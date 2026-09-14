@@ -328,6 +328,196 @@ function initMuteButton() {
 }
 
 // ──────────────────────────────────────────────────────────────
+// Interactive Command Shortcuts & Hotkeys & Command Palette
+// ──────────────────────────────────────────────────────────────
+let _cmdPaletteSelectedIndex = 0;
+let _cmdPaletteCurrentItems = [];
+
+const COMMAND_ACTIONS = [
+  { id: 'view_trajectory', title: 'Go to Trajectory Reconstruction', icon: '◈', meta: 'Press 1', action: () => navigateTo('trajectory') },
+  { id: 'view_heatmap', title: 'Go to Sighting Heatmap & Geofences', icon: '◉', meta: 'Press 2', action: () => navigateTo('heatmap') },
+  { id: 'view_blacklist', title: 'Go to Blacklist & Watchlist Verification', icon: '◧', meta: 'Press 3', action: () => navigateTo('blacklist') },
+  { id: 'view_alerts', title: 'Go to Incident Alerts Triage', icon: '◬', meta: 'Press 4', action: () => navigateTo('alerts') },
+  { id: 'view_trends', title: 'Go to Traffic Trends & Analytics', icon: '▦', meta: 'Press 5', action: () => navigateTo('trends') },
+  { id: 'view_cameras', title: 'Go to Camera Nodes & Streams', icon: '⊡', meta: 'Press 6', action: () => navigateTo('cameras') },
+  { id: 'action_rescan', title: 'Execute City-Wide Incident Alert Scan', icon: '⚡', meta: 'Run full scan', action: () => { navigateTo('alerts'); setTimeout(() => window.AlertsView?.rescanAlerts(), 100); } },
+  { id: 'action_mute', title: 'Toggle Alarm Audio Beeps', icon: '🔊', meta: 'Press M', action: () => document.getElementById('btn-mute-toggle')?.click() },
+  { id: 'track_normal', title: 'Track Normal Transit (TN09CB1234)', icon: '🛰️', meta: 'Quick target', action: () => { navigateTo('trajectory'); setTimeout(() => window.TrajectoryView?.searchPreset('TN09CB1234'), 100); } },
+  { id: 'track_anomaly', title: 'Track Speed Anomaly (KA03MD5522)', icon: '⚠️', meta: 'Incident target', action: () => { navigateTo('trajectory'); setTimeout(() => window.TrajectoryView?.searchPreset('KA03MD5522'), 100); } },
+  { id: 'track_blacklist', title: 'Track Wanted Vehicle (TN07AX4521)', icon: '🚨', meta: 'Blacklist target', action: () => { navigateTo('trajectory'); setTimeout(() => window.TrajectoryView?.searchPreset('TN07AX4521'), 100); } },
+];
+
+function toggleCommandPalette() {
+  const modal = document.getElementById('cmd-palette-modal');
+  if (!modal) return;
+  const isOpening = modal.classList.contains('hidden');
+  modal.classList.toggle('hidden');
+  if (isOpening) {
+    const input = document.getElementById('cmd-palette-input');
+    if (input) {
+      input.value = '';
+      setTimeout(() => input.focus(), 50);
+    }
+    renderCommandPaletteResults('');
+  }
+}
+
+function renderCommandPaletteResults(query) {
+  const container = document.getElementById('cmd-palette-results');
+  if (!container) return;
+  const q = (query || '').trim().toLowerCase();
+
+  let items = [...COMMAND_ACTIONS];
+  if (q) {
+    items = items.filter(item =>
+      item.title.toLowerCase().includes(q) ||
+      item.meta.toLowerCase().includes(q) ||
+      item.id.toLowerCase().includes(q)
+    );
+
+    // If query looks like a license plate or camera ID, add instant dynamic jump actions
+    if (/^[a-z0-9]{3,}$/i.test(q)) {
+      const upper = q.toUpperCase();
+      items.unshift({
+        id: `dyn_traj_${upper}`,
+        title: `Reconstruct Trajectory for "${upper}"`,
+        icon: '🛰️',
+        meta: 'Jump & Reconstruct',
+        action: () => {
+          navigateTo('trajectory');
+          setTimeout(() => {
+            const inp = document.getElementById('plate-query-input');
+            if (inp) { inp.value = upper; inp.dispatchEvent(new Event('input')); }
+            document.getElementById('btn-search-plate')?.click();
+          }, 120);
+        }
+      });
+      items.unshift({
+        id: `dyn_bl_${upper}`,
+        title: `Verify Blacklist Registry for "${upper}"`,
+        icon: '🔍',
+        meta: 'Blacklist Check',
+        action: () => {
+          navigateTo('blacklist');
+          setTimeout(() => window.BlacklistView?.checkPlate(upper), 120);
+        }
+      });
+    }
+  }
+
+  _cmdPaletteCurrentItems = items;
+  _cmdPaletteSelectedIndex = 0;
+
+  if (items.length === 0) {
+    container.innerHTML = '<div style="padding:12px; color:var(--text-muted); text-align:center;">No matching commands, plates, or actions found.</div>';
+    return;
+  }
+
+  container.innerHTML = items.map((item, idx) => `
+    <div class="cmd-palette-item ${idx === 0 ? 'selected' : ''}" data-index="${idx}" onclick="window.App.execPaletteItem(${idx})">
+      <div class="item-title"><span>${item.icon}</span> <span>${item.title}</span></div>
+      <div class="item-meta mono">${item.meta}</div>
+    </div>
+  `).join('');
+}
+
+function execPaletteItem(index) {
+  const item = _cmdPaletteCurrentItems[index];
+  if (item && item.action) {
+    toggleCommandPalette();
+    item.action();
+  }
+}
+
+function toggleShortcutsModal() {
+  const modal = document.getElementById('shortcuts-modal');
+  if (modal) modal.classList.toggle('hidden');
+}
+
+function closeAllModals() {
+  document.getElementById('cmd-palette-modal')?.classList.add('hidden');
+  document.getElementById('shortcuts-modal')?.classList.add('hidden');
+  document.getElementById('cam-hud-modal')?.classList.add('hidden');
+}
+
+function initKeyboardShortcuts() {
+  const palInput = document.getElementById('cmd-palette-input');
+  if (palInput) {
+    palInput.addEventListener('input', e => {
+      renderCommandPaletteResults(e.target.value);
+    });
+    palInput.addEventListener('keydown', e => {
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (_cmdPaletteCurrentItems.length > 0) {
+          _cmdPaletteSelectedIndex = (_cmdPaletteSelectedIndex + 1) % _cmdPaletteCurrentItems.length;
+          updatePaletteSelectionVisual();
+        }
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (_cmdPaletteCurrentItems.length > 0) {
+          _cmdPaletteSelectedIndex = (_cmdPaletteSelectedIndex - 1 + _cmdPaletteCurrentItems.length) % _cmdPaletteCurrentItems.length;
+          updatePaletteSelectionVisual();
+        }
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        execPaletteItem(_cmdPaletteSelectedIndex);
+      } else if (e.key === 'Escape') {
+        closeAllModals();
+      }
+    });
+  }
+
+  window.addEventListener('keydown', e => {
+    // Ctrl+K or Cmd+K opens Command Palette anywhere
+    if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) {
+      e.preventDefault();
+      toggleCommandPalette();
+      return;
+    }
+
+    const tag = e.target.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') {
+      if (e.key === 'Escape') {
+        e.target.blur();
+        closeAllModals();
+      }
+      return;
+    }
+
+    if (e.key === '1') navigateTo('trajectory');
+    else if (e.key === '2') navigateTo('heatmap');
+    else if (e.key === '3') navigateTo('blacklist');
+    else if (e.key === '4') navigateTo('alerts');
+    else if (e.key === '5') navigateTo('trends');
+    else if (e.key === '6') navigateTo('cameras');
+    else if (e.key === '/') {
+      e.preventDefault();
+      toggleCommandPalette();
+    }
+    else if (e.key === 'm' || e.key === 'M') {
+      document.getElementById('btn-mute-toggle')?.click();
+    }
+    else if (e.key === '?' || e.key === 'h' || e.key === 'H') {
+      toggleShortcutsModal();
+    }
+    else if (e.key === 'Escape') {
+      closeAllModals();
+    }
+  });
+}
+
+function updatePaletteSelectionVisual() {
+  const items = document.querySelectorAll('#cmd-palette-results .cmd-palette-item');
+  items.forEach((el, idx) => {
+    el.classList.toggle('selected', idx === _cmdPaletteSelectedIndex);
+    if (idx === _cmdPaletteSelectedIndex) {
+      el.scrollIntoView({ block: 'nearest' });
+    }
+  });
+}
+
+// ──────────────────────────────────────────────────────────────
 // Exports — used by views
 // ──────────────────────────────────────────────────────────────
 window.App = {
@@ -335,6 +525,10 @@ window.App = {
   getShiftBadgeId: () => ShiftSession.getBadgeId(),
   pushRecentSearch: (plate) => RecentSearches.push(plate),
   refreshKPIs,
+  toggleShortcutsModal,
+  toggleCommandPalette,
+  execPaletteItem,
+  navigateTo,
 };
 
 // ──────────────────────────────────────────────────────────────
@@ -344,6 +538,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initNav();
   initMuteButton();
   initShiftModal();
+  initKeyboardShortcuts();
   RecentSearches.render();
 
   // Handle hash-based routing on initial load

@@ -68,17 +68,29 @@ class BlacklistView {
             <div class="mono" style="font-size: 20px; font-weight: 700; color: var(--accent-critical); margin-bottom: 8px;">
               ${res.entry.plate_text}
             </div>
-            <div style="font-size: 13px; color: var(--text-primary);">
+            <div style="font-size: 13px; color: var(--text-primary); margin-bottom: 12px;">
               <strong>Watchlist Cause on File:</strong><br/>${this._esc(res.entry.reason)}
+            </div>
+            <div>
+              <button class="btn-action" style="font-size: 11px; padding: 5px 12px;"
+                onclick="window.BlacklistView.trackPlate('${this._esc(res.entry.plate_text)}')">
+                🛰️ Reconstruct 24H Trajectory for ${this._esc(res.entry.plate_text)}
+              </button>
             </div>
           </div>`;
       } else {
         container.innerHTML = `
           <div style="border: 1px solid var(--border-color); background-color: var(--surface-color);
                       padding: 16px; border-radius: 4px;">
-            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-              <span class="badge badge-primary">NO WATCHLIST MATCH</span>
-              <span class="mono" style="font-weight:700;">${plate.toUpperCase()}</span>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span class="badge badge-primary">NO WATCHLIST MATCH</span>
+                <span class="mono" style="font-weight:700;">${plate.toUpperCase()}</span>
+              </div>
+              <button class="btn-secondary" style="font-size: 11px; padding: 3px 8px;"
+                onclick="window.BlacklistView.trackPlate('${plate.toUpperCase()}')">
+                🛰️ Search Sightings
+              </button>
             </div>
             <div class="text-muted" style="font-size: 13px;">
               No records found matching this registration in active crime watchlists or impound registries.
@@ -88,6 +100,20 @@ class BlacklistView {
     } catch {
       document.getElementById('offline-banner').classList.add('visible');
       container.innerHTML = '<div class="state-box text-critical">Unable to reach the backend — check your connection.</div>';
+    }
+  }
+
+  trackPlate(plate) {
+    if (window.App) {
+      window.App.navigateTo('trajectory');
+      setTimeout(() => {
+        const inp = document.getElementById('plate-query-input');
+        if (inp) {
+          inp.value = plate;
+          inp.dispatchEvent(new Event('input'));
+        }
+        document.getElementById('btn-search-plate')?.click();
+      }, 120);
     }
   }
 
@@ -144,9 +170,15 @@ class BlacklistView {
             <td class="mono" style="font-weight:700;">${this._esc(e.plate_text)}</td>
             <td style="font-size:12px; white-space:normal;">${this._esc(e.reason)}</td>
             <td class="mono text-muted" style="font-size:11px;">${e.added_on}</td>
-            ${role === 'supervisor'
-              ? `<td><button class="btn-critical" onclick="window.BlacklistView.removePlate('${this._esc(e.plate_text)}')">Remove</button></td>`
-              : '<td></td>'}
+            <td>
+              <div style="display:flex; gap:6px; align-items:center;">
+                <button class="btn-secondary" style="font-size:10px; padding:2px 6px; font-family:var(--font-mono);"
+                  onclick="window.BlacklistView.trackPlate('${this._esc(e.plate_text)}')">🛰️ Track</button>
+                ${role === 'supervisor'
+                  ? `<button class="btn-critical" onclick="window.BlacklistView.removePlate('${this._esc(e.plate_text)}')">Remove</button>`
+                  : ''}
+              </div>
+            </td>
           </tr>`;
       });
       tc.innerHTML = `

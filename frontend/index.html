@@ -135,6 +135,14 @@
           </select>
         </div>
 
+        <div class="search-trigger-wrap" style="display:flex; align-items:center; gap:6px;">
+          <button id="btn-cmd-palette" class="btn-secondary" style="font-size: 11px; padding: 3px 10px; font-family: var(--font-mono); display: flex; align-items: center; gap: 6px;" title="Open Command Palette (Ctrl+K or /)" onclick="window.App.toggleCommandPalette()">
+            <span>🔍 COMMAND PALETTE</span>
+            <kbd class="mono" style="background:var(--surface-color); border:1px solid var(--border-color); padding:0 4px; border-radius:3px; font-size:10px;">Ctrl+K</kbd>
+          </button>
+        </div>
+
+        <button id="btn-shortcuts-toggle" class="btn-secondary" style="font-size: 11px; padding: 3px 8px; font-family: var(--font-mono);" title="View interactive command keys" onclick="window.App.toggleShortcutsModal()">[⌨ KEYS]</button>
         <button id="btn-mute-toggle" class="btn-mute" title="Toggle audio alert beeps">[AUDIO: ON]</button>
 
         <div class="system-status">
@@ -143,6 +151,87 @@
         </div>
       </div>
     </header>
+
+    <!-- Global Command Palette Modal (Ctrl+K / /) -->
+    <div id="cmd-palette-modal" class="modal-backdrop hidden" onclick="if(event.target===this) window.App.toggleCommandPalette()">
+      <div class="modal-box" style="width: 540px; max-width: 92vw; padding: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <div class="brand-badge">TACTICAL DISPATCH</div>
+            <span class="mono" style="font-size: 12px; font-weight: 700;">COMMAND &amp; VEHICLE JUMP</span>
+          </div>
+          <span class="mono text-muted" style="font-size: 11px;">[ESC to close]</span>
+        </div>
+
+        <div style="position: relative; margin-bottom: 12px;">
+          <input id="cmd-palette-input" class="input-text input-lg mono" type="text"
+            placeholder="Search plate (TN09CB1234), camera (CAM-01), or action..."
+            autocomplete="off" style="width: 100%; padding-left: 36px;" />
+          <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 14px; color: var(--text-muted);">🔍</span>
+        </div>
+
+        <div id="cmd-palette-results" class="mono" style="max-height: 280px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px;">
+          <!-- Dynamically populated -->
+        </div>
+
+        <div style="margin-top: 12px; padding-top: 8px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; font-size: 11px;" class="mono text-muted">
+          <span>&uarr;&darr; Navigate &bull; Enter Select</span>
+          <span>Hotkeys: 1-6 Switch View &bull; / Focus</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Command Shortcuts Modal -->
+    <div id="shortcuts-modal" class="modal-backdrop hidden" onclick="if(event.target===this) window.App.toggleShortcutsModal()">
+      <div class="modal-box" style="width: 460px; max-width: 90vw;">
+        <div class="modal-header" style="display: flex; justify-content: space-between; align-items: flex-start;">
+          <div>
+            <div class="brand-badge">ICCC COMMAND PALETTE</div>
+            <h2 class="modal-title" style="font-size: 16px;">Console Hotkeys</h2>
+            <p class="modal-subtitle mono text-muted">Rapid tactical navigation for traffic dispatchers</p>
+          </div>
+          <button class="btn-secondary" style="padding: 2px 8px; font-size: 14px;" onclick="window.App.toggleShortcutsModal()">&times;</button>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px; font-size: 12px; margin-bottom: 16px;">
+          <div style="display: flex; justify-content: space-between; padding: 6px 10px; background: var(--surface-color); border-radius: 4px; border: 1px solid var(--border-color);">
+            <span>Global Command &amp; Vehicle Jump</span>
+            <kbd class="mono" style="background:#fff; border:1px solid #ccc; padding:1px 6px; border-radius:3px; font-weight:700;">Ctrl+K</kbd>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 6px 10px; background: var(--surface-color); border-radius: 4px; border: 1px solid var(--border-color);">
+            <span>Trajectory Reconstruction</span>
+            <kbd class="mono" style="background:#fff; border:1px solid #ccc; padding:1px 6px; border-radius:3px; font-weight:700;">1</kbd>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 6px 10px; background: var(--surface-color); border-radius: 4px; border: 1px solid var(--border-color);">
+            <span>Sighting Heatmap</span>
+            <kbd class="mono" style="background:#fff; border:1px solid #ccc; padding:1px 6px; border-radius:3px; font-weight:700;">2</kbd>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 6px 10px; background: var(--surface-color); border-radius: 4px; border: 1px solid var(--border-color);">
+            <span>Blacklist / Watchlist Check</span>
+            <kbd class="mono" style="background:#fff; border:1px solid #ccc; padding:1px 6px; border-radius:3px; font-weight:700;">3</kbd>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 6px 10px; background: var(--surface-color); border-radius: 4px; border: 1px solid var(--border-color);">
+            <span>Incident Alert Triage</span>
+            <kbd class="mono" style="background:#fff; border:1px solid #ccc; padding:1px 6px; border-radius:3px; font-weight:700;">4</kbd>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 6px 10px; background: var(--surface-color); border-radius: 4px; border: 1px solid var(--border-color);">
+            <span>Traffic Anomaly Trends</span>
+            <kbd class="mono" style="background:#fff; border:1px solid #ccc; padding:1px 6px; border-radius:3px; font-weight:700;">5</kbd>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 6px 10px; background: var(--surface-color); border-radius: 4px; border: 1px solid var(--border-color);">
+            <span>Camera Nodes &amp; Live Streams</span>
+            <kbd class="mono" style="background:#fff; border:1px solid #ccc; padding:1px 6px; border-radius:3px; font-weight:700;">6</kbd>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 6px 10px; background: var(--surface-color); border-radius: 4px; border: 1px solid var(--border-color);">
+            <span>Focus License Plate Query</span>
+            <kbd class="mono" style="background:#fff; border:1px solid #ccc; padding:1px 6px; border-radius:3px; font-weight:700;">/</kbd>
+          </div>
+          <div style="display: flex; justify-content: space-between; padding: 6px 10px; background: var(--surface-color); border-radius: 4px; border: 1px solid var(--border-color);">
+            <span>Toggle Audio Alarm Mute</span>
+            <kbd class="mono" style="background:#fff; border:1px solid #ccc; padding:1px 6px; border-radius:3px; font-weight:700;">M</kbd>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- KPI Summary Strip -->
     <div id="kpi-strip">

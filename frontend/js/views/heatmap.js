@@ -114,10 +114,16 @@ class HeatmapView {
       });
 
       marker.bindPopup(`
-        <div style="font-family: ui-monospace, monospace; font-size: 11px;">
-          <strong>Camera ID: ${cam.camera_id}</strong><br/>
-          GPS: ${cam.lat.toFixed(4)}, ${cam.lon.toFixed(4)}<br/>
-          Total Sightings: <strong>${cam.count}</strong>
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; line-height: 1.5;">
+          <strong style="font-size:12px; color:#2F5233;">NODE: ${cam.camera_id}</strong><br/>
+          <strong>Coordinates:</strong> ${cam.lat.toFixed(4)}°N, ${cam.lon.toFixed(4)}°E<br/>
+          <strong>Sighting Density:</strong> <span style="font-weight:700; color:#2F5233;">${cam.count} detections</span><br/>
+          <div style="margin-top:8px; display:flex; gap:6px;">
+            <button style="font-size:10px; padding:3px 8px; background:#2F5233; color:#fff; border:none; border-radius:3px; cursor:pointer;"
+              onclick="window.HeatmapView.inspectCameraSightings('${cam.camera_id}')">
+              🛰️ Track Sightings
+            </button>
+          </div>
         </div>
       `);
 
@@ -125,15 +131,34 @@ class HeatmapView {
     });
   }
 
+  inspectCameraSightings(camId) {
+    if (window.App) {
+      window.App.navigateTo('cameras');
+      setTimeout(() => {
+        const inp = document.getElementById('cam-search-input');
+        if (inp) {
+          inp.value = camId;
+          inp.dispatchEvent(new Event('input'));
+        }
+      }, 100);
+    }
+  }
+
   _renderTable(cameras, zones, container) {
     let camRows = "";
     cameras.forEach(c => {
       camRows += `
-        <tr>
+        <tr style="cursor:pointer;" onclick="window.HeatmapView.inspectCameraSightings('${c.camera_id}')">
           <td class="mono font-bold">${c.camera_id}</td>
           <td class="mono">${c.lat.toFixed(4)}, ${c.lon.toFixed(4)}</td>
           <td class="mono font-bold" style="text-align: right;">${c.count}</td>
           <td><span class="badge badge-primary">ACTIVE</span></td>
+          <td>
+            <button class="btn-secondary" style="font-size:10px; padding:2px 6px;"
+              onclick="event.stopPropagation(); window.HeatmapView.inspectCameraSightings('${c.camera_id}')">
+              Inspect Node
+            </button>
+          </td>
         </tr>
       `;
     });
@@ -160,6 +185,7 @@ class HeatmapView {
                 <th>Coordinates</th>
                 <th style="text-align: right;">Sightings</th>
                 <th>Status</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>${camRows}</tbody>

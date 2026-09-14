@@ -153,23 +153,51 @@ class TrendsView {
       return;
     }
 
-    // Flag corridors where avg_speed > mean + 2*stddev expressed in km/h terms
-    // We use avg_speed_kmh as proxy and flag those significantly above 60 km/h urban limit
-    const URBAN_LIMIT_KMH = 60;
-    const violations = corridors
-      .filter(c => c.avg_speed_kmh > URBAN_LIMIT_KMH)
+    this._allCorridors = corridors;
+    this._currentThreshold = this._currentThreshold || 60;
+
+    container.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
+        <div>
+          <div style="font-size:12px; font-weight:700;">Corridor Speed Threshold Filter: <span id="speed-thresh-val" class="mono text-warning" style="font-size:13px;">${this._currentThreshold} km/h</span></div>
+          <div class="mono text-muted" style="font-size:11px;">Ranked by transit velocity over corridor baseline</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <input type="range" min="30" max="120" step="5" value="${this._currentThreshold}" style="width:140px; cursor:pointer;"
+            oninput="window.TrendsView.updateThreshold(this.value)" />
+        </div>
+      </div>
+      <div id="violations-table-mount"></div>
+    `;
+
+    this._filterViolations();
+  }
+
+  updateThreshold(val) {
+    this._currentThreshold = parseInt(val, 10);
+    const valEl = document.getElementById('speed-thresh-val');
+    if (valEl) valEl.textContent = `${this._currentThreshold} km/h`;
+    this._filterViolations();
+  }
+
+  _filterViolations() {
+    const mount = document.getElementById('violations-table-mount');
+    if (!mount || !this._allCorridors) return;
+
+    const violations = this._allCorridors
+      .filter(c => c.avg_speed_kmh > this._currentThreshold)
       .sort((a, b) => b.avg_speed_kmh - a.avg_speed_kmh);
 
     if (violations.length === 0) {
-      container.innerHTML = `
-        <div class="state-box">
+      mount.innerHTML = `
+        <div class="state-box" style="margin:0;">
           <span class="badge badge-primary" style="margin-bottom:6px; display:inline-block;">ALL CLEAR</span><br/>
-          No corridors exceed the ${URBAN_LIMIT_KMH} km/h urban speed limit baseline.
+          No corridors exceed the ${this._currentThreshold} km/h threshold.
         </div>`;
       return;
     }
 
-    const maxSpeed = violations[0].avg_speed_kmh;
+    const maxSpeed = Math.max(...violations.map(v => v.avg_speed_kmh), 1);
     let rows = '';
     violations.forEach((c, i) => {
       const pct = Math.round((c.avg_speed_kmh / maxSpeed) * 100);
@@ -177,30 +205,29 @@ class TrendsView {
 
       rows += `
         <tr>
-          <td class="mono speed-rank">#${i + 1}</td>
-          <td class="mono" style="font-weight:700;">${c.camera_from} &rarr; ${c.camera_to}</td>
-          <td class="mono ${severityClass}" style="font-weight:700;">${c.avg_speed_kmh.toFixed(1)} km/h</td>
-          <td class="mono text-muted">${(c.avg_speed_kmh - URBAN_LIMIT_KMH).toFixed(1)} km/h over limit</td>
-          <td class="speed-bar-cell">
-            <div class="speed-bar" title="${c.avg_speed_kmh.toFixed(1)} km/h">
-              <div class="speed-bar-fill" style="width: ${pct}%;
-                background-color: ${c.avg_speed_kmh > 100 ? 'var(--accent-critical)' : 'var(--accent-warning)'};"></div>
+          <td class="mono" style="font-weight:700;">#${i + 1}</td>
+          <td class="mono font-semibold">${c.camera_from} &rarr; ${c.camera_to}</td>
+          <td class="mono ${severityClass}" style="font-weight:700; text-align:right;">${c.avg_speed_kmh.toFixed(1)} km/h</td>
+          <td class="mono text-muted">${(c.avg_speed_kmh - this._currentThreshold).toFixed(1)} km/h over limit</td>
+          <td style="width: 140px;">
+            <div style="background:#E5E2DA; height:6px; border-radius:3px; overflow:hidden;">
+              <div style="width: ${pct}%; height:100%; background: ${c.avg_speed_kmh > 100 ? 'var(--accent-critical)' : 'var(--accent-warning)'}; border-radius:3px;"></div>
             </div>
           </td>
           <td class="mono" style="text-align:right; font-size:11px;">${c.sample_count} obs.</td>
         </tr>`;
     });
 
-    container.innerHTML = `
+    mount.innerHTML = `
       <div class="data-table-wrap">
         <table class="data-table">
           <thead>
             <tr>
               <th>Rank</th>
               <th>Corridor</th>
-              <th>Avg Speed</th>
+              <th style="text-align:right;">Avg Speed</th>
               <th>Excess</th>
-              <th>Relative Severity</th>
+              <th>Relative Velocity</th>
               <th style="text-align:right;">Observations</th>
             </tr>
           </thead>
@@ -208,7 +235,7 @@ class TrendsView {
         </table>
       </div>
       <p class="mono text-muted" style="font-size: 10px; margin-top: 6px; padding-left: 4px;">
-        Urban speed limit baseline: ${URBAN_LIMIT_KMH} km/h. Red = &gt;100 km/h. Amber = ${URBAN_LIMIT_KMH}–100 km/h.
+        Threshold: ${this._currentThreshold} km/h. Red = &gt;100 km/h. Amber = ${this._currentThreshold}–100 km/h.
       </p>`;
   }
 }

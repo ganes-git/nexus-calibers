@@ -139,6 +139,41 @@ body {
 }
 
 /* ════════════════════════════════════════════
+   COMMAND PALETTE STYLING
+════════════════════════════════════════════ */
+.cmd-palette-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background-color: var(--surface-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 120ms var(--ease-spring);
+  font-size: 12px;
+}
+
+.cmd-palette-item:hover,
+.cmd-palette-item.selected {
+  background-color: var(--accent-primary-light);
+  border-color: var(--accent-primary);
+  transform: translateX(2px);
+}
+
+.cmd-palette-item .item-title {
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cmd-palette-item .item-meta {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* ════════════════════════════════════════════
    LAYOUT SHELL
 ════════════════════════════════════════════ */
 #sidebar {
