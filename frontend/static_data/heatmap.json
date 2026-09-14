@@ -1,0 +1,50 @@
+[
+  {
+    "camera_id": "CAM_01",
+    "lat": 13.0528,
+    "lon": 80.2512,
+    "count": 15
+  },
+  {
+    "camera_id": "CAM_06",
+    "lat": 13.0232,
+    "lon": 80.2228,
+    "count": 14
+  },
+  {
+    "camera_id": "CAM_07",
+    "lat": 13.0544,
+    "lon": 80.2825,
+    "count": 14
+  },
+  {
+    "camera_id": "CAM_05",
+    "lat": 13.0076,
+    "lon": 80.2036,
+    "count": 13
+  },
+  {
+    "camera_id": "CAM_08",
+    "lat": 13.0067,
+    "lon": 80.2443,
+    "count": 13
+  },
+  {
+    "camera_id": "CAM_02",
+    "lat": 13.061,
+    "lon": 80.258,
+    "count": 12
+  },
+  {
+    "camera_id": "CAM_03",
+    "lat": 13.0674,
+    "lon": 80.2642,
+    "count": 12
+  },
+  {
+    "camera_id": "CAM_04",
+    "lat": 13.0405,
+    "lon": 80.2337,
+    "count": 12
+  }
+]

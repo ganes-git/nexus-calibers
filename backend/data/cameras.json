@@ -1,0 +1,42 @@
+{
+  "CAM_01": {
+    "name": "Gemini Flyover (Anna Salai)",
+    "lat": 13.0528,
+    "lon": 80.2512
+  },
+  "CAM_02": {
+    "name": "Thousand Lights (Anna Salai)",
+    "lat": 13.061,
+    "lon": 80.258
+  },
+  "CAM_03": {
+    "name": "Spencers Plaza (Anna Salai)",
+    "lat": 13.0674,
+    "lon": 80.2642
+  },
+  "CAM_04": {
+    "name": "Panagal Park (T. Nagar)",
+    "lat": 13.0405,
+    "lon": 80.2337
+  },
+  "CAM_05": {
+    "name": "Kathipara Junction (Guindy)",
+    "lat": 13.0076,
+    "lon": 80.2036
+  },
+  "CAM_06": {
+    "name": "Maraimalai Adigal Bridge (Saidapet)",
+    "lat": 13.0232,
+    "lon": 80.2228
+  },
+  "CAM_07": {
+    "name": "Marina Beach (Kamarajar Salai)",
+    "lat": 13.0544,
+    "lon": 80.2825
+  },
+  "CAM_08": {
+    "name": "Madhya Kailash (Adyar)",
+    "lat": 13.0067,
+    "lon": 80.2443
+  }
+}

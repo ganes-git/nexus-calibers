@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NexusCaliber // ANPR Trajectory & Route-Anomaly Engine</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%232F5233' rx='2'/></svg>" />
+
+  <!-- Leaflet CDN -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
+  <!-- Design Contract Stylesheet -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Left Sidebar Navigation -->
+  <aside id="sidebar">
+    <div class="sidebar-header">
+      <div class="brand-badge">BEL &bull; PS 26127</div>
+      <div class="brand-title">ANPR Trajectory & Route Engine</div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="#trajectory" class="nav-link active" data-view="trajectory">
+        <span>&bull;</span>
+        <span>Trajectory Search</span>
+      </a>
+      <a href="#heatmap" class="nav-link" data-view="heatmap">
+        <span>&bull;</span>
+        <span>Sighting Heatmap</span>
+      </a>
+      <a href="#blacklist" class="nav-link" data-view="blacklist">
+        <span>&bull;</span>
+        <span>Blacklist Check</span>
+      </a>
+      <a href="#alerts" class="nav-link" data-view="alerts">
+        <span>&bull;</span>
+        <span>Incident Alerts</span>
+      </a>
+      <a href="#trends" class="nav-link" data-view="trends">
+        <span>&bull;</span>
+        <span>Traffic Trends</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer mono">
+      Anchor: Chennai Cluster<br/>
+      8 Junction Nodes Active
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main id="main-content">
+    
+    <!-- Top Control Header -->
+    <header id="top-header">
+      <div class="header-left">
+        <h1 id="current-view-heading" class="view-heading">Trajectory Reconstruction</h1>
+      </div>
+
+      <div class="header-controls">
+        <div class="role-selector-wrap">
+          <label for="role-selector" class="mono text-muted">Role:</label>
+          <select id="role-selector" class="role-select mono">
+            <option value="operator">Operator (Traffic Police)</option>
+            <option value="supervisor">Supervisor (ICCC Oversight)</option>
+          </select>
+        </div>
+
+        <button id="btn-mute-toggle" class="btn-mute" title="Toggle audio alert beeps">[AUDIO: ON]</button>
+
+        <div class="system-status">
+          <div class="status-dot"></div>
+          <span>LIVE ENGINE</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Offline / Unreachable Banner -->
+    <div id="offline-banner" class="mono">
+      [ALERT] Unable to reach the backend — check your connection.
+    </div>
+
+    <!-- Active View Panel -->
+    <div id="view-container"></div>
+  </main>
+
+  <!-- Global Alert Toast Container -->
+  <div id="toast-container"></div>
+
+  <!-- Application Logic Modules -->
+  <script src="js/dataSource.js"></script>
+  <script src="js/audioAlert.js"></script>
+  <script src="js/toastManager.js"></script>
+  <script src="js/views/trajectory.js"></script>
+  <script src="js/views/heatmap.js"></script>
+  <script src="js/views/blacklist.js"></script>
+  <script src="js/views/alerts.js"></script>
+  <script src="js/views/trends.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
