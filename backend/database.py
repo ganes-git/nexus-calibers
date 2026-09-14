@@ -132,10 +132,12 @@ def init_db():
     );
     """)
 
-    # Indexes per SCHEMA.md
+    # Indexes per SCHEMA.md and performance optimization
     cursor.execute("CREATE INDEX IF NOT EXISTS idx_sightings_cam_time ON sightings(camera_id, timestamp);")
     cursor.execute("CREATE INDEX IF NOT EXISTS idx_alerts_created_at ON alerts(created_at);")
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_alerts_ack_created ON alerts(acknowledged, created_at);")
     cursor.execute("CREATE INDEX IF NOT EXISTS idx_sightings_plate ON sightings(plate_text);")
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_sightings_ts ON sightings(timestamp DESC);")
 
     conn.commit()
     conn.close()

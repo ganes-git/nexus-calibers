@@ -73,3 +73,9 @@ class AudioAlertManager {
 }
 
 window.audioAlertManager = new AudioAlertManager();
+window.AudioAlert = {
+  isMuted: () => window.audioAlertManager.isMuted,
+  toggleMute: () => window.audioAlertManager.toggleMute(),
+  beep: (tone) => window.audioAlertManager.playAlertTone(),
+  playAlertTone: () => window.audioAlertManager.playAlertTone(),
+};

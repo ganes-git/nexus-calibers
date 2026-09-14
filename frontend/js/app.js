@@ -272,6 +272,20 @@ function initShiftModal() {
   badgeInput.addEventListener('keydown', e => {
     if (e.key === 'Enter') btnStart.click();
   });
+
+  // Header role selector change listener
+  const headerRole = document.getElementById('role-selector');
+  if (headerRole) {
+    headerRole.addEventListener('change', e => {
+      const role = e.target.value;
+      if (currentView === 'alerts' && window.AlertsView) {
+        window.AlertsView.syncAuditLogSection();
+      }
+      if (currentView === 'blacklist' && window.BlacklistView) {
+        window.BlacklistView._renderWatchlistManagement();
+      }
+    });
+  }
 }
 
 // ──────────────────────────────────────────────────────────────

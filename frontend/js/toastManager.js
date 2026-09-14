@@ -77,7 +77,9 @@ class ToastManager {
       window.audioAlertManager.playAlertTone();
     }
 
-    if (!this.container) return;
+    if (!this.container) {
+      this.container = document.getElementById("toast-container") || document.body;
+    }
 
     const toast = document.createElement("div");
     const isCritical = (alert.alert_type === "clone" || alert.alert_type === "blacklist");
