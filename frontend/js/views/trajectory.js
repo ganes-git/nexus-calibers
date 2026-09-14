@@ -39,14 +39,19 @@ class TrajectoryView {
             <option value="KA01AB9999">Impound Notice Vehicle</option>
           </datalist>
           <button type="submit" id="btn-search-plate" class="btn-action">Search Trajectory</button>
+          
+          <!-- Item 13: Load Demo Scenario Dropdown -->
           <div style="display: flex; gap: 6px; align-items: center; margin-left: auto; flex-wrap: wrap;">
-            <span class="text-muted" style="font-size: 11px;">Quick Tests:</span>
-            <button type="button" class="btn-secondary" style="font-size: 11px; padding: 4px 8px;"
-              onclick="window.TrajectoryView.searchPreset('TN09CB1234')">Normal (TN09CB1234)</button>
-            <button type="button" class="btn-secondary" style="font-size: 11px; padding: 4px 8px;"
-              onclick="window.TrajectoryView.searchPreset('KA03MD5522')">Anomaly (KA03MD5522)</button>
-            <button type="button" class="btn-secondary" style="font-size: 11px; padding: 4px 8px;"
-              onclick="window.TrajectoryView.searchPreset('TN01AZ7788')">Unconfirmed (TN01AZ7788)</button>
+            <label for="demo-scenario-select" class="mono text-muted" style="font-size: 11px; font-weight: 600;">Load Demo Scenario:</label>
+            <select id="demo-scenario-select" class="input-text" style="padding: 4px 8px; font-size: 11px; min-width: 200px;"
+              onchange="if(this.value){ window.TrajectoryView.searchPreset(this.value); }">
+              <option value="">-- Select Pre-Baked Case --</option>
+              <option value="TN09CB1234">1. Normal Transit (TN09CB1234)</option>
+              <option value="KA03MD5522">2. Route Anomaly (KA03MD5522)</option>
+              <option value="TN07AX4521">3. Blacklist Wanted Hit (TN07AX4521)</option>
+              <option value="TN01AZ7788">4. Unconfirmed Sighting (TN01AZ7788)</option>
+              <option value="TN22CY3311">5. Speed Anomaly (TN22CY3311)</option>
+            </select>
           </div>
         </form>
       </div>
@@ -241,6 +246,7 @@ class TrajectoryView {
           </div>`;
         if (this.markersLayer) this.markersLayer.clearLayers();
         if (this.polyline) { this.map.removeLayer(this.polyline); this.polyline = null; }
+        if (this.simMarker) { this.map.removeLayer(this.simMarker); this.simMarker = null; }
         document.getElementById('traj-video-bar').style.display = 'none';
         document.getElementById('traj-bottom-hud').style.display = 'none';
         return;
