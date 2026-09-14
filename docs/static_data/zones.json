@@ -1,0 +1,26 @@
+[
+  {
+    "zone_id": 4,
+    "name": "Raj Bhavan High-Security Perimeter",
+    "center_lat": 13.007,
+    "center_lon": 80.218,
+    "radius_meters": 850.0,
+    "reason": "VIP Governor residence zone \u2014 commercial heavy transit restricted"
+  },
+  {
+    "zone_id": 5,
+    "name": "Fort St. George Secretariat Perimeter",
+    "center_lat": 13.078,
+    "center_lon": 80.287,
+    "radius_meters": 600.0,
+    "reason": "State administrative zone \u2014 vehicle entry permits mandatory"
+  },
+  {
+    "zone_id": 6,
+    "name": "Marina Promenade Pedestrian Heritage Zone",
+    "center_lat": 13.054,
+    "center_lon": 80.282,
+    "radius_meters": 500.0,
+    "reason": "Pedestrian promenade \u2014 unpermitted motor vehicles prohibited"
+  }
+]

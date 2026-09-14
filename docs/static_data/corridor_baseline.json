@@ -1,0 +1,412 @@
+[
+  {
+    "camera_from": "CAM_02",
+    "camera_to": "CAM_03",
+    "distance_km": 1.0,
+    "mean_transit_seconds": 140.0,
+    "stddev_transit_seconds": 30.0,
+    "sample_count": 152,
+    "avg_speed_kmh": 25.16,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_01",
+    "camera_to": "CAM_02",
+    "distance_km": 1.1,
+    "mean_transit_seconds": 150.0,
+    "stddev_transit_seconds": 30.0,
+    "sample_count": 142,
+    "avg_speed_kmh": 28.13,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_06",
+    "camera_to": "CAM_01",
+    "distance_km": 4.2,
+    "mean_transit_seconds": 1986.3,
+    "stddev_transit_seconds": 1239.4,
+    "sample_count": 116,
+    "avg_speed_kmh": 8.17,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_08",
+    "camera_to": "CAM_07",
+    "distance_km": 6.5,
+    "mean_transit_seconds": 3179.7,
+    "stddev_transit_seconds": 801.0,
+    "sample_count": 115,
+    "avg_speed_kmh": 7.62,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_05",
+    "camera_to": "CAM_06",
+    "distance_km": 2.6,
+    "mean_transit_seconds": 1782.7,
+    "stddev_transit_seconds": 2744.1,
+    "sample_count": 91,
+    "avg_speed_kmh": 5.47,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_08",
+    "camera_to": "CAM_06",
+    "distance_km": 3.1,
+    "mean_transit_seconds": 6803.5,
+    "stddev_transit_seconds": 176.8,
+    "sample_count": 86,
+    "avg_speed_kmh": 1.57,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_06",
+    "camera_to": "CAM_04",
+    "distance_km": 2.3,
+    "mean_transit_seconds": 6723.1,
+    "stddev_transit_seconds": 244.0,
+    "sample_count": 79,
+    "avg_speed_kmh": 1.21,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_04",
+    "camera_to": "CAM_01",
+    "distance_km": 2.4,
+    "mean_transit_seconds": 380.0,
+    "stddev_transit_seconds": 30.0,
+    "sample_count": 62,
+    "avg_speed_kmh": 22.15,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_01",
+    "camera_to": "CAM_07",
+    "distance_km": 3.4,
+    "mean_transit_seconds": 4067.6,
+    "stddev_transit_seconds": 1897.8,
+    "sample_count": 28,
+    "avg_speed_kmh": 3.0,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_01",
+    "camera_to": "CAM_08",
+    "distance_km": 5.18,
+    "mean_transit_seconds": 1721.7,
+    "stddev_transit_seconds": 138.4,
+    "sample_count": 22,
+    "avg_speed_kmh": 10.83,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_05",
+    "camera_to": "CAM_03",
+    "distance_km": 9.34,
+    "mean_transit_seconds": 5578.4,
+    "stddev_transit_seconds": 2463.6,
+    "sample_count": 20,
+    "avg_speed_kmh": 6.03,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_02",
+    "camera_to": "CAM_01",
+    "distance_km": 1.17,
+    "mean_transit_seconds": 3377.4,
+    "stddev_transit_seconds": 166.7,
+    "sample_count": 18,
+    "avg_speed_kmh": 1.25,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_02",
+    "camera_to": "CAM_08",
+    "distance_km": 6.22,
+    "mean_transit_seconds": 5057.4,
+    "stddev_transit_seconds": 166.7,
+    "sample_count": 18,
+    "avg_speed_kmh": 4.43,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_03",
+    "camera_to": "CAM_02",
+    "distance_km": 0.98,
+    "mean_transit_seconds": 3377.4,
+    "stddev_transit_seconds": 166.7,
+    "sample_count": 18,
+    "avg_speed_kmh": 1.04,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_04",
+    "camera_to": "CAM_03",
+    "distance_km": 4.46,
+    "mean_transit_seconds": 3377.4,
+    "stddev_transit_seconds": 166.7,
+    "sample_count": 18,
+    "avg_speed_kmh": 4.75,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_07",
+    "camera_to": "CAM_06",
+    "distance_km": 7.34,
+    "mean_transit_seconds": 3548.4,
+    "stddev_transit_seconds": 558.9,
+    "sample_count": 18,
+    "avg_speed_kmh": 7.45,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_03",
+    "camera_to": "CAM_01",
+    "distance_km": 2.15,
+    "mean_transit_seconds": 6741.0,
+    "stddev_transit_seconds": 231.5,
+    "sample_count": 16,
+    "avg_speed_kmh": 1.15,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_04",
+    "camera_to": "CAM_02",
+    "distance_km": 3.48,
+    "mean_transit_seconds": 6741.0,
+    "stddev_transit_seconds": 231.5,
+    "sample_count": 16,
+    "avg_speed_kmh": 1.86,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_05",
+    "camera_to": "CAM_04",
+    "distance_km": 4.9,
+    "mean_transit_seconds": 3370.5,
+    "stddev_transit_seconds": 176.8,
+    "sample_count": 16,
+    "avg_speed_kmh": 5.23,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_06",
+    "camera_to": "CAM_05",
+    "distance_km": 2.71,
+    "mean_transit_seconds": 3370.5,
+    "stddev_transit_seconds": 176.8,
+    "sample_count": 16,
+    "avg_speed_kmh": 2.89,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_07",
+    "camera_to": "CAM_05",
+    "distance_km": 10.01,
+    "mean_transit_seconds": 6723.1,
+    "stddev_transit_seconds": 244.0,
+    "sample_count": 14,
+    "avg_speed_kmh": 5.36,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_01",
+    "camera_to": "CAM_06",
+    "distance_km": 4.51,
+    "mean_transit_seconds": 5179.0,
+    "stddev_transit_seconds": 1218.8,
+    "sample_count": 6,
+    "avg_speed_kmh": 3.13,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_05",
+    "camera_to": "CAM_02",
+    "distance_km": 8.37,
+    "mean_transit_seconds": 2574.5,
+    "stddev_transit_seconds": 2099.4,
+    "sample_count": 4,
+    "avg_speed_kmh": 11.7,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_06",
+    "camera_to": "CAM_02",
+    "distance_km": 5.68,
+    "mean_transit_seconds": 2373.5,
+    "stddev_transit_seconds": 2324.3,
+    "sample_count": 4,
+    "avg_speed_kmh": 8.61,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_06",
+    "camera_to": "CAM_03",
+    "distance_km": 6.65,
+    "mean_transit_seconds": 727.0,
+    "stddev_transit_seconds": 202.2,
+    "sample_count": 4,
+    "avg_speed_kmh": 32.95,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_05",
+    "camera_to": "CAM_01",
+    "distance_km": 7.2,
+    "mean_transit_seconds": 940.0,
+    "stddev_transit_seconds": 30.0,
+    "sample_count": 2,
+    "avg_speed_kmh": 27.58,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_05",
+    "camera_to": "CAM_07",
+    "distance_km": 10.01,
+    "mean_transit_seconds": 1513.0,
+    "stddev_transit_seconds": 30.0,
+    "sample_count": 2,
+    "avg_speed_kmh": 23.81,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_06",
+    "camera_to": "CAM_07",
+    "distance_km": 7.34,
+    "mean_transit_seconds": 1153.0,
+    "stddev_transit_seconds": 30.0,
+    "sample_count": 2,
+    "avg_speed_kmh": 22.91,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_01",
+    "camera_to": "CAM_03",
+    "distance_km": 2.15,
+    "mean_transit_seconds": 290.0,
+    "stddev_transit_seconds": 30.0,
+    "sample_count": 2,
+    "avg_speed_kmh": 26.68,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_02",
+    "camera_to": "CAM_06",
+    "distance_km": 5.68,
+    "mean_transit_seconds": 3856.0,
+    "stddev_transit_seconds": 30.0,
+    "sample_count": 2,
+    "avg_speed_kmh": 5.3,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_02",
+    "camera_to": "CAM_07",
+    "distance_km": 2.75,
+    "mean_transit_seconds": 423.0,
+    "stddev_transit_seconds": 30.0,
+    "sample_count": 2,
+    "avg_speed_kmh": 23.43,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_03",
+    "camera_to": "CAM_05",
+    "distance_km": 9.34,
+    "mean_transit_seconds": 7149.0,
+    "stddev_transit_seconds": 30.0,
+    "sample_count": 2,
+    "avg_speed_kmh": 4.71,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_03",
+    "camera_to": "CAM_06",
+    "distance_km": 6.65,
+    "mean_transit_seconds": 3716.0,
+    "stddev_transit_seconds": 30.0,
+    "sample_count": 2,
+    "avg_speed_kmh": 6.45,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_03",
+    "camera_to": "CAM_07",
+    "distance_km": 2.45,
+    "mean_transit_seconds": 283.0,
+    "stddev_transit_seconds": 30.0,
+    "sample_count": 2,
+    "avg_speed_kmh": 31.21,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_04",
+    "camera_to": "CAM_06",
+    "distance_km": 2.26,
+    "mean_transit_seconds": 6819.0,
+    "stddev_transit_seconds": 30.0,
+    "sample_count": 2,
+    "avg_speed_kmh": 1.19,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_04",
+    "camera_to": "CAM_07",
+    "distance_km": 5.51,
+    "mean_transit_seconds": 3386.0,
+    "stddev_transit_seconds": 30.0,
+    "sample_count": 2,
+    "avg_speed_kmh": 5.86,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_06",
+    "camera_to": "CAM_08",
+    "distance_km": 2.97,
+    "mean_transit_seconds": 4599.0,
+    "stddev_transit_seconds": 30.0,
+    "sample_count": 2,
+    "avg_speed_kmh": 2.32,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_08",
+    "camera_to": "CAM_01",
+    "distance_km": 5.18,
+    "mean_transit_seconds": 6765.0,
+    "stddev_transit_seconds": 30.0,
+    "sample_count": 2,
+    "avg_speed_kmh": 2.76,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_08",
+    "camera_to": "CAM_02",
+    "distance_km": 6.22,
+    "mean_transit_seconds": 3332.0,
+    "stddev_transit_seconds": 30.0,
+    "sample_count": 2,
+    "avg_speed_kmh": 6.72,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_07",
+    "camera_to": "CAM_01",
+    "distance_km": 3.4,
+    "mean_transit_seconds": 5865.0,
+    "stddev_transit_seconds": 30.0,
+    "sample_count": 2,
+    "avg_speed_kmh": 2.08,
+    "source": "observed"
+  },
+  {
+    "camera_from": "CAM_07",
+    "camera_to": "CAM_02",
+    "distance_km": 2.75,
+    "mean_transit_seconds": 2432.0,
+    "stddev_transit_seconds": 30.0,
+    "sample_count": 2,
+    "avg_speed_kmh": 4.08,
+    "source": "observed"
+  }
+]
