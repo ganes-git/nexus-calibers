@@ -28,7 +28,7 @@ class TrajectoryView {
         <div class="print-subtitle mono" id="print-evidence-meta"></div>
       </div>
 
-      <div class="card">
+      <div class="card" style="margin-bottom: 14px;">
         <div class="card-title">Trajectory Query &amp; Forensic Reconstruction</div>
         <form id="traj-form" class="form-row">
           <input type="text" id="plate-query-input" class="input-text" list="target-plate-suggestions"
@@ -53,50 +53,54 @@ class TrajectoryView {
         </form>
       </div>
 
-      <div class="card">
-        <div class="card-title">
-          <span>Spatial Path Map &amp; Real-Time Playback</span>
-          <div style="display: flex; align-items: center; gap: 10px;">
-            <span id="traj-meta" class="mono text-muted" style="font-size: 11px;"></span>
+      <div class="traj-workspace-grid">
+        <!-- Left Column: Map & Playback Controls -->
+        <div class="card" style="margin-bottom: 0; display: flex; flex-direction: column;">
+          <div class="card-title">
+            <span>Spatial Path Map &amp; Real-Time Playback</span>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span id="traj-meta" class="mono text-muted" style="font-size: 11px;"></span>
+            </div>
           </div>
+
+          <!-- Interactive Simulation Toolbar -->
+          <div id="traj-sim-bar" style="display:none; align-items:center; gap:8px; background:var(--surface-color); padding:8px 12px; border:1px solid var(--border-color); border-radius:4px; margin-bottom:10px; flex-wrap:wrap;">
+            <button id="btn-sim-play" type="button" class="btn-action" style="font-size:11px; padding:4px 10px;" onclick="window.TrajectoryView.togglePlay()">▶ Play Simulation</button>
+            <button type="button" class="btn-secondary" style="font-size:11px; padding:4px 8px;" onclick="window.TrajectoryView.resetSim()">⏹ Reset</button>
+            
+            <div style="display:flex; align-items:center; gap:6px; margin-left:6px;">
+              <label for="sim-scrubber" class="mono text-muted" style="font-size:11px;">Hop:</label>
+              <input id="sim-scrubber" type="range" min="0" max="0" value="0" style="width:120px; cursor:pointer;" oninput="window.TrajectoryView.scrubTo(this.value)" />
+              <span id="sim-hop-label" class="mono" style="font-size:11px; font-weight:700;">1 / 1</span>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:6px; margin-left:auto;">
+              <span class="mono text-muted" style="font-size:11px;">Speed:</span>
+              <select id="sim-speed-select" class="input-text" style="padding:2px 6px; font-size:11px;" onchange="window.TrajectoryView.setSpeed(this.value)">
+                <option value="1500">1x (Normal)</option>
+                <option value="800" selected>2x (Fast)</option>
+                <option value="350">4x (Rapid)</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="traj-map" class="map-container" style="height:440px; margin-bottom:0;"></div>
         </div>
 
-        <!-- Interactive Simulation Toolbar -->
-        <div id="traj-sim-bar" style="display:none; align-items:center; gap:10px; background:var(--surface-color); padding:8px 12px; border:1px solid var(--border-color); border-radius:5px; margin-bottom:10px; flex-wrap:wrap;">
-          <button id="btn-sim-play" class="btn-action" style="font-size:11px; padding:4px 10px;" onclick="window.TrajectoryView.togglePlay()">▶ Play Simulation</button>
-          <button class="btn-secondary" style="font-size:11px; padding:4px 8px;" onclick="window.TrajectoryView.resetSim()">⏹ Reset</button>
-          
-          <div style="display:flex; align-items:center; gap:6px; margin-left:6px;">
-            <label for="sim-scrubber" class="mono text-muted" style="font-size:11px;">Hop:</label>
-            <input id="sim-scrubber" type="range" min="0" max="0" value="0" style="width:140px; cursor:pointer;" oninput="window.TrajectoryView.scrubTo(this.value)" />
-            <span id="sim-hop-label" class="mono" style="font-size:11px; font-weight:700;">1 / 1</span>
+        <!-- Right Column: Evidence Trail Table with Independent Scroll -->
+        <div class="card" style="margin-bottom: 0; display: flex; flex-direction: column;">
+          <div class="card-title">
+            <span>Per-Hop Identity Evidence</span>
+            <div class="toolbar-row" style="margin-bottom:0;">
+              <button class="btn-secondary" id="btn-export-evidence" type="button"
+                onclick="window.TrajectoryView.exportEvidence()" disabled>
+                ⎙ Export PDF
+              </button>
+            </div>
           </div>
-
-          <div style="display:flex; align-items:center; gap:6px; margin-left:auto;">
-            <span class="mono text-muted" style="font-size:11px;">Speed:</span>
-            <select id="sim-speed-select" class="input-text" style="padding:2px 6px; font-size:11px;" onchange="window.TrajectoryView.setSpeed(this.value)">
-              <option value="1500">1x (Normal)</option>
-              <option value="800" selected>2x (Fast)</option>
-              <option value="350">4x (Rapid)</option>
-            </select>
+          <div id="traj-table-container" style="flex:1; overflow-y:auto; max-height:490px; border-radius:4px;">
+            <div class="state-box">Enter a license plate or sighting ID above to reconstruct trajectory.</div>
           </div>
-        </div>
-
-        <div id="traj-map" class="map-container"></div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">
-          <span>Per-Hop Identity-Fusion Evidence Trail</span>
-          <div class="toolbar-row" style="margin-bottom:0;">
-            <button class="btn-secondary" id="btn-export-evidence"
-              onclick="window.TrajectoryView.exportEvidence()" disabled>
-              ⎙ Export Evidence PDF
-            </button>
-          </div>
-        </div>
-        <div id="traj-table-container">
-          <div class="state-box">Enter a license plate or sighting ID above to reconstruct trajectory.</div>
         </div>
       </div>
     `;
@@ -115,7 +119,11 @@ class TrajectoryView {
     const mapEl = document.getElementById('traj-map');
     if (!mapEl || !window.L) return;
 
-    this.map = L.map('traj-map', { attributionControl: false }).setView([13.0450, 80.2450], 12);
+    this.map = L.map('traj-map', {
+      attributionControl: false,
+      scrollWheelZoom: true,
+      keyboard: false
+    }).setView([13.0450, 80.2450], 12);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(this.map);
     this.markersLayer = L.layerGroup().addTo(this.map);
   }
@@ -197,7 +205,7 @@ class TrajectoryView {
       latlngs.push(pos);
       const color = hop.anomaly_badge ? '#C98A1E' : '#2F5233';
       const marker = L.circleMarker(pos, {
-        radius: 8, color, fillColor: color, fillOpacity: 0.9, weight: 2
+        radius: 8, color, fillColor: color, fillOpacity: 0.9, weight: 2, keyboard: false
       });
       marker.bindPopup(`
         <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; line-height: 1.5;">
@@ -209,7 +217,7 @@ class TrajectoryView {
           <strong>Composite Score:</strong> ${(hop.composite_score * 100).toFixed(1)}%
           ${hop.anomaly_detail ? `<br/><span style="color:#B3262A; font-weight:700;">${hop.anomaly_detail}</span>` : ''}
         </div>
-      `);
+      `, { autoPan: false });
       marker.hopIndex = idx;
       this.markersLayer.addLayer(marker);
     });
@@ -217,7 +225,7 @@ class TrajectoryView {
     if (latlngs.length > 1) {
       this.polyline = L.polyline(latlngs, { color: '#2F5233', weight: 3.5, dashArray: '6, 6', opacity: 0.85 }).addTo(this.map);
     }
-    this.map.fitBounds(L.latLngBounds(latlngs), { padding: [45, 45] });
+    this.map.fitBounds(L.latLngBounds(latlngs), { padding: [45, 45], animate: false });
   }
 
   _setupSimulationControls(hops) {
@@ -300,7 +308,7 @@ class TrajectoryView {
     if (scrubber) scrubber.value = idx;
     if (hopLabel) hopLabel.textContent = `${idx + 1} / ${this._lastData.length}`;
 
-    // Highlight row in table (without forcing page scroll)
+    // Highlight row in table (pure CSS color highlight, absolutely no scroll triggering)
     document.querySelectorAll('.expandable-row').forEach((r, rIdx) => {
       if (rIdx === idx) {
         r.style.backgroundColor = '#E2DDD3';
@@ -317,7 +325,7 @@ class TrajectoryView {
         iconSize: [28, 28],
         iconAnchor: [14, 14]
       });
-      this.simMarker = L.marker(pos, { icon: carIcon, zIndexOffset: 1000 }).addTo(this.map);
+      this.simMarker = L.marker(pos, { icon: carIcon, zIndexOffset: 1000, keyboard: false }).addTo(this.map);
     } else {
       this.simMarker.setLatLng(pos);
     }
@@ -326,7 +334,7 @@ class TrajectoryView {
   focusHopOnMap(idx) {
     if (!this._lastData || !this._lastData[idx] || !this.map) return;
     const hop = this._lastData[idx];
-    this.map.setView([hop.lat, hop.lon], 14, { animate: true });
+    this.map.panTo([hop.lat, hop.lon], { animate: true });
     this.updateSimPosition(idx);
   }
 
@@ -341,7 +349,7 @@ class TrajectoryView {
       const vtypeIcon = VTYPE_ICONS[vtype] || '🚘';
 
       const plateBadge = isUnconfirmed
-        ? '<span class="badge badge-warning">PLATE UNCONFIRMED</span>'
+        ? '<span class="badge badge-warning">UNCONFIRMED</span>'
         : `<span class="mono" style="font-weight:700;">${h.plate_text || '—'}</span>`;
 
       const statusBadge = hasAnomaly
@@ -354,7 +362,6 @@ class TrajectoryView {
 
       rowsHtml += `
         <tr class="expandable-row ${hasAnomaly ? 'highlighted' : ''}"
-          onmouseenter="window.TrajectoryView.focusHopOnMap(${idx})"
           onclick="window.TrajectoryView.toggleDetail(${idx})">
           <td class="mono">#${idx + 1}</td>
           <td class="mono" style="font-weight:700;">${h.camera_id}</td>
@@ -364,14 +371,18 @@ class TrajectoryView {
           <td class="mono">${speedCell}</td>
           <td class="mono">${(h.composite_score * 100).toFixed(1)}%</td>
           <td>${statusBadge}</td>
+          <td>
+            <button class="btn-secondary" type="button" style="font-size:10px; padding:2px 6px; font-family:var(--font-mono);"
+              onclick="event.stopPropagation(); window.TrajectoryView.focusHopOnMap(${idx})">🎯 Pan</button>
+          </td>
         </tr>
         <tr id="hop-detail-${idx}" style="display:none;">
-          <td colspan="8">
+          <td colspan="9">
             <div class="reason-detail">
               <strong>Evidence Breakdown:</strong> ${h.explanation}<br/>
               ${h.distance_km > 0 ? `Distance: ${h.distance_km} km &nbsp;|&nbsp; Speed: ${speedCell}<br/>` : ''}
               Plate Match: ${(h.plate_score * 100).toFixed(1)}% &nbsp;|&nbsp;
-              Visual Embedding Sim: ${(h.visual_score * 100).toFixed(1)}% &nbsp;|&nbsp;
+              Visual Sim: ${(h.visual_score * 100).toFixed(1)}% &nbsp;|&nbsp;
               Transit Plausibility: ${(h.transit_score * 100).toFixed(1)}%
               ${h.anomaly_detail ? `<br/><strong class="text-critical">Deviation:</strong> ${h.anomaly_detail}` : ''}
             </div>
@@ -386,12 +397,13 @@ class TrajectoryView {
             <tr>
               <th>Hop</th>
               <th>Camera</th>
-              <th>Timestamp</th>
+              <th>Time</th>
               <th>Plate</th>
               <th>Vehicle</th>
               <th>Speed</th>
-              <th>Composite</th>
+              <th>Score</th>
               <th>Status</th>
+              <th>Focus</th>
             </tr>
           </thead>
           <tbody>${rowsHtml}</tbody>

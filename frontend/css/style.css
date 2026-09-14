@@ -962,6 +962,20 @@ body {
   filter: grayscale(0.2) contrast(1.05);
 }
 
+/* Trajectory Split Workspace */
+.traj-workspace-grid {
+  display: grid;
+  grid-template-columns: 1.12fr 1fr;
+  gap: 16px;
+  align-items: stretch;
+}
+
+@media (max-width: 1080px) {
+  .traj-workspace-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ════════════════════════════════════════════
    TACTICAL RESPONSIVE STATE BOXES
 ════════════════════════════════════════════ */
