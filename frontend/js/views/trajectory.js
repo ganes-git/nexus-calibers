@@ -300,11 +300,10 @@ class TrajectoryView {
     if (scrubber) scrubber.value = idx;
     if (hopLabel) hopLabel.textContent = `${idx + 1} / ${this._lastData.length}`;
 
-    // Highlight row in table
+    // Highlight row in table (without forcing page scroll)
     document.querySelectorAll('.expandable-row').forEach((r, rIdx) => {
       if (rIdx === idx) {
         r.style.backgroundColor = '#E2DDD3';
-        r.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       } else {
         r.style.backgroundColor = '';
       }
@@ -322,8 +321,6 @@ class TrajectoryView {
     } else {
       this.simMarker.setLatLng(pos);
     }
-
-    this.map.panTo(pos);
   }
 
   focusHopOnMap(idx) {
