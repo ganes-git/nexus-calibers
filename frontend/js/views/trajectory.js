@@ -139,7 +139,7 @@ class TrajectoryView {
     this.stopSim();
     const tableContainer = document.getElementById('traj-table-container');
     const metaEl = document.getElementById('traj-meta');
-    tableContainer.innerHTML = '<div class="state-box state-loading">Querying sightings and calculating per-hop fusion scores...</div>';
+    tableContainer.innerHTML = '<div class="state-box state-loading">Executing multi-node sighting query &amp; computing identity fusion weights...</div>';
     if (metaEl) metaEl.textContent = '';
 
     const role = document.getElementById('role-selector')?.value || 'operator';
@@ -150,7 +150,12 @@ class TrajectoryView {
       document.getElementById('offline-banner').classList.remove('visible');
 
       if (!data || data.length === 0) {
-        tableContainer.innerHTML = '<div class="state-box">No trajectory found for this query.</div>';
+        tableContainer.innerHTML = `
+          <div class="state-box">
+            <div style="font-size:16px;">⚠️</div>
+            <strong>No Sighting Records Found</strong>
+            <span class="mono text-muted" style="font-size:11px;">No optical detections or transit timestamps were registered for "${query}".</span>
+          </div>`;
         if (this.markersLayer) this.markersLayer.clearLayers();
         if (this.polyline) { this.map.removeLayer(this.polyline); this.polyline = null; }
         document.getElementById('traj-sim-bar').style.display = 'none';
