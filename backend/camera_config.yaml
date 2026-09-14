@@ -1,0 +1,83 @@
+# ============================================================
+# camera_config.yaml — City ANPR Camera Registry
+# Each block defines one physical ANPR/CCTV camera node.
+# Edit rtsp_url, user, and password for each real camera.
+# Run:  py -3.13 backend/ingest_service.py
+# ============================================================
+
+# Global ingest settings
+ingest:
+  sample_interval_seconds: 2       # Grab a frame every N seconds per camera
+  ocr_engine: easyocr              # 'easyocr' or 'tesseract'
+  min_plate_confidence: 0.55       # Drop readings below this score
+  save_snapshots: true             # Save cropped plate images to data/snapshots/
+  max_workers: 8                   # Max parallel camera threads
+
+cameras:
+  # ── Zone 1 — Anna Salai Corridor ─────────────────────────
+  - camera_id: CAM_01
+    name: "Anna Salai / Gemini Flyover"
+    rtsp_url: "rtsp://admin:PASSWORD@192.168.1.101:554/stream1"
+    lat: 13.0522
+    lon: 80.2467
+    zone_id: Z1
+    enabled: false     # Set to true once camera IP is configured
+
+  - camera_id: CAM_02
+    name: "Thousand Lights / Museum Rd"
+    rtsp_url: "rtsp://admin:PASSWORD@192.168.1.102:554/stream1"
+    lat: 13.0577
+    lon: 80.2497
+    zone_id: Z1
+    enabled: false
+
+  # ── Zone 2 — Marina & Fort ───────────────────────────────
+  - camera_id: CAM_03
+    name: "Spencers Plaza / Anna Salai"
+    rtsp_url: "rtsp://admin:PASSWORD@192.168.1.103:554/stream1"
+    lat: 13.0620
+    lon: 80.2601
+    zone_id: Z2
+    enabled: false
+
+  - camera_id: CAM_07
+    name: "Marina / Kamarajar Salai"
+    rtsp_url: "rtsp://admin:PASSWORD@192.168.1.107:554/stream1"
+    lat: 13.0540
+    lon: 80.2820
+    zone_id: Z2
+    enabled: false
+
+  # ── Zone 3 — T-Nagar & Madhya Kailash ───────────────────
+  - camera_id: CAM_04
+    name: "Panagal Park / T Nagar"
+    rtsp_url: "rtsp://admin:PASSWORD@192.168.1.104:554/stream1"
+    lat: 13.0397
+    lon: 80.2325
+    zone_id: Z3
+    enabled: false
+
+  - camera_id: CAM_08
+    name: "Madhya Kailash / 200 Ft Rd"
+    rtsp_url: "rtsp://admin:PASSWORD@192.168.1.108:554/stream1"
+    lat: 13.0102
+    lon: 80.2457
+    zone_id: Z3
+    enabled: false
+
+  # ── Zone 4 — Guindy & Saidapet ───────────────────────────
+  - camera_id: CAM_05
+    name: "Guindy Junction / GST Rd"
+    rtsp_url: "rtsp://admin:PASSWORD@192.168.1.105:554/stream1"
+    lat: 13.0070
+    lon: 80.2093
+    zone_id: Z4
+    enabled: false
+
+  - camera_id: CAM_06
+    name: "Saidapet / Maraimalai Nagar Rd"
+    rtsp_url: "rtsp://admin:PASSWORD@192.168.1.106:554/stream1"
+    lat: 13.0227
+    lon: 80.2210
+    zone_id: Z4
+    enabled: false

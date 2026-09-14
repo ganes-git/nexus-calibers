@@ -30,9 +30,15 @@ def init_db():
         plate_text TEXT,
         plate_confidence REAL,
         embedding TEXT NOT NULL,
-        snapshot_path TEXT
+        snapshot_path TEXT,
+        vehicle_type TEXT DEFAULT 'UNKNOWN'
     );
     """)
+    # Migration: add vehicle_type if missing
+    try:
+        cursor.execute("ALTER TABLE sightings ADD COLUMN vehicle_type TEXT DEFAULT 'UNKNOWN'")
+    except Exception:
+        pass
 
     # 2. blacklist
     cursor.execute("""
@@ -85,22 +91,64 @@ def init_db():
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS alerts (
         alert_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        alert_type TEXT CHECK(alert_type IN ('clone', 'impossible_transit', 'blacklist', 'zone_deviation', 'route_anomaly')),
+        alert_type TEXT CHECK(alert_type IN ('clone', 'impossible_transit', 'blacklist', 'zone_deviation', 'route_anomaly', 'convoy')),
         sighting_id_a INTEGER NOT NULL,
         sighting_id_b INTEGER,
         detail_text TEXT NOT NULL,
         created_at DATETIME NOT NULL,
+        severity TEXT DEFAULT 'MEDIUM',
+        acknowledged INTEGER DEFAULT 0,
+        acknowledged_by TEXT,
+        acknowledged_at DATETIME,
         FOREIGN KEY (sighting_id_a) REFERENCES sightings(sighting_id),
         FOREIGN KEY (sighting_id_b) REFERENCES sightings(sighting_id)
+    );
+    """)
+    # Migrations for alerts table
+    for col_def in [
+        ("severity", "TEXT DEFAULT 'MEDIUM'"),
+        ("acknowledged", "INTEGER DEFAULT 0"),
+        ("acknowledged_by", "TEXT"),
+        ("acknowledged_at", "DATETIME"),
+    ]:
+        try:
+            cursor.execute(f"ALTER TABLE alerts ADD COLUMN {col_def[0]} {col_def[1]}")
+        except Exception:
+            pass
+
+    # 7. cameras — physical camera registry for health tracking
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS cameras (
+        camera_id TEXT PRIMARY KEY,
+        name TEXT NOT NULL,
+        lat REAL NOT NULL,
+        lon REAL NOT NULL,
+        zone_id TEXT,
+        rtsp_url TEXT,
+        enabled INTEGER DEFAULT 1,
+        last_seen DATETIME,
+        sightings_today INTEGER DEFAULT 0,
+        status TEXT DEFAULT 'OFFLINE'
     );
     """)
 
     # Indexes per SCHEMA.md
     cursor.execute("CREATE INDEX IF NOT EXISTS idx_sightings_cam_time ON sightings(camera_id, timestamp);")
     cursor.execute("CREATE INDEX IF NOT EXISTS idx_alerts_created_at ON alerts(created_at);")
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_sightings_plate ON sightings(plate_text);")
 
     conn.commit()
     conn.close()
+
+# Severity map for alert types — authoritative lookup used by baseline.py and main.py
+ALERT_SEVERITY_MAP = {
+    'clone':              'CRITICAL',
+    'blacklist':          'CRITICAL',
+    'impossible_transit': 'HIGH',
+    'convoy':             'HIGH',
+    'zone_deviation':     'MEDIUM',
+    'route_anomaly':      'MEDIUM',
+}
 
 def seed_static_metadata():
     conn = get_db_connection()
@@ -154,6 +202,23 @@ def seed_static_metadata():
             (camera_from, camera_to, distance_km, mean_transit_seconds, stddev_transit_seconds, sample_count, avg_speed_kmh, source, updated_at)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (c_from, c_to, dist, mean_t, stddev_t, count, round(avg_speed, 2), src, now))
+
+    # Seed Camera Registry — 8 Chennai ANPR node positions
+    camera_rows = [
+        ("CAM_01", "Anna Salai / Gemini Flyover",        13.0522, 80.2467, "Z1"),
+        ("CAM_02", "Thousand Lights / Museum Rd",        13.0577, 80.2497, "Z1"),
+        ("CAM_03", "Spencers Plaza / Anna Salai",        13.0620, 80.2601, "Z2"),
+        ("CAM_04", "Panagal Park / T Nagar",             13.0397, 80.2325, "Z3"),
+        ("CAM_05", "Guindy Junction / GST Rd",           13.0070, 80.2093, "Z4"),
+        ("CAM_06", "Saidapet / Maraimalai Nagar Rd",    13.0227, 80.2210, "Z4"),
+        ("CAM_07", "Marina / Kamarajar Salai",           13.0540, 80.2820, "Z2"),
+        ("CAM_08", "Madhya Kailash / 200 Ft Rd",        13.0102, 80.2457, "Z3"),
+    ]
+    for cam_id, name, lat, lon, zone_id in camera_rows:
+        cursor.execute("""
+            INSERT OR IGNORE INTO cameras (camera_id, name, lat, lon, zone_id, enabled, status)
+            VALUES (?, ?, ?, ?, ?, 1, 'DEMO')
+        """, (cam_id, name, lat, lon, zone_id))
 
     conn.commit()
     conn.close()

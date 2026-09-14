@@ -17,7 +17,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
 
-from database import get_db_connection, init_db
+from database import get_db_connection, init_db, seed_static_metadata, ALERT_SEVERITY_MAP
 from match import fuse_sighting_pair, calculate_haversine_km
 from baseline import scan_all_alerts, recompute_corridor_baselines
 
@@ -62,6 +62,7 @@ def favicon():
 @app.on_event("startup")
 def on_startup():
     init_db()
+    seed_static_metadata()
 
 # 1. Health
 @app.get("/api/health")
@@ -290,14 +291,28 @@ def check_blacklist(
 
 # 8. Alerts
 @app.get("/api/alerts")
-def get_alerts():
+def get_alerts(
+    severity: Optional[str] = Query(None),
+    unacknowledged_only: bool = Query(False)
+):
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("""
-        SELECT alert_id, alert_type, sighting_id_a, sighting_id_b, detail_text, created_at
+    query = """
+        SELECT alert_id, alert_type, sighting_id_a, sighting_id_b, detail_text, created_at,
+               severity, acknowledged, acknowledged_by, acknowledged_at
         FROM alerts
-        ORDER BY alert_id DESC
-    """)
+    """
+    conditions = []
+    params = []
+    if severity:
+        conditions.append("severity = ?")
+        params.append(severity.upper())
+    if unacknowledged_only:
+        conditions.append("acknowledged = 0")
+    if conditions:
+        query += " WHERE " + " AND ".join(conditions)
+    query += " ORDER BY alert_id DESC"
+    cursor.execute(query, params)
     rows = cursor.fetchall()
     conn.close()
     return [dict(r) for r in rows]
@@ -328,11 +343,139 @@ def get_unseen_alerts(since_id: Optional[int] = Query(0)):
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("""
-        SELECT alert_id, alert_type, detail_text, created_at
+        SELECT alert_id, alert_type, detail_text, created_at, severity
         FROM alerts
         WHERE alert_id > ?
         ORDER BY alert_id ASC
     """, (since_id or 0,))
+    rows = cursor.fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+# 12. Acknowledge Alert
+@app.patch("/api/alerts/{alert_id}/acknowledge")
+def acknowledge_alert(alert_id: int, acknowledged_by: str = Query("operator")):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    now = datetime.now().isoformat()
+    cursor.execute(
+        "UPDATE alerts SET acknowledged = 1, acknowledged_by = ?, acknowledged_at = ? WHERE alert_id = ?",
+        (acknowledged_by, now, alert_id)
+    )
+    if cursor.rowcount == 0:
+        conn.close()
+        raise HTTPException(status_code=404, detail="Alert not found")
+    conn.commit()
+    conn.close()
+    return {"alert_id": alert_id, "acknowledged": True, "acknowledged_by": acknowledged_by}
+
+# 13. Camera Status
+@app.get("/api/cameras")
+def get_cameras():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    today_str = datetime.now().strftime("%Y-%m-%d")
+    # Count sightings today per camera
+    cursor.execute("""
+        SELECT c.camera_id, c.name, c.lat, c.lon, c.zone_id, c.rtsp_url,
+               c.enabled, c.last_seen, c.status,
+               COALESCE(s.cnt, 0) as sightings_today
+        FROM cameras c
+        LEFT JOIN (
+            SELECT camera_id, COUNT(*) as cnt
+            FROM sightings
+            WHERE timestamp >= ?
+            GROUP BY camera_id
+        ) s ON c.camera_id = s.camera_id
+        ORDER BY c.camera_id ASC
+    """, (today_str,))
+    rows = cursor.fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+# 14. Blacklist — full list
+@app.get("/api/blacklist")
+def list_blacklist():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT plate_text, reason, added_on FROM blacklist ORDER BY added_on DESC")
+    rows = cursor.fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+# 15. Blacklist — Add plate
+@app.post("/api/blacklist")
+def add_to_blacklist(plate: str = Query(...), reason: str = Query(...)):
+    clean_plate = plate.strip().upper()
+    if not clean_plate:
+        raise HTTPException(status_code=400, detail="Plate text is required")
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    now_date = datetime.now().strftime("%Y-%m-%d")
+    cursor.execute(
+        "INSERT OR REPLACE INTO blacklist (plate_text, reason, added_on) VALUES (?, ?, ?)",
+        (clean_plate, reason, now_date)
+    )
+    conn.commit()
+    conn.close()
+    return {"plate_text": clean_plate, "reason": reason, "added_on": now_date}
+
+# 16. Blacklist — Remove plate
+@app.delete("/api/blacklist/{plate}")
+def remove_from_blacklist(plate: str):
+    clean_plate = plate.strip().upper()
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM blacklist WHERE UPPER(plate_text) = ?", (clean_plate,))
+    if cursor.rowcount == 0:
+        conn.close()
+        raise HTTPException(status_code=404, detail="Plate not found in blacklist")
+    conn.commit()
+    conn.close()
+    return {"plate_text": clean_plate, "removed": True}
+
+# 17. KPI Summary Stats
+@app.get("/api/stats/summary")
+def get_summary_stats():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    today_str = datetime.now().strftime("%Y-%m-%d")
+    cursor.execute("SELECT COUNT(*) as cnt FROM sightings WHERE timestamp >= ?", (today_str,))
+    sightings_today = cursor.fetchone()["cnt"]
+    cursor.execute("SELECT COUNT(*) as cnt FROM alerts WHERE acknowledged = 0")
+    active_alerts = cursor.fetchone()["cnt"]
+    cursor.execute("SELECT COUNT(*) as cnt FROM cameras WHERE enabled = 1")
+    cameras_total = cursor.fetchone()["cnt"]
+    cursor.execute("SELECT COUNT(*) as cnt FROM cameras WHERE status IN ('ONLINE', 'DEMO')")
+    cameras_online = cursor.fetchone()["cnt"]
+    cursor.execute("""
+        SELECT COUNT(DISTINCT s.plate_text) as cnt
+        FROM sightings s
+        INNER JOIN blacklist b ON UPPER(s.plate_text) = UPPER(b.plate_text)
+        WHERE s.timestamp >= ?
+    """, (today_str,))
+    blacklist_seen = cursor.fetchone()["cnt"]
+    conn.close()
+    return {
+        "sightings_today": sightings_today,
+        "active_alerts": active_alerts,
+        "cameras_online": cameras_online,
+        "cameras_total": cameras_total,
+        "blacklist_seen_today": blacklist_seen
+    }
+
+# 18. Recent Sightings Ticker
+@app.get("/api/sightings/recent")
+def get_recent_sightings(limit: int = Query(8, ge=1, le=50)):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT sighting_id, camera_id, plate_text, timestamp, vehicle_type
+        FROM sightings
+        WHERE plate_text IS NOT NULL
+        ORDER BY sighting_id DESC
+        LIMIT ?
+    """, (limit,))
     rows = cursor.fetchall()
     conn.close()
     return [dict(r) for r in rows]

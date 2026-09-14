@@ -51,19 +51,19 @@ class HeatmapView {
   }
 
   async loadData() {
-    const tableContainer = document.getElementById("heatmap-table-container");
+    const tableContainer = document.getElementById('heatmap-table-container');
     try {
       const [heatmapData, zonesData] = await Promise.all([
-        window.dataSource.getHeatmap(),
-        window.dataSource.getZones()
+        DataSource.getHeatmap(),
+        DataSource.getZones()
       ]);
-      window.appRouter.hideOfflineBanner();
+      document.getElementById('offline-banner').classList.remove('visible');
 
       this._renderZones(zonesData);
       this._renderCameras(heatmapData);
       this._renderTable(heatmapData, zonesData, tableContainer);
     } catch (err) {
-      window.appRouter.showOfflineBanner();
+      document.getElementById('offline-banner').classList.add('visible');
       tableContainer.innerHTML = '<div class="state-box text-critical">Unable to reach the backend — check your connection.</div>';
     }
   }
@@ -184,3 +184,4 @@ class HeatmapView {
 }
 
 window.heatmapView = new HeatmapView();
+window.HeatmapView = window.heatmapView; // alias

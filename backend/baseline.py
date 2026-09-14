@@ -11,7 +11,7 @@ Directly implements corridor_baseline maintenance and all five alert types:
 import sqlite3
 import math
 from datetime import datetime
-from database import get_db_connection
+from database import get_db_connection, ALERT_SEVERITY_MAP
 from match import calculate_haversine_km, compute_plate_similarity, compute_transit_plausibility
 from embed import cosine_similarity
 
@@ -195,9 +195,50 @@ def scan_all_alerts():
                               f"Deviation is +{z_score:.2f}σ, exceeding the 3.00σ threshold.")
                     alerts_to_insert.append(('route_anomaly', s1['sighting_id'], s2['sighting_id'], detail, now))
 
+    # 4. Convoy Detection
+    # Group sightings by camera and timestamp window (5 min)
+    # If 3+ distinct plates appear at CAM_X then within 300s at CAM_Y, flag convoy
+    plates_by_sighting = {s['sighting_id']: (s.get('plate_text') or '').strip().upper() for s in sightings if s.get('plate_text')}
+    cam_windows = {}  # camera_id -> list of (timestamp, plate, sighting_id)
+    for s in sightings:
+        plate = (s.get('plate_text') or '').strip().upper()
+        if not plate:
+            continue
+        cam_id = s['camera_id']
+        ts = datetime.fromisoformat(s['timestamp'])
+        if cam_id not in cam_windows:
+            cam_windows[cam_id] = []
+        cam_windows[cam_id].append((ts, plate, s['sighting_id']))
+
+    # Build convoy groups: find sets of 3+ plates at cam_a that also appear at cam_b within window
+    cam_list = sorted(cam_windows.keys())
+    for idx in range(len(cam_list) - 1):
+        cam_a = cam_list[idx]
+        cam_b = cam_list[idx + 1]
+        entries_a = cam_windows.get(cam_a, [])
+        entries_b = cam_windows.get(cam_b, [])
+        if len(entries_a) < 3 or len(entries_b) < 3:
+            continue
+        # Find plates common to both cameras within a 5-minute window
+        for ts_a, plate_a, sid_a in entries_a:
+            group_a = {p for ts2, p, s2 in entries_a if abs((ts2 - ts_a).total_seconds()) <= 300 and p != plate_a}
+            group_a.add(plate_a)
+            if len(group_a) >= 3:
+                group_b = {p for ts2, p, s2 in entries_b if abs((ts2 - ts_a).total_seconds()) <= 600}
+                overlap = group_a & group_b
+                if len(overlap) >= 3:
+                    plates_str = ', '.join(sorted(overlap))
+                    ref_sids = [s2 for ts2, p, s2 in entries_a if p in overlap][:3]
+                    detail = (f"Convoy alert: {len(overlap)} vehicles ({plates_str}) "
+                              f"detected in formation at {cam_a} then {cam_b} within a 10-minute window. "
+                              f"Coordinated movement pattern flagged for review.")
+                    alerts_to_insert.append(('convoy', ref_sids[0], ref_sids[1] if len(ref_sids) > 1 else None, detail, now))
+                    break  # One convoy alert per camera pair
+
     # Deduplicate and insert into alerts table
     alerts_created = 0
     for alert_type, s_a, s_b, detail, created in alerts_to_insert:
+        severity = ALERT_SEVERITY_MAP.get(alert_type, 'MEDIUM')
         # Check if identical alert already exists
         cursor.execute("""
             SELECT alert_id FROM alerts 
@@ -205,9 +246,9 @@ def scan_all_alerts():
         """, (alert_type, s_a, s_b, s_b))
         if not cursor.fetchone():
             cursor.execute("""
-                INSERT INTO alerts (alert_type, sighting_id_a, sighting_id_b, detail_text, created_at)
-                VALUES (?, ?, ?, ?, ?)
-            """, (alert_type, s_a, s_b, detail, created))
+                INSERT INTO alerts (alert_type, sighting_id_a, sighting_id_b, detail_text, created_at, severity, acknowledged)
+                VALUES (?, ?, ?, ?, ?, ?, 0)
+            """, (alert_type, s_a, s_b, detail, created, severity))
             alerts_created += 1
 
     conn.commit()
