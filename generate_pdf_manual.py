@@ -408,6 +408,50 @@ def build_pdf(filename="NexusCaliber_System_Manual.pdf"):
         ('RIGHTPADDING', (0,0), (-1,-1), 6),
     ]))
     story.append(t_test)
+    story.append(Spacer(1, 14))
+
+    # ==========================================
+    # 7. SIH 2026 PROBLEM STATEMENT 127 ALIGNMENT
+    # ==========================================
+    story.append(PageBreak())
+    story.append(Paragraph("7. SIH 2026 Problem Statement 127 (BEL) Alignment", h1_style))
+    story.append(HRFlowable(width="100%", thickness=1, color=BORDER, spaceAfter=10))
+    story.append(Paragraph(
+        "<b>Problem Statement Title:</b> <i>City-Wide AI Engine for Multi-Camera ANPR Trajectory Tracking and Urban Traffic Analytics</i><br/>"
+        "<b>Organization:</b> Bharat Electronics Limited (BEL) | <b>PS Code:</b> SIH26127 / PS 127",
+        callout_style
+    ))
+    story.append(Paragraph(
+        "NexusCaliber matches 100% of the BEL SIH #127 challenge scope while introducing five proprietary innovations:",
+        body_style
+    ))
+
+    sih_align_data = [
+        ["SIH PS #127 Requirement", "NexusCaliber Implementation", "Evaluation Advantage"],
+        ["Multi-Camera Ingestion", "Threaded RTSP pipeline with buffer zeroing & auto-reconnection.", "Eliminates network streaming latency & handles packet drops."],
+        ["Cross-Camera Vehicle Re-ID", "3-Factor Identity Fusion (OCR Levenshtein + Visual Vector + Haversine Physics).", "Accurate cross-node Re-ID even with partially obscured plates."],
+        ["Indian Plate Grammar Repair", "Deterministic RTO slot regex autocorrection (e.g. TN 09 CB 1234).", "Corrects '0' vs 'O', '8' vs 'B', '1' vs 'I' misreads at edge."],
+        ["Trajectory Tracking & Playback", "Leaflet GIS map, 520px full width, Video-Player scrubber, Fullscreen Cinema Mode.", "Inspect suspect transit like reviewing a flight video with zero page scroll."],
+        ["Live Bottom Telemetry HUD", "Semi-transparent tactical HUD ('Flight Recorder') docked on map.", "Real-time streaming of active corridor, speed, distance, elapsed time, alert tags."],
+        ["Route & Speed Anomalies", "Historical corridor baseline modeling with IQR / Z-score deviations.", "Autonomous speeding and detour detection without manual threshold setting."],
+        ["Plate Cloning Detection", "Kinematic velocity validator (impossible velocity v > 180 km/h).", "Immediate CRITICAL alert for stolen or cloned vehicle plates."],
+        ["Convoy Formation Detector", "Clustering 3+ vehicles traversing 2+ sequential checkpoints within 10 min.", "Identifies coordinated criminal, smuggling, or VIP convoy groups."],
+        ["Traffic Flow Analytics", "Hourly corridor throughput bar charts, Congestion Index, Speed Violations table.", "City-wide bottleneck mitigation for ICCC municipal planners."],
+        ["Law Enforcement Integrity", "Officer Badge ID alert ACK logging, supervisor audit trail, CSV export.", "Court-admissible forensic accountability for police operations."]
+    ]
+    t_sih = Table([[Paragraph(c, body_style) for c in row] for row in sih_align_data], colWidths=[120, 230, 150])
+    t_sih.setStyle(TableStyle([
+        ('BACKGROUND', (0,0), (-1,0), PRIMARY),
+        ('TEXTCOLOR', (0,0), (-1,0), colors.white),
+        ('BOX', (0,0), (-1,-1), 1, BORDER),
+        ('INNERGRID', (0,0), (-1,-1), 0.5, BORDER),
+        ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.white, BG_LIGHT]),
+        ('TOPPADDING', (0,0), (-1,-1), 4),
+        ('BOTTOMPADDING', (0,0), (-1,-1), 4),
+        ('LEFTPADDING', (0,0), (-1,-1), 5),
+        ('RIGHTPADDING', (0,0), (-1,-1), 5),
+    ]))
+    story.append(t_sih)
 
     # Build Document
     doc.build(story, canvasmaker=NumberedCanvas)
