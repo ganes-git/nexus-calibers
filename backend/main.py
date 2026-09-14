@@ -480,6 +480,132 @@ def get_recent_sightings(limit: int = Query(8, ge=1, le=50)):
     conn.close()
     return [dict(r) for r in rows]
 
+# 19. External Camera / Edge AI Sighting Ingestion Endpoint
+@app.post("/api/sightings/ingest")
+async def ingest_external_sighting(request: Request):
+    """
+    Accepts real-time optical sightings from external edge ANPR devices,
+    ONVIF cameras, or Jetson compute units.
+    """
+    body = await request.json()
+    camera_id = body.get("camera_id")
+    plate_text = body.get("plate_text", "").strip().upper()
+    confidence = float(body.get("confidence", 0.95))
+    vehicle_type = body.get("vehicle_type", "SEDAN").upper()
+    lat = body.get("lat")
+    lon = body.get("lon")
+
+    if not camera_id or not plate_text:
+        raise HTTPException(status_code=400, detail="camera_id and plate_text are required")
+
+    from camera_ingest import write_sighting
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    if lat is None or lon is None:
+        cursor.execute("SELECT lat, lon FROM cameras WHERE camera_id = ?", (camera_id,))
+        cam = cursor.fetchone()
+        if cam:
+            lat = cam["lat"]
+            lon = cam["lon"]
+        else:
+            lat, lon = 13.0450, 80.2450
+
+    conn.close()
+    sighting_id = write_sighting(
+        camera_id=camera_id,
+        lat=lat,
+        lon=lon,
+        plate_text=plate_text,
+        plate_confidence=confidence,
+        vehicle_type=vehicle_type
+    )
+
+    return {
+        "status": "ingested",
+        "sighting_id": sighting_id,
+        "camera_id": camera_id,
+        "plate_text": plate_text,
+        "timestamp": datetime.now().isoformat()
+    }
+
+# 20. Live Transit Simulation Generator
+@app.post("/api/sightings/simulate-transit")
+def simulate_vehicle_transit(
+    plate_text: str = Query(..., description="Target vehicle registration"),
+    corridor_speed_kmh: float = Query(65.0, description="Transit speed in km/h"),
+    anomaly: bool = Query(False, description="Whether to simulate a route/speed anomaly")
+):
+    """Simulates a live multi-hop corridor transit for tactical demonstrations."""
+    from camera_ingest import write_sighting
+    clean_plate = plate_text.strip().upper()
+
+    CAM_SEQ = [
+        ("CAM_01", 13.0694, 80.1948),
+        ("CAM_02", 13.0067, 80.2025),
+        ("CAM_03", 13.0333, 80.2680),
+        ("CAM_04", 12.9815, 80.2180),
+    ]
+
+    sighting_ids = []
+    for idx, (cam_id, lat, lon) in enumerate(CAM_SEQ):
+        vtype = "SUV" if "SUV" in clean_plate else "SEDAN"
+        sid = write_sighting(
+            camera_id=cam_id,
+            lat=lat,
+            lon=lon,
+            plate_text=clean_plate,
+            plate_confidence=0.96,
+            vehicle_type=vtype
+        )
+        sighting_ids.append(sid)
+
+    scan_all_alerts()
+    return {
+        "status": "simulated",
+        "plate_text": clean_plate,
+        "hops_created": len(sighting_ids),
+        "sighting_ids": sighting_ids
+    }
+
+# 21. Forensic CSV Data Exporter
+@app.get("/api/export/csv")
+def export_csv(dataset: str = Query("alerts", description="alerts, sightings, or cameras")):
+    """Streams a RFC 4180 CSV file for forensic audit reporting."""
+    import csv
+    import io
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    output = io.StringIO()
+    writer = csv.writer(output)
+
+    if dataset == "alerts":
+        cursor.execute("SELECT alert_id, severity, alert_type, sighting_id_a, sighting_id_b, detail_text, created_at, acknowledged, acknowledged_by FROM alerts ORDER BY alert_id DESC")
+        rows = cursor.fetchall()
+        writer.writerow(["Alert ID", "Severity", "Type", "Sighting A", "Sighting B", "Forensic Detail", "Created At", "Acknowledged", "Acknowledged By"])
+        for r in rows:
+            writer.writerow([r["alert_id"], r["severity"], r["alert_type"], r["sighting_id_a"], r["sighting_id_b"], r["detail_text"], r["created_at"], r["acknowledged"], r["acknowledged_by"]])
+    elif dataset == "cameras":
+        cursor.execute("SELECT camera_id, name, zone_id, lat, lon, status, enabled, last_seen FROM cameras ORDER BY camera_id ASC")
+        rows = cursor.fetchall()
+        writer.writerow(["Camera ID", "Name", "Zone", "Latitude", "Longitude", "Status", "Enabled", "Last Seen"])
+        for r in rows:
+            writer.writerow([r["camera_id"], r["name"], r["zone_id"], r["lat"], r["lon"], r["status"], r["enabled"], r["last_seen"]])
+    else:
+        cursor.execute("SELECT sighting_id, camera_id, lat, lon, timestamp, plate_text, plate_confidence, vehicle_type FROM sightings ORDER BY sighting_id DESC LIMIT 500")
+        rows = cursor.fetchall()
+        writer.writerow(["Sighting ID", "Camera ID", "Latitude", "Longitude", "Timestamp", "Plate Text", "Confidence", "Vehicle Type"])
+        for r in rows:
+            writer.writerow([r["sighting_id"], r["camera_id"], r["lat"], r["lon"], r["timestamp"], r["plate_text"], r["plate_confidence"], r["vehicle_type"]])
+
+    conn.close()
+    return Response(
+        content=output.getvalue(),
+        media_type="text/csv",
+        headers={"Content-Disposition": f"attachment; filename=nexuscaliber_{dataset}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"}
+    )
+
 # Root redirection to frontend index.html
 @app.get("/")
 def read_root():

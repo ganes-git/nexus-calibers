@@ -72,6 +72,8 @@ class CamerasView {
               <button id="btn-view-table" class="filter-btn active" style="border:none; border-radius:0;" onclick="window.CamerasView.setViewMode('table')">📋 Table View</button>
               <button id="btn-view-matrix" class="filter-btn" style="border:none; border-radius:0;" onclick="window.CamerasView.setViewMode('matrix')">🎛️ Quad CCTV Matrix</button>
             </div>
+            <button class="btn-secondary" style="font-size: 11px; padding: 4px 8px;"
+              onclick="window.open('/api/export/csv?dataset=cameras', '_blank')" title="Export camera registry CSV">📥 Export CSV</button>
             <button class="btn-action" style="font-size: 11px; padding: 5px 12px;"
               onclick="window.CamerasView.loadCameras()">Refresh Registry</button>
           </div>

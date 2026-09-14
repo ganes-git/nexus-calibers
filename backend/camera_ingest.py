@@ -91,6 +91,7 @@ def get_ocr_reader():
 
 
 import re
+import time
 
 # ──────────────────────────────────────────────────────────────
 # Plate Extraction & Advanced Preprocessing
@@ -103,6 +104,54 @@ PLATE_REGEXES = [
     # Generic format: DL041234, KA534444
     re.compile(r"^[A-Z]{2}[0-9]{4,8}$"),
 ]
+
+# Character substitution lookup tables for positional OCR correction
+_LETTER_TO_DIGIT = {'O': '0', 'I': '1', 'L': '1', 'Z': '2', 'S': '5', 'B': '8', 'G': '6', 'D': '0'}
+_DIGIT_TO_LETTER = {'0': 'O', '1': 'I', '2': 'Z', '5': 'S', '8': 'B', '6': 'G'}
+
+def correct_ocr_plate_characters(raw_text: str) -> str:
+    """
+    Context-aware optical character autocorrection for Indian license plates.
+    Disambiguates lookalike characters (0 vs O, 1 vs I, 2 vs Z, 8 vs B) based on
+    grammatical position (State Code -> RTO Code -> Series -> Unique ID).
+    """
+    clean = raw_text.strip().upper().replace(" ", "").replace("-", "").replace(".", "").replace("_", "")
+    if len(clean) < 7:
+        return clean
+
+    chars = list(clean)
+    n = len(chars)
+
+    # Check for Bharat Series: 22BH1234AA
+    if n >= 9 and "".join(chars[2:4]) in ["BH", "8H", "BH"]:
+        chars[0] = _LETTER_TO_DIGIT.get(chars[0], chars[0])
+        chars[1] = _LETTER_TO_DIGIT.get(chars[1], chars[1])
+        chars[2] = 'B'
+        chars[3] = 'H'
+        for i in range(4, min(8, n)):
+            chars[i] = _LETTER_TO_DIGIT.get(chars[i], chars[i])
+        for i in range(8, n):
+            chars[i] = _DIGIT_TO_LETTER.get(chars[i], chars[i])
+        return "".join(chars)
+
+    # Standard format: State(2 letters) + District(1-2 digits) + Series(1-3 letters) + Number(4 digits)
+    # 1. State Code (Positions 0, 1) MUST be alphabetic
+    chars[0] = _DIGIT_TO_LETTER.get(chars[0], chars[0])
+    chars[1] = _DIGIT_TO_LETTER.get(chars[1], chars[1])
+
+    # 2. Last 4 characters MUST be digits
+    if n >= 8:
+        for i in range(n - 4, n):
+            chars[i] = _LETTER_TO_DIGIT.get(chars[i], chars[i])
+
+    # 3. District Code (Positions 2, 3) are digits
+    if n >= 8:
+        chars[2] = _LETTER_TO_DIGIT.get(chars[2], chars[2])
+        if chars[3].isdigit() or chars[3] in _LETTER_TO_DIGIT:
+            chars[3] = _LETTER_TO_DIGIT.get(chars[3], chars[3])
+
+    corrected = "".join(chars)
+    return corrected if is_valid_plate_format(corrected) else clean
 
 def is_valid_plate_format(text: str) -> bool:
     """Validate plate string against Indian standard and BH series formats."""
@@ -125,10 +174,74 @@ def preprocess_plate_frame(frame):
     except Exception:
         return frame
 
-def extract_plate_from_frame(frame, min_confidence: float = 0.50):
+def estimate_vehicle_color(frame) -> str:
     """
-    Run EasyOCR on a frame (with CLAHE enhancement) and return (plate_text, confidence)
-    for the highest-confidence matching license plate string.
+    Estimate dominant vehicle body color using HSV histogram analysis.
+    Returns: 'WHITE', 'BLACK', 'SILVER', 'RED', 'BLUE', 'YELLOW', or 'DARK'
+    """
+    if not CV2_AVAILABLE or frame is None:
+        return "WHITE"
+    try:
+        import cv2
+        import numpy as np
+        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+        # Exclude license plate center crop (bottom center) by sampling upper vehicle body
+        h, w, _ = frame.shape
+        sample_crop = hsv[0:int(h * 0.6), :]
+        if sample_crop.size == 0:
+            return "WHITE"
+
+        mean_h = np.mean(sample_crop[:, :, 0])
+        mean_s = np.mean(sample_crop[:, :, 1])
+        mean_v = np.mean(sample_crop[:, :, 2])
+
+        if mean_v < 45:
+            return "BLACK"
+        if mean_s < 35 and mean_v > 180:
+            return "WHITE"
+        if mean_s < 45:
+            return "SILVER"
+        if mean_h < 10 or mean_h > 170:
+            return "RED"
+        if 95 <= mean_h <= 135:
+            return "BLUE"
+        if 20 <= mean_h <= 35:
+            return "YELLOW"
+        return "WHITE"
+    except Exception:
+        return "WHITE"
+
+# ──────────────────────────────────────────────────────────────
+# In-Memory Stream Deduplicator
+# ──────────────────────────────────────────────────────────────
+class DetectionDeduplicator:
+    """Thread-safe LRU detection debouncing cache to prevent frame duplicate floods."""
+    def __init__(self, cooldown_seconds: float = 5.0):
+        self.cooldown = cooldown_seconds
+        self.last_seen = {}
+        self.lock = threading.Lock()
+
+    def should_record(self, camera_id: str, plate_text: str) -> bool:
+        key = f"{camera_id}:{plate_text.upper()}"
+        now = time.time()
+        with self.lock:
+            # Purge entries older than 60s
+            expired = [k for k, t in self.last_seen.items() if now - t > 60.0]
+            for k in expired:
+                del self.last_seen[k]
+
+            last_time = self.last_seen.get(key, 0)
+            if now - last_time >= self.cooldown:
+                self.last_seen[key] = now
+                return True
+            return False
+
+_deduplicator = DetectionDeduplicator(cooldown_seconds=4.0)
+
+def extract_plate_from_frame(frame, min_confidence: float = 0.45):
+    """
+    Run EasyOCR on a frame (with CLAHE enhancement & character autocorrection)
+    and return (plate_text, confidence) for the highest-confidence matching plate.
     Returns (None, 0.0) if no plate detected above threshold.
     """
     if not EASYOCR_AVAILABLE or frame is None:
@@ -144,7 +257,9 @@ def extract_plate_from_frame(frame, min_confidence: float = 0.50):
     for (bbox, text, conf) in results:
         if conf < min_confidence:
             continue
-        clean = text.strip().upper().replace(" ", "").replace("-", "").replace(".", "")
+        raw_clean = text.strip().upper().replace(" ", "").replace("-", "").replace(".", "")
+        # Apply intelligent character autocorrection
+        clean = correct_ocr_plate_characters(raw_clean)
         if is_valid_plate_format(clean) or (7 <= len(clean) <= 11 and clean[:2].isalpha() and clean[2:4].isdigit()):
             if conf > best_conf:
                 best_plate = clean

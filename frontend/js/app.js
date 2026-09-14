@@ -325,6 +325,17 @@ const COMMAND_ACTIONS = [
   { id: 'track_normal', title: 'Track Normal Transit (TN09CB1234)', icon: '🛰️', meta: 'Quick target', action: () => { navigateTo('trajectory'); setTimeout(() => window.TrajectoryView?.searchPreset('TN09CB1234'), 100); } },
   { id: 'track_anomaly', title: 'Track Speed Anomaly (KA03MD5522)', icon: '⚠️', meta: 'Incident target', action: () => { navigateTo('trajectory'); setTimeout(() => window.TrajectoryView?.searchPreset('KA03MD5522'), 100); } },
   { id: 'track_blacklist', title: 'Track Wanted Vehicle (TN07AX4521)', icon: '🚨', meta: 'Blacklist target', action: () => { navigateTo('trajectory'); setTimeout(() => window.TrajectoryView?.searchPreset('TN07AX4521'), 100); } },
+  { id: 'export_alerts_csv', title: 'Export Forensic Alerts to CSV', icon: '📥', meta: 'Download CSV', action: () => window.open('/api/export/csv?dataset=alerts', '_blank') },
+  { id: 'export_cameras_csv', title: 'Export Camera Node Registry to CSV', icon: '📥', meta: 'Download CSV', action: () => window.open('/api/export/csv?dataset=cameras', '_blank') },
+  { id: 'simulate_live_transit', title: 'Simulate Live Suspect Transit (DL01CA9999)', icon: '⚡', meta: 'Run Simulator', action: async () => {
+      try {
+        await DataSource.post('/api/sightings/simulate-transit?plate_text=DL01CA9999&corridor_speed_kmh=85&anomaly=true');
+        navigateTo('trajectory');
+        setTimeout(() => window.TrajectoryView?.searchPreset('DL01CA9999'), 120);
+        if (window.ToastManager) window.ToastManager.show('SIMULATION ACTIVE', 'Live 4-hop transit simulated for DL01CA9999', 'warning');
+      } catch { /* proceed */ }
+    }
+  },
 ];
 
 function toggleCommandPalette() {

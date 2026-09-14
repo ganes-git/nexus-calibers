@@ -21,6 +21,8 @@ class AlertsView {
           <span>Active Incident Alerts</span>
           <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
             <button class="btn-secondary" style="font-size: 11px; padding: 4px 8px;"
+              onclick="window.open('/api/export/csv?dataset=alerts', '_blank')" title="Export forensic incident audit CSV">📥 Export CSV</button>
+            <button class="btn-secondary" style="font-size: 11px; padding: 4px 8px;"
               onclick="window.AlertsView.testAudio()" title="Test audio alarm alert">🔊 Test Audio</button>
             <button class="btn-secondary" style="font-size: 11px; padding: 4px 8px;"
               onclick="window.AlertsView.acknowledgeAllFiltered()" title="Acknowledge all filtered unacked alerts">⚡ Ack Filtered</button>
