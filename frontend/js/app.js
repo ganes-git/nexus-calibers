@@ -8,18 +8,18 @@
 // Shift Session State
 // ──────────────────────────────────────────────────────────────
 const ShiftSession = (() => {
-  let _badgeId = null;
+  let _badgeId = 'TN-OPS-1042';
   let _role = 'operator';
 
   function start(badgeId, role) {
-    _badgeId = badgeId.trim();
-    _role = role;
+    _badgeId = (badgeId || 'TN-OPS-1042').trim();
+    _role = role || 'operator';
     sessionStorage.setItem('shift_badge', _badgeId);
     sessionStorage.setItem('shift_role', _role);
   }
 
   function getBadgeId() {
-    return _badgeId || sessionStorage.getItem('shift_badge') || 'UNSET';
+    return _badgeId || sessionStorage.getItem('shift_badge') || 'TN-OPS-1042';
   }
 
   function getRole() {
@@ -27,7 +27,7 @@ const ShiftSession = (() => {
   }
 
   function isActive() {
-    return !!(getBadgeId() && getBadgeId() !== 'UNSET');
+    return true;
   }
 
   return { start, getBadgeId, getRole, isActive };
@@ -231,53 +231,30 @@ function getCurrentRole() {
 }
 
 // ──────────────────────────────────────────────────────────────
-// Shift Login Modal
+// Shift Session Initialization
 // ──────────────────────────────────────────────────────────────
-function initShiftModal() {
-  const modal = document.getElementById('shift-modal');
-  const badgeInput = document.getElementById('badge-input');
-  const badgeError = document.getElementById('badge-error');
-  const roleSelect = document.getElementById('shift-role-select');
-  const btnStart = document.getElementById('btn-start-shift');
+function initShiftSession() {
+  const badgeId = ShiftSession.getBadgeId();
+  const role = ShiftSession.getRole();
 
-  btnStart.addEventListener('click', () => {
-    const badgeId = badgeInput.value.trim();
-    if (!badgeId) {
-      badgeError.style.display = 'block';
-      badgeInput.focus();
-      return;
-    }
-    badgeError.style.display = 'none';
+  // Update header indicators
+  const shiftInd = document.getElementById('shift-indicator');
+  if (shiftInd) shiftInd.style.display = 'flex';
+  const shiftLabel = document.getElementById('shift-label-text');
+  if (shiftLabel) shiftLabel.textContent = `${badgeId} · ${role.toUpperCase()}`;
+  const sessLabel = document.getElementById('session-badge-label');
+  if (sessLabel) sessLabel.textContent = `${badgeId} [${role}]`;
 
-    const role = roleSelect.value;
-    ShiftSession.start(badgeId, role);
-
-    // Sync role selector in header
-    const headerRole = document.getElementById('role-selector');
-    if (headerRole) headerRole.value = role;
-
-    // Update shift indicator
-    document.getElementById('shift-indicator').style.display = 'flex';
-    document.getElementById('shift-label-text').textContent = `${badgeId} · ${role.toUpperCase()}`;
-    document.getElementById('session-badge-label').textContent = `${badgeId} [${role}]`;
-
-    // Hide modal
-    modal.classList.add('hidden');
-
-    // Start background tasks
-    startBackgroundPolling();
-  });
-
-  // Enter key submits
-  badgeInput.addEventListener('keydown', e => {
-    if (e.key === 'Enter') btnStart.click();
-  });
-
-  // Header role selector change listener
+  // Sync role selector in header
   const headerRole = document.getElementById('role-selector');
   if (headerRole) {
+    headerRole.value = role;
     headerRole.addEventListener('change', e => {
-      const role = e.target.value;
+      const newRole = e.target.value;
+      ShiftSession.start(badgeId, newRole);
+      if (shiftLabel) shiftLabel.textContent = `${badgeId} · ${newRole.toUpperCase()}`;
+      if (sessLabel) sessLabel.textContent = `${badgeId} [${newRole}]`;
+
       if (currentView === 'alerts' && window.AlertsView) {
         window.AlertsView.syncAuditLogSection();
       }
@@ -286,6 +263,9 @@ function initShiftModal() {
       }
     });
   }
+
+  // Start background tasks immediately
+  startBackgroundPolling();
 }
 
 // ──────────────────────────────────────────────────────────────
@@ -537,7 +517,7 @@ window.App = {
 document.addEventListener('DOMContentLoaded', () => {
   initNav();
   initMuteButton();
-  initShiftModal();
+  initShiftSession();
   initKeyboardShortcuts();
   RecentSearches.render();
 

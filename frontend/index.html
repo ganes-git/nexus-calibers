@@ -27,31 +27,6 @@
 <body>
 
   <!-- ═══════════════════════════════════════════════════════
-       SHIFT LOGIN MODAL
-  ════════════════════════════════════════════════════════════ -->
-  <div id="shift-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="shift-modal-title">
-    <div class="modal-box">
-      <div class="modal-header">
-        <div class="brand-badge">BEL &bull; PS 26127</div>
-        <h2 id="shift-modal-title" class="modal-title">Shift Login</h2>
-        <p class="modal-subtitle mono text-muted">Enter your officer badge ID to begin your shift. All queries will be logged against this session.</p>
-      </div>
-      <div class="modal-form">
-        <label for="badge-input" class="modal-label">Officer Badge ID</label>
-        <input id="badge-input" class="input-text input-lg" type="text" placeholder="e.g. TN-OPS-1042" autocomplete="off" maxlength="20" />
-        <div id="badge-error" class="modal-error" style="display:none;">Badge ID is required to begin shift.</div>
-      </div>
-      <div class="modal-actions">
-        <select id="shift-role-select" class="role-select mono">
-          <option value="operator">Operator (Traffic Police)</option>
-          <option value="supervisor">Supervisor (ICCC Oversight)</option>
-        </select>
-        <button id="btn-start-shift" class="btn-action" id="btn-start-shift">BEGIN SHIFT</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════════════════════════════
        LEFT SIDEBAR NAVIGATION
   ════════════════════════════════════════════════════════════ -->
   <aside id="sidebar">
