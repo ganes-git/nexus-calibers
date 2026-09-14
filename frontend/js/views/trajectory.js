@@ -1,10 +1,6 @@
 /**
- * View 1: Trajectory Search, Evidence Export, Vehicle Type Badge.
- * Enhancements:
- *  - Export PDF button (window.print() with print.css)
- *  - Vehicle type badge on each hop
- *  - Recent search logging via App.pushRecentSearch()
- *  - Uses renamed input ID 'plate-query-input' for quick-access from sidebar
+ * View 1: Trajectory Search, Full-Screen Cinema Map, Video-Player Simulation,
+ * Real-Time Bottom Telemetry HUD & Forensic Reconstruction.
  */
 
 class TrajectoryView {
@@ -18,6 +14,7 @@ class TrajectoryView {
     this._simInterval = null;
     this._simIndex = 0;
     this._simSpeed = 1000;
+    this._isFullscreen = false;
   }
 
   render(container) {
@@ -28,6 +25,7 @@ class TrajectoryView {
         <div class="print-subtitle mono" id="print-evidence-meta"></div>
       </div>
 
+      <!-- Card 1: Search Form -->
       <div class="card" style="margin-bottom: 14px;">
         <div class="card-title">Trajectory Query &amp; Forensic Reconstruction</div>
         <form id="traj-form" class="form-row">
@@ -53,54 +51,99 @@ class TrajectoryView {
         </form>
       </div>
 
-      <div class="traj-workspace-grid">
-        <!-- Left Column: Map & Playback Controls -->
-        <div class="card" style="margin-bottom: 0; display: flex; flex-direction: column;">
-          <div class="card-title">
-            <span>Spatial Path Map &amp; Real-Time Playback</span>
-            <div style="display: flex; align-items: center; gap: 10px;">
-              <span id="traj-meta" class="mono text-muted" style="font-size: 11px;"></span>
-            </div>
+      <!-- Card 2: Full-Width Map with Video Player Controls & Fullscreen Cinema Mode -->
+      <div class="card" style="margin-bottom: 14px;">
+        <div class="card-title">
+          <span>Spatial Path Map &amp; Full-Spectrum Simulation</span>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span id="traj-meta" class="mono text-muted" style="font-size: 11px;"></span>
+            <button id="btn-fullscreen-toggle" type="button" class="btn-action" style="font-size:11px; padding:4px 10px;"
+              onclick="window.TrajectoryView.toggleFullscreen()">⛶ Fullscreen Map</button>
           </div>
+        </div>
 
-          <!-- Interactive Simulation Toolbar -->
-          <div id="traj-sim-bar" style="display:none; align-items:center; gap:8px; background:var(--surface-color); padding:8px 12px; border:1px solid var(--border-color); border-radius:4px; margin-bottom:10px; flex-wrap:wrap;">
-            <button id="btn-sim-play" type="button" class="btn-action" style="font-size:11px; padding:4px 10px;" onclick="window.TrajectoryView.togglePlay()">▶ Play Simulation</button>
-            <button type="button" class="btn-secondary" style="font-size:11px; padding:4px 8px;" onclick="window.TrajectoryView.resetSim()">⏹ Reset</button>
+        <!-- Video Player & Map Wrapper -->
+        <div id="traj-player-wrapper" class="traj-player-wrapper">
+          
+          <!-- Video-Style Playback Toolbar -->
+          <div id="traj-video-bar" class="traj-video-bar" style="display:none;">
+            <button id="btn-sim-play" type="button" class="btn-player btn-player-play" onclick="window.TrajectoryView.togglePlay()">▶ Play</button>
+            <button type="button" class="btn-player" title="Previous Hop" onclick="window.TrajectoryView.stepHop(-1)">⏮</button>
+            <button type="button" class="btn-player" title="Next Hop" onclick="window.TrajectoryView.stepHop(1)">⏭</button>
+            <button type="button" class="btn-player" title="Reset to Start" onclick="window.TrajectoryView.resetSim()">⏹</button>
             
-            <div style="display:flex; align-items:center; gap:6px; margin-left:6px;">
-              <label for="sim-scrubber" class="mono text-muted" style="font-size:11px;">Hop:</label>
-              <input id="sim-scrubber" type="range" min="0" max="0" value="0" style="width:120px; cursor:pointer;" oninput="window.TrajectoryView.scrubTo(this.value)" />
-              <span id="sim-hop-label" class="mono" style="font-size:11px; font-weight:700;">1 / 1</span>
+            <div class="scrubber-container">
+              <span class="mono text-muted" style="font-size:11px;">Hop:</span>
+              <input id="sim-scrubber" class="sim-timeline-slider" type="range" min="0" max="0" value="0"
+                oninput="window.TrajectoryView.scrubTo(this.value)" />
+              <span id="sim-hop-label" class="mono" style="font-size:11px; font-weight:700; min-width:45px; color:#fff;">1 / 1</span>
             </div>
 
             <div style="display:flex; align-items:center; gap:6px; margin-left:auto;">
               <span class="mono text-muted" style="font-size:11px;">Speed:</span>
-              <select id="sim-speed-select" class="input-text" style="padding:2px 6px; font-size:11px;" onchange="window.TrajectoryView.setSpeed(this.value)">
-                <option value="1500">1x (Normal)</option>
-                <option value="800" selected>2x (Fast)</option>
-                <option value="350">4x (Rapid)</option>
+              <select id="sim-speed-select" class="input-text" style="padding:2px 6px; font-size:11px; background:#222; color:#fff; border-color:#444;"
+                onchange="window.TrajectoryView.setSpeed(this.value)">
+                <option value="1500">0.75x</option>
+                <option value="1000">1x (Normal)</option>
+                <option value="600" selected>2x (Fast)</option>
+                <option value="300">4x (Rapid)</option>
               </select>
+
+              <button type="button" id="btn-fs-inner" class="btn-player" style="margin-left:4px;"
+                onclick="window.TrajectoryView.toggleFullscreen()">⛶ Fullscreen</button>
             </div>
           </div>
 
-          <div id="traj-map" class="map-container" style="height:440px; margin-bottom:0;"></div>
+          <!-- Leaflet Map Container -->
+          <div id="traj-map" class="map-container" style="height: 520px; margin-bottom: 0;"></div>
+
+          <!-- Live Bottom Telemetry HUD Overlay ("Flight Recorder") -->
+          <div id="traj-bottom-hud" class="traj-bottom-hud" style="display:none;">
+            <div style="display:flex; flex-direction:column; gap:2px; min-width:220px;">
+              <div style="font-size:10px; text-transform:uppercase; letter-spacing:0.08em; color:#A49F93; font-family:var(--font-mono);">
+                📍 Active Transit Corridor
+              </div>
+              <div id="hud-leg-title" style="font-size:13px; font-weight:700; color:#fff; font-family:var(--font-mono);">
+                Origin Hop #1
+              </div>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; font-family:var(--font-mono); font-size:12px;">
+              <div style="background:rgba(255,255,255,0.08); padding:4px 8px; border-radius:3px; border:1px solid rgba(255,255,255,0.12);">
+                <span style="color:#A49F93; font-size:10px;">TARGET:</span> <strong id="hud-plate-val" style="color:#fff;">—</strong>
+              </div>
+              <div style="background:rgba(255,255,255,0.08); padding:4px 8px; border-radius:3px; border:1px solid rgba(255,255,255,0.12);">
+                <span style="color:#A49F93; font-size:10px;">SPEED:</span> <strong id="hud-speed-val" style="color:#fff;">—</strong>
+              </div>
+              <div style="background:rgba(255,255,255,0.08); padding:4px 8px; border-radius:3px; border:1px solid rgba(255,255,255,0.12);">
+                <span style="color:#A49F93; font-size:10px;">DIST:</span> <strong id="hud-dist-val" style="color:#fff;">—</strong>
+              </div>
+              <div style="background:rgba(255,255,255,0.08); padding:4px 8px; border-radius:3px; border:1px solid rgba(255,255,255,0.12);">
+                <span style="color:#A49F93; font-size:10px;">TIME:</span> <span id="hud-time-val" style="color:#fff;">—</span>
+              </div>
+            </div>
+
+            <div id="hud-status-badge" style="font-family:var(--font-mono); font-size:11px; font-weight:700; padding:4px 10px; border-radius:3px; background:#2F5233; color:#fff; white-space:nowrap;">
+              🟢 NORMAL
+            </div>
+          </div>
+
         </div>
+      </div>
 
-        <!-- Right Column: Evidence Trail Table with Independent Scroll -->
-        <div class="card" style="margin-bottom: 0; display: flex; flex-direction: column;">
-          <div class="card-title">
-            <span>Per-Hop Identity Evidence</span>
-            <div class="toolbar-row" style="margin-bottom:0;">
-              <button class="btn-secondary" id="btn-export-evidence" type="button"
-                onclick="window.TrajectoryView.exportEvidence()" disabled>
-                ⎙ Export PDF
-              </button>
-            </div>
+      <!-- Card 3: Evidence Trail Table -->
+      <div class="card">
+        <div class="card-title">
+          <span>Per-Hop Identity-Fusion Evidence Trail</span>
+          <div class="toolbar-row" style="margin-bottom:0;">
+            <button class="btn-secondary" id="btn-export-evidence" type="button"
+              onclick="window.TrajectoryView.exportEvidence()" disabled>
+              ⎙ Export Evidence PDF
+            </button>
           </div>
-          <div id="traj-table-container" style="flex:1; overflow-y:auto; max-height:490px; border-radius:4px;">
-            <div class="state-box">Enter a license plate or sighting ID above to reconstruct trajectory.</div>
-          </div>
+        </div>
+        <div id="traj-table-container">
+          <div class="state-box">Enter a license plate or sighting ID above to reconstruct trajectory.</div>
         </div>
       </div>
     `;
@@ -109,6 +152,13 @@ class TrajectoryView {
       e.preventDefault();
       const q = document.getElementById('plate-query-input').value.trim();
       if (q) this.executeSearch(q);
+    });
+
+    // Handle Escape key to exit fullscreen
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this._isFullscreen) {
+        this.toggleFullscreen();
+      }
     });
 
     this._initMap();
@@ -126,6 +176,31 @@ class TrajectoryView {
     }).setView([13.0450, 80.2450], 12);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(this.map);
     this.markersLayer = L.layerGroup().addTo(this.map);
+  }
+
+  toggleFullscreen() {
+    const wrapper = document.getElementById('traj-player-wrapper');
+    const btnTop = document.getElementById('btn-fullscreen-toggle');
+    const btnInner = document.getElementById('btn-fs-inner');
+    if (!wrapper) return;
+
+    this._isFullscreen = !this._isFullscreen;
+    wrapper.classList.toggle('fullscreen-mode', this._isFullscreen);
+
+    const btnText = this._isFullscreen ? '✕ Exit Fullscreen' : '⛶ Fullscreen Map';
+    if (btnTop) btnTop.textContent = btnText;
+    if (btnInner) btnInner.textContent = this._isFullscreen ? '✕ Exit' : '⛶ Fullscreen';
+
+    // Invalidate map size so Leaflet resizes instantly
+    setTimeout(() => {
+      if (this.map) {
+        this.map.invalidateSize();
+        if (this._lastData && this._lastData.length > 0) {
+          const latlngs = this._lastData.map(h => [h.lat, h.lon]);
+          this.map.fitBounds(L.latLngBounds(latlngs), { padding: [50, 50], animate: false });
+        }
+      }
+    }, 120);
   }
 
   searchPreset(plate) {
@@ -166,7 +241,8 @@ class TrajectoryView {
           </div>`;
         if (this.markersLayer) this.markersLayer.clearLayers();
         if (this.polyline) { this.map.removeLayer(this.polyline); this.polyline = null; }
-        document.getElementById('traj-sim-bar').style.display = 'none';
+        document.getElementById('traj-video-bar').style.display = 'none';
+        document.getElementById('traj-bottom-hud').style.display = 'none';
         return;
       }
 
@@ -176,6 +252,7 @@ class TrajectoryView {
       this._renderMapTrajectory(data);
       this._renderTable(data, tableContainer);
       this._setupSimulationControls(data);
+      this.updateSimPosition(0);
 
       if (metaEl) {
         const first = data[0].timestamp.replace('T', ' ').substring(0, 19);
@@ -225,18 +302,21 @@ class TrajectoryView {
     if (latlngs.length > 1) {
       this.polyline = L.polyline(latlngs, { color: '#2F5233', weight: 3.5, dashArray: '6, 6', opacity: 0.85 }).addTo(this.map);
     }
-    this.map.fitBounds(L.latLngBounds(latlngs), { padding: [45, 45], animate: false });
+    this.map.fitBounds(L.latLngBounds(latlngs), { padding: [50, 50], animate: false });
   }
 
   _setupSimulationControls(hops) {
-    const simBar = document.getElementById('traj-sim-bar');
+    const videoBar = document.getElementById('traj-video-bar');
+    const bottomHud = document.getElementById('traj-bottom-hud');
     const scrubber = document.getElementById('sim-scrubber');
     const hopLabel = document.getElementById('sim-hop-label');
-    if (!simBar || hops.length <= 1) {
-      if (simBar) simBar.style.display = 'none';
+    if (!videoBar || hops.length <= 1) {
+      if (videoBar) videoBar.style.display = 'none';
+      if (bottomHud) bottomHud.style.display = 'none';
       return;
     }
-    simBar.style.display = 'flex';
+    videoBar.style.display = 'flex';
+    if (bottomHud) bottomHud.style.display = 'flex';
     scrubber.max = hops.length - 1;
     scrubber.value = 0;
     this._simIndex = 0;
@@ -254,7 +334,7 @@ class TrajectoryView {
   startSim() {
     if (!this._lastData || this._lastData.length <= 1) return;
     const btn = document.getElementById('btn-sim-play');
-    if (btn) btn.textContent = '⏸ Pause Simulation';
+    if (btn) btn.textContent = '⏸ Pause';
 
     if (this._simIndex >= this._lastData.length - 1) {
       this._simIndex = 0;
@@ -276,7 +356,17 @@ class TrajectoryView {
       this._simInterval = null;
     }
     const btn = document.getElementById('btn-sim-play');
-    if (btn) btn.textContent = '▶ Play Simulation';
+    if (btn) btn.textContent = '▶ Play';
+  }
+
+  stepHop(delta) {
+    if (!this._lastData) return;
+    this.stopSim();
+    let nextIdx = this._simIndex + delta;
+    if (nextIdx < 0) nextIdx = 0;
+    if (nextIdx >= this._lastData.length) nextIdx = this._lastData.length - 1;
+    this._simIndex = nextIdx;
+    this.updateSimPosition(this._simIndex);
   }
 
   resetSim() {
@@ -308,6 +398,9 @@ class TrajectoryView {
     if (scrubber) scrubber.value = idx;
     if (hopLabel) hopLabel.textContent = `${idx + 1} / ${this._lastData.length}`;
 
+    // Update Bottom Telemetry HUD Details
+    this._updateBottomHUD(idx, hop);
+
     // Highlight row in table (pure CSS color highlight, absolutely no scroll triggering)
     document.querySelectorAll('.expandable-row').forEach((r, rIdx) => {
       if (rIdx === idx) {
@@ -321,13 +414,57 @@ class TrajectoryView {
     if (!this.simMarker) {
       const carIcon = L.divIcon({
         className: 'sim-car-pulse',
-        html: '<div style="background:#2F5233; color:#fff; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; box-shadow:0 0 0 4px rgba(47,82,51,0.3); border:2px solid #fff;">🚗</div>',
-        iconSize: [28, 28],
-        iconAnchor: [14, 14]
+        html: '<div style="background:#2F5233; color:#fff; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:15px; box-shadow:0 0 0 4px rgba(47,82,51,0.35); border:2px solid #fff;">🚗</div>',
+        iconSize: [30, 30],
+        iconAnchor: [15, 15]
       });
       this.simMarker = L.marker(pos, { icon: carIcon, zIndexOffset: 1000, keyboard: false }).addTo(this.map);
     } else {
       this.simMarker.setLatLng(pos);
+    }
+  }
+
+  _updateBottomHUD(idx, hop) {
+    const bottomHud = document.getElementById('traj-bottom-hud');
+    const legTitle = document.getElementById('hud-leg-title');
+    const plateVal = document.getElementById('hud-plate-val');
+    const speedVal = document.getElementById('hud-speed-val');
+    const distVal = document.getElementById('hud-dist-val');
+    const timeVal = document.getElementById('hud-time-val');
+    const statusBadge = document.getElementById('hud-status-badge');
+
+    if (!bottomHud || !legTitle) return;
+    bottomHud.style.display = 'flex';
+
+    const vtype = (hop.vehicle_type || 'CAR').toUpperCase();
+    const plate = hop.plate_text || '(unconfirmed)';
+
+    if (idx === 0) {
+      legTitle.textContent = `Hop #1 (Origin): ${hop.camera_id}`;
+      distVal.textContent = `0.0 km (Start)`;
+      speedVal.textContent = `Initial Sighting`;
+      timeVal.textContent = hop.timestamp.replace('T', ' ').substring(11, 19);
+    } else {
+      const prev = this._lastData[idx - 1];
+      legTitle.textContent = `Hop #${idx} ➔ Hop #${idx + 1} : ${prev.camera_id} ➔ ${hop.camera_id}`;
+      distVal.textContent = hop.distance_km > 0 ? `${hop.distance_km.toFixed(2)} km` : '—';
+      speedVal.textContent = hop.speed_kmh ? `${hop.speed_kmh.toFixed(1)} km/h` : '—';
+
+      const tPrev = prev.timestamp.substring(11, 19);
+      const tCur = hop.timestamp.substring(11, 19);
+      timeVal.textContent = `${tPrev} ➔ ${tCur}`;
+    }
+
+    plateVal.textContent = `[${vtype}] ${plate}`;
+
+    if (hop.anomaly_badge) {
+      bottomHud.classList.add('hud-anomaly');
+      statusBadge.style.background = '#B3262A';
+      statusBadge.textContent = `⚠️ ANOMALY: ${hop.anomaly_detail || 'Route Deviation'}`;
+    } else {
+      bottomHud.classList.remove('hud-anomaly');
+      statusBadge.style.background = '#2F5233';
+      statusBadge.textContent = `🟢 NORMAL (${(hop.composite_score * 100).toFixed(1)}%)`;
     }
   }
 
