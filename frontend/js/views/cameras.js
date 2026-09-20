@@ -24,9 +24,9 @@ class CamerasView {
           </div>
 
           <!-- Video Stream Simulated Canvas -->
-          <div style="position:relative; width:100%; height:260px; background:#121312; border-radius:5px; overflow:hidden; border:1px solid #2B2D2B; margin-bottom:14px; display:flex; align-items:center; justify-content:center;">
+          <div style="position:relative; width:100%; height:260px; background:#121312; border-radius:4px; overflow:hidden; border:1px solid #2B2D2B; margin-bottom:14px; display:flex; align-items:center; justify-content:center;">
             <!-- Grid lines / Reticle -->
-            <div style="position:absolute; inset:0; background:radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.6) 100%), linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 100% 100%, 20px 20px, 20px 20px;"></div>
+            <div style="position:absolute; inset:0; background:rgba(0,0,0,0.5);"></div>
             
             <!-- Top HUD overlay -->
             <div style="position:absolute; top:10px; left:12px; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#A4E5A4; display:flex; gap:12px; text-shadow:0 1px 2px #000;">
@@ -144,12 +144,33 @@ class CamerasView {
   }
 
   _initMap() {
-    if (this.map) { this.map.remove(); this.map = null; }
+    if (this.map) { 
+      try { this.map.remove(); } catch(e) {}
+      this.map = null; 
+    }
     const mapEl = document.getElementById('cameras-map');
     if (!mapEl || !window.L) return;
-    this.map = L.map('cameras-map', { attributionControl: false }).setView([13.030, 80.235], 12);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(this.map);
+    if (mapEl._leaflet_id) {
+      delete mapEl._leaflet_id;
+    }
+    this.map = L.map('cameras-map', { 
+      attributionControl: false,
+      scrollWheelZoom: true,
+      keyboard: false
+    }).setView([13.045, 80.240], 12);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { 
+      maxZoom: 18,
+      subdomains: ['a', 'b', 'c']
+    }).addTo(this.map);
+
     this.markersLayer = L.layerGroup().addTo(this.map);
+
+    [0, 50, 150, 300, 600].forEach(delay => {
+      setTimeout(() => {
+        if (this.map) this.map.invalidateSize();
+      }, delay);
+    });
   }
 
   setViewMode(mode) {
@@ -157,6 +178,7 @@ class CamerasView {
     document.getElementById('btn-view-table')?.classList.toggle('active', mode === 'table');
     document.getElementById('btn-view-matrix')?.classList.toggle('active', mode === 'matrix');
     this._renderCurrentView();
+    if (this.map) this.map.invalidateSize();
   }
 
   setSearch(q) {
@@ -231,8 +253,8 @@ class CamerasView {
           </div>
 
           <!-- Video Simulation viewport -->
-          <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:16px; position:relative; background:radial-gradient(circle at center, rgba(47,82,51,0.15), transparent 70%);">
-            <div style="position:absolute; inset:0; background:linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px); background-size: 15px 15px;"></div>
+          <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:16px; position:relative; background:rgba(47,82,51,0.08);">
+            <div style="position:absolute; inset:0; background:rgba(0,0,0,0.2);"></div>
             <div style="position:relative; z-index:2; text-align:center;">
               <div style="font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:700; color:#A4E5A4; letter-spacing:1px;">${c.name}</div>
               <div class="mono text-muted" style="font-size:10px; margin-top:3px;">Sightings Today: <strong style="color:#FFF;">${c.sightings_today ?? 0}</strong></div>

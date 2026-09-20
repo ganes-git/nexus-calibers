@@ -10,7 +10,7 @@
  */
 
 const STATIC_MODE = false;
-const API_BASE = window.location.origin.includes(':8000') ? '' : 'http://127.0.0.1:8000';
+const API_BASE = (typeof window !== 'undefined' && window.location && window.location.protocol.startsWith('http') && window.location.origin !== 'null') ? '' : 'http://127.0.0.1:8080';
 
 // ──────────────────────────────────────────────────────────────
 // Core HTTP Helpers

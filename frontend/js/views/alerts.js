@@ -16,35 +16,35 @@ class AlertsView {
 
   render(container) {
     container.innerHTML = `
-      <div class="card">
-        <div class="card-title">
-          <span>Active Incident Alerts</span>
-          <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-            <button class="btn-secondary" style="font-size: 11px; padding: 4px 8px;"
+      <div class="card" style="padding: 18px 22px; margin-bottom: 18px;">
+        <div class="card-title" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 14px;">
+          <span style="font-size: 15px; font-weight: 700;">Active Incident Alerts</span>
+          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <button class="btn-secondary btn-sm" style="padding: 7px 14px; font-weight: 500;"
               onclick="window.open('/api/export/csv?dataset=alerts', '_blank')" title="Export forensic incident audit CSV">📥 Export CSV</button>
-            <button class="btn-secondary" style="font-size: 11px; padding: 4px 8px;"
+            <button class="btn-secondary btn-sm" style="padding: 7px 14px; font-weight: 500;"
               onclick="window.AlertsView.testAudio()" title="Test audio alarm alert">🔊 Test Audio</button>
-            <button class="btn-secondary" style="font-size: 11px; padding: 4px 8px;"
+            <button class="btn-secondary btn-sm" style="padding: 7px 14px; font-weight: 500;"
               onclick="window.AlertsView.acknowledgeAllFiltered()" title="Acknowledge all filtered unacked alerts">⚡ Ack Filtered</button>
-            <button class="btn-secondary" style="font-size: 11px; padding: 4px 8px;"
+            <button class="btn-secondary btn-sm" style="padding: 7px 14px; font-weight: 500;"
               onclick="window.AlertsView.rescanAlerts()">Re-Scan Engine</button>
-            <button class="btn-action" style="font-size: 11px; padding: 4px 10px;"
+            <button class="btn-action btn-sm" style="padding: 7px 16px; font-weight: 600;"
               onclick="window.AlertsView.loadAlerts()">Refresh</button>
           </div>
         </div>
 
         <!-- Severity Filter Strip -->
-        <div style="display: flex; gap: 6px; align-items: center; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border-color); flex-wrap: wrap;">
-          <span class="mono text-muted" style="font-size: 11px; font-weight: 700;">SEVERITY:</span>
+        <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--border-color); flex-wrap: wrap;">
+          <span class="mono text-muted" style="font-size: 11px; font-weight: 700; margin-right: 4px;">SEVERITY:</span>
           <button class="filter-btn active" id="sev-all" onclick="window.AlertsView.setSeverityFilter('all', this)">All Severities</button>
-          <button class="filter-btn" id="sev-crit" onclick="window.AlertsView.setSeverityFilter('CRITICAL', this)" style="border-color: var(--accent-critical);">🚨 Critical</button>
-          <button class="filter-btn" id="sev-high" onclick="window.AlertsView.setSeverityFilter('HIGH', this)" style="border-color: var(--accent-warning);">⚠️ High</button>
+          <button class="filter-btn" id="sev-crit" onclick="window.AlertsView.setSeverityFilter('CRITICAL', this)">🚨 Critical</button>
+          <button class="filter-btn" id="sev-high" onclick="window.AlertsView.setSeverityFilter('HIGH', this)">⚠️ High</button>
           <button class="filter-btn" id="sev-med" onclick="window.AlertsView.setSeverityFilter('MEDIUM', this)">ℹ️ Medium</button>
         </div>
 
         <!-- Filter Row -->
-        <div class="filter-row" id="alert-filters">
-          <span class="filter-label">Type:</span>
+        <div class="filter-row" id="alert-filters" style="display: flex; gap: 10px; align-items: center; margin-bottom: 16px; flex-wrap: wrap;">
+          <span class="filter-label mono text-muted" style="font-size: 11px; font-weight: 700; margin-right: 4px;">TYPE:</span>
           <button class="filter-btn active" onclick="window.AlertsView.setFilter('all', this)">All Types</button>
           <button class="filter-btn" onclick="window.AlertsView.setFilter('clone', this)">Clone</button>
           <button class="filter-btn" onclick="window.AlertsView.setFilter('impossible_transit', this)">Impossible Transit</button>
@@ -53,7 +53,7 @@ class AlertsView {
           <button class="filter-btn" onclick="window.AlertsView.setFilter('route_anomaly', this)">Route Anomaly</button>
           <button class="filter-btn" onclick="window.AlertsView.setFilter('convoy', this)">Convoy</button>
           <span style="margin-left: auto;">
-            <label class="filter-label" style="display:flex; align-items:center; gap:6px; cursor:pointer;">
+            <label class="filter-label" style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:12px; font-weight:500;">
               <input type="checkbox" id="ack-filter-chk" onchange="window.AlertsView.toggleAckFilter(this.checked)" />
               Unacknowledged only
             </label>

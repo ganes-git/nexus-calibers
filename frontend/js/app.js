@@ -213,13 +213,15 @@ async function pollForNewAlerts() {
 async function checkSystemStatus() {
   try {
     await DataSource.get('/api/health');
-    document.getElementById('offline-banner').classList.remove('visible');
-    document.getElementById('status-dot').classList.remove('offline');
-    document.getElementById('status-label').textContent = 'LIVE ENGINE';
+    document.getElementById('offline-banner')?.classList.remove('visible');
+    document.getElementById('status-dot')?.classList.remove('offline');
+    const sl = document.getElementById('status-label');
+    if (sl) sl.textContent = 'LIVE ENGINE';
   } catch {
-    document.getElementById('offline-banner').classList.add('visible');
-    document.getElementById('status-dot').classList.add('offline');
-    document.getElementById('status-label').textContent = 'DISCONNECTED';
+    document.getElementById('offline-banner')?.classList.add('visible');
+    document.getElementById('status-dot')?.classList.add('offline');
+    const sl = document.getElementById('status-label');
+    if (sl) sl.textContent = 'DISCONNECTED';
   }
 }
 

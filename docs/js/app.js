@@ -60,7 +60,6 @@ class AppRouter {
   setRole(newRole) {
     window.appState.role = newRole;
     localStorage.setItem("anpr_role", newRole);
-    console.log(`[AppRouter] Switched role to: ${newRole}`);
 
     // If currently on Alerts view, re-sync Audit Log
     if (window.appState.currentView === "alerts" && window.alertsView) {

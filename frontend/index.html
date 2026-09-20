@@ -13,21 +13,16 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 
-  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-
-  <!-- Design Contract Stylesheet -->
-  <link rel="stylesheet" href="css/style.css?v=3.7" />
+  <!-- Design Contract Stylesheet (UI-UX v2) -->
+  <link rel="stylesheet" href="css/style.css?v=4.8" />
 
   <!-- Print stylesheet for evidence export -->
-  <link rel="stylesheet" href="css/print.css?v=3.7" media="print" />
+  <link rel="stylesheet" href="css/print.css?v=4.8" media="print" />
 </head>
 <body>
 
   <!-- ═══════════════════════════════════════════════════════
-       LEFT SIDEBAR NAVIGATION
+       LEFT SIDEBAR NAVIGATION (Hand-drawn monoline SVG icons)
   ════════════════════════════════════════════════════════════ -->
   <aside id="sidebar">
     <div class="sidebar-header">
@@ -37,51 +32,47 @@
 
     <nav class="sidebar-nav" id="sidebar-nav" aria-label="Primary navigation">
       <a href="#trajectory" class="nav-link active" data-view="trajectory" id="nav-trajectory">
-        <span class="nav-icon">◈</span>
+        <svg class="icon" viewBox="0 0 20 20" width="18" height="18"><circle cx="8.5" cy="8.5" r="5"/><path d="M12.5 12.5L17 17"/></svg>
         <span>Trajectory Search</span>
       </a>
       <a href="#heatmap" class="nav-link" data-view="heatmap" id="nav-heatmap">
-        <span class="nav-icon">◉</span>
+        <svg class="icon" viewBox="0 0 20 20" width="18" height="18"><path d="M10 2.5C7 2.5 4.5 5 4.5 8c0 4.5 5.5 9.5 5.5 9.5s5.5-5 5.5-9.5c0-3-2.5-5.5-5.5-5.5z"/><circle cx="10" cy="8" r="2"/></svg>
         <span>Sighting Heatmap</span>
       </a>
       <a href="#blacklist" class="nav-link" data-view="blacklist" id="nav-blacklist">
-        <span class="nav-icon">◧</span>
+        <svg class="icon" viewBox="0 0 20 20" width="18" height="18"><path d="M10 2.5L4 5v5.5c0 4.5 6 7 6 7s6-2.5 6-7V5l-6-2.5z"/></svg>
         <span>Blacklist / Watchlist</span>
       </a>
       <a href="#alerts" class="nav-link" data-view="alerts" id="nav-alerts">
-        <span class="nav-icon">◬</span>
+        <svg class="icon" viewBox="0 0 20 20" width="18" height="18"><path d="M15 13.5v-4.5c0-2.8-2.2-5-5-5s-5 2.2-5 5v4.5l-1.5 2h13l-1.5-2z"/><path d="M8.5 16.5c0 .8.7 1.5 1.5 1.5s1.5-.7 1.5-1.5"/></svg>
         <span>Incident Alerts</span>
         <span id="alert-badge" class="nav-badge" style="display:none;">0</span>
       </a>
       <a href="#trends" class="nav-link" data-view="trends" id="nav-trends">
-        <span class="nav-icon">▦</span>
+        <svg class="icon" viewBox="0 0 20 20" width="18" height="18"><path d="M3 17V3"/><path d="M3 17h14"/><path d="M6 13l4-5 3 3 4-6"/></svg>
         <span>Traffic Trends</span>
       </a>
       <a href="#cameras" class="nav-link" data-view="cameras" id="nav-cameras">
-        <span class="nav-icon">⊡</span>
+        <svg class="icon" viewBox="0 0 20 20" width="18" height="18"><rect x="3" y="6" width="14" height="10" rx="2"/><circle cx="10" cy="11" r="2.5"/><path d="M7 6l1.5-2.5h3L13 6"/></svg>
         <span>Camera Health</span>
       </a>
     </nav>
 
     <!-- Recent Plate Searches -->
-    <div class="sidebar-section" id="recent-searches-section" style="display:none;">
-      <div class="sidebar-section-title">RECENT SEARCHES</div>
-      <div id="recent-searches-list"></div>
+    <div class="sidebar-section" id="recent-searches-section" style="display:none; padding: 12px 20px; border-top: 1px solid var(--border-color);">
+      <div class="section-label" style="margin-bottom: 6px;">Recent searches</div>
+      <div id="recent-searches-list" class="mono" style="display: flex; flex-direction: column; gap: 4px;"></div>
     </div>
 
     <!-- Live Sighting Ticker -->
     <div class="sidebar-ticker" id="sidebar-ticker">
-      <div class="ticker-title">LIVE FEED</div>
+      <div class="section-label">Live feed</div>
       <div id="ticker-items" class="ticker-list"></div>
     </div>
 
     <div class="sidebar-footer mono" id="sidebar-footer">
-      <div class="footer-row">
-        <span id="session-badge-label">No shift active</span>
-      </div>
-      <div class="footer-row text-muted">
-        Chennai Cluster &bull; <span id="footer-cam-count">8</span> nodes
-      </div>
+      <div><span id="session-badge-label">No shift active</span></div>
+      <div class="text-muted" style="margin-top: 2px;">Chennai Cluster &bull; <span id="footer-cam-count">8</span> nodes</div>
     </div>
   </aside>
 
@@ -90,147 +81,96 @@
   ════════════════════════════════════════════════════════════ -->
   <main id="main-content">
 
-    <!-- Top Control Header -->
+    <!-- Global Header Status Strip -->
     <header id="top-header">
       <div class="header-left">
-        <h1 id="current-view-heading" class="view-heading">Trajectory Reconstruction</h1>
-      </div>
-
-      <div class="header-controls">
-        <div id="shift-indicator" class="shift-indicator" style="display:none;">
-          <span class="shift-dot"></span>
-          <span id="shift-label-text" class="mono">SHIFT ACTIVE</span>
-        </div>
-
-        <div class="role-selector-wrap">
-          <label for="role-selector" class="mono text-muted">Role:</label>
-          <select id="role-selector" class="role-select mono">
-            <option value="operator">Operator (Traffic Police)</option>
-            <option value="supervisor">Supervisor (ICCC Oversight)</option>
-          </select>
-        </div>
-
-        <div class="search-trigger-wrap" style="display:flex; align-items:center; gap:6px;">
-          <button id="btn-cmd-palette" class="btn-secondary" style="font-size: 11px; padding: 3px 10px; font-family: var(--font-mono); display: flex; align-items: center; gap: 6px;" title="Open Command Palette (Ctrl+K or /)" onclick="window.App.toggleCommandPalette()">
-            <span>🔍 COMMAND PALETTE</span>
-            <kbd class="mono" style="background:var(--surface-color); border:1px solid var(--border-color); padding:0 4px; border-radius:3px; font-size:10px;">Ctrl+K</kbd>
-          </button>
-        </div>
-
-        <button id="btn-shortcuts-toggle" class="btn-secondary" style="font-size: 11px; padding: 3px 8px; font-family: var(--font-mono);" title="View interactive command keys" onclick="window.App.toggleShortcutsModal()">[⌨ KEYS]</button>
-        <button id="btn-mute-toggle" class="btn-mute" title="Toggle audio alert beeps">[AUDIO: ON]</button>
-
-        <div class="system-status">
-          <div class="status-dot" id="status-dot"></div>
-          <span id="status-label">LIVE ENGINE</span>
-        </div>
+        <h1 id="current-view-heading" class="screen-title">Trajectory Search</h1>
       </div>
     </header>
 
     <!-- Global Command Palette Modal (Ctrl+K / /) -->
     <div id="cmd-palette-modal" class="modal-backdrop hidden" onclick="if(event.target===this) window.App.toggleCommandPalette()">
-      <div class="modal-box" style="width: 540px; max-width: 92vw; padding: 20px;">
+      <div class="modal-box" style="width: 500px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <div class="brand-badge">TACTICAL DISPATCH</div>
-            <span class="mono" style="font-size: 12px; font-weight: 700;">COMMAND &amp; VEHICLE JUMP</span>
-          </div>
-          <span class="mono text-muted" style="font-size: 11px;">[ESC to close]</span>
+          <div class="section-label" style="margin-bottom: 0;">Command &amp; vehicle jump</div>
+          <span class="meta-caption mono">[ESC to close]</span>
         </div>
 
         <div style="position: relative; margin-bottom: 12px;">
-          <input id="cmd-palette-input" class="input-text input-lg mono" type="text"
-            placeholder="Search plate (TN09CB1234), camera (CAM-01), or action..."
-            autocomplete="off" style="width: 100%; padding-left: 36px;" />
-          <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 14px; color: var(--text-muted);">🔍</span>
+          <input id="cmd-palette-input" class="input-text mono" type="text"
+            placeholder="Search plate (TN09CB1234), camera, or action..."
+            autocomplete="off" style="width: 100%;" />
         </div>
 
-        <div id="cmd-palette-results" class="mono" style="max-height: 280px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px;">
+        <div id="cmd-palette-results" class="mono" style="max-height: 240px; overflow-y: auto; display: flex; flex-direction: column; gap: 4px;">
           <!-- Dynamically populated -->
         </div>
 
-        <div style="margin-top: 12px; padding-top: 8px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; font-size: 11px;" class="mono text-muted">
+        <div style="margin-top: 12px; padding-top: 8px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between;" class="meta-caption mono">
           <span>&uarr;&darr; Navigate &bull; Enter Select</span>
-          <span>Hotkeys: 1-6 Switch View &bull; / Focus</span>
+          <span>1-6 Switch View &bull; / Focus</span>
         </div>
       </div>
     </div>
 
     <!-- Interactive Command Shortcuts Modal -->
     <div id="shortcuts-modal" class="modal-backdrop hidden" onclick="if(event.target===this) window.App.toggleShortcutsModal()">
-      <div class="modal-box" style="width: 460px; max-width: 90vw;">
-        <div class="modal-header" style="display: flex; justify-content: space-between; align-items: flex-start;">
+      <div class="modal-box" style="width: 440px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
           <div>
-            <div class="brand-badge">ICCC COMMAND PALETTE</div>
-            <h2 class="modal-title" style="font-size: 16px;">Console Hotkeys</h2>
-            <p class="modal-subtitle mono text-muted">Rapid tactical navigation for traffic dispatchers</p>
+            <div class="section-label" style="margin-bottom: 2px;">Console Hotkeys</div>
+            <p class="meta-caption">Tactical navigation for traffic enforcement</p>
           </div>
-          <button class="btn-secondary" style="padding: 2px 8px; font-size: 14px;" onclick="window.App.toggleShortcutsModal()">&times;</button>
+          <button class="btn-secondary btn-sm" onclick="window.App.toggleShortcutsModal()">&times;</button>
         </div>
-        <div style="display: flex; flex-direction: column; gap: 8px; font-size: 12px; margin-bottom: 16px;">
+        <div style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; margin-bottom: 12px;">
           <div style="display: flex; justify-content: space-between; padding: 6px 10px; background: var(--surface-color); border-radius: 4px; border: 1px solid var(--border-color);">
-            <span>Global Command &amp; Vehicle Jump</span>
-            <kbd class="mono" style="background:#fff; border:1px solid #ccc; padding:1px 6px; border-radius:3px; font-weight:700;">Ctrl+K</kbd>
+            <span>Global Command Jump</span>
+            <kbd class="mono" style="background:#fff; border:1px solid #ccc; padding:1px 6px; border-radius:2px; font-weight:600;">Ctrl+K</kbd>
           </div>
           <div style="display: flex; justify-content: space-between; padding: 6px 10px; background: var(--surface-color); border-radius: 4px; border: 1px solid var(--border-color);">
-            <span>Trajectory Reconstruction</span>
-            <kbd class="mono" style="background:#fff; border:1px solid #ccc; padding:1px 6px; border-radius:3px; font-weight:700;">1</kbd>
+            <span>Trajectory Search</span>
+            <kbd class="mono" style="background:#fff; border:1px solid #ccc; padding:1px 6px; border-radius:2px; font-weight:600;">1</kbd>
           </div>
           <div style="display: flex; justify-content: space-between; padding: 6px 10px; background: var(--surface-color); border-radius: 4px; border: 1px solid var(--border-color);">
             <span>Sighting Heatmap</span>
-            <kbd class="mono" style="background:#fff; border:1px solid #ccc; padding:1px 6px; border-radius:3px; font-weight:700;">2</kbd>
+            <kbd class="mono" style="background:#fff; border:1px solid #ccc; padding:1px 6px; border-radius:2px; font-weight:600;">2</kbd>
           </div>
           <div style="display: flex; justify-content: space-between; padding: 6px 10px; background: var(--surface-color); border-radius: 4px; border: 1px solid var(--border-color);">
             <span>Blacklist / Watchlist Check</span>
-            <kbd class="mono" style="background:#fff; border:1px solid #ccc; padding:1px 6px; border-radius:3px; font-weight:700;">3</kbd>
+            <kbd class="mono" style="background:#fff; border:1px solid #ccc; padding:1px 6px; border-radius:2px; font-weight:600;">3</kbd>
           </div>
           <div style="display: flex; justify-content: space-between; padding: 6px 10px; background: var(--surface-color); border-radius: 4px; border: 1px solid var(--border-color);">
             <span>Incident Alert Triage</span>
-            <kbd class="mono" style="background:#fff; border:1px solid #ccc; padding:1px 6px; border-radius:3px; font-weight:700;">4</kbd>
+            <kbd class="mono" style="background:#fff; border:1px solid #ccc; padding:1px 6px; border-radius:2px; font-weight:600;">4</kbd>
           </div>
           <div style="display: flex; justify-content: space-between; padding: 6px 10px; background: var(--surface-color); border-radius: 4px; border: 1px solid var(--border-color);">
             <span>Traffic Anomaly Trends</span>
-            <kbd class="mono" style="background:#fff; border:1px solid #ccc; padding:1px 6px; border-radius:3px; font-weight:700;">5</kbd>
+            <kbd class="mono" style="background:#fff; border:1px solid #ccc; padding:1px 6px; border-radius:2px; font-weight:600;">5</kbd>
           </div>
           <div style="display: flex; justify-content: space-between; padding: 6px 10px; background: var(--surface-color); border-radius: 4px; border: 1px solid var(--border-color);">
-            <span>Camera Nodes &amp; Live Streams</span>
-            <kbd class="mono" style="background:#fff; border:1px solid #ccc; padding:1px 6px; border-radius:3px; font-weight:700;">6</kbd>
+            <span>Camera Nodes</span>
+            <kbd class="mono" style="background:#fff; border:1px solid #ccc; padding:1px 6px; border-radius:2px; font-weight:600;">6</kbd>
           </div>
           <div style="display: flex; justify-content: space-between; padding: 6px 10px; background: var(--surface-color); border-radius: 4px; border: 1px solid var(--border-color);">
-            <span>Focus License Plate Query</span>
-            <kbd class="mono" style="background:#fff; border:1px solid #ccc; padding:1px 6px; border-radius:3px; font-weight:700;">/</kbd>
-          </div>
-          <div style="display: flex; justify-content: space-between; padding: 6px 10px; background: var(--surface-color); border-radius: 4px; border: 1px solid var(--border-color);">
-            <span>Toggle Audio Alarm Mute</span>
-            <kbd class="mono" style="background:#fff; border:1px solid #ccc; padding:1px 6px; border-radius:3px; font-weight:700;">M</kbd>
+            <span>Toggle Audio Mute</span>
+            <kbd class="mono" style="background:#fff; border:1px solid #ccc; padding:1px 6px; border-radius:2px; font-weight:600;">M</kbd>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- KPI Summary Strip -->
-    <div id="kpi-strip">
-      <div class="kpi-tile" id="kpi-sightings">
-        <div class="kpi-value" id="kpi-sightings-val">—</div>
-        <div class="kpi-label">SIGHTINGS TODAY</div>
-      </div>
-      <div class="kpi-tile kpi-alert" id="kpi-alerts">
-        <div class="kpi-value" id="kpi-alerts-val">—</div>
-        <div class="kpi-label">ACTIVE ALERTS</div>
-      </div>
-      <div class="kpi-tile" id="kpi-cameras">
-        <div class="kpi-value" id="kpi-cameras-val">—</div>
-        <div class="kpi-label">CAMERAS ONLINE</div>
-      </div>
-      <div class="kpi-tile kpi-warn" id="kpi-blacklist">
-        <div class="kpi-value" id="kpi-blacklist-val">—</div>
-        <div class="kpi-label">WATCHLISTED TODAY</div>
-      </div>
+    <!-- Hidden compatibility elements for background API sync -->
+    <div id="kpi-strip" style="display:none;">
+      <span id="kpi-sightings-val"></span>
+      <span id="kpi-alerts-val"></span>
+      <span id="kpi-cameras-val"></span>
+      <span id="kpi-blacklist-val"></span>
     </div>
 
     <!-- Offline / Unreachable Banner -->
     <div id="offline-banner" class="mono">
-      [ALERT] Unable to reach the backend — check your connection.
+      Unable to reach the backend — check your connection.
     </div>
 
     <!-- Active View Panel -->
@@ -241,16 +181,16 @@
   <div id="toast-container" role="alert" aria-live="assertive"></div>
 
   <!-- Application Logic Modules -->
-  <script src="js/dataSource.js?v=3.7"></script>
-  <script src="js/audioAlert.js?v=3.7"></script>
-  <script src="js/toastManager.js?v=3.7"></script>
-  <script src="js/views/trajectory.js?v=3.7"></script>
-  <script src="js/views/heatmap.js?v=3.7"></script>
-  <script src="js/views/blacklist.js?v=3.7"></script>
-  <script src="js/views/alerts.js?v=3.7"></script>
-  <script src="js/views/trends.js?v=3.7"></script>
-  <script src="js/views/cameras.js?v=3.7"></script>
-  <script src="js/app.js?v=3.7"></script>
+  <script src="js/dataSource.js?v=4.8"></script>
+  <script src="js/audioAlert.js?v=4.8"></script>
+  <script src="js/toastManager.js?v=4.8"></script>
+  <script src="js/views/trajectory.js?v=4.8"></script>
+  <script src="js/views/heatmap.js?v=4.8"></script>
+  <script src="js/views/blacklist.js?v=4.8"></script>
+  <script src="js/views/alerts.js?v=4.8"></script>
+  <script src="js/views/trends.js?v=4.8"></script>
+  <script src="js/views/cameras.js?v=4.8"></script>
+  <script src="js/app.js?v=4.8"></script>
 
 </body>
 </html>
