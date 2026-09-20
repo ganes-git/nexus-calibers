@@ -78,3 +78,16 @@ scratch/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Internal project specifications, design documents & pitch deck prompts
+PRD.md
+TRD.md
+SCHEMA.md
+UI-UX.md
+DESIGN.md
+BUILD_LOG.md
+SYSTEM_MANUAL_A_TO_Z.md
+SIH_*.md
+*.pdf
+generate_pdf_manual.py
+
