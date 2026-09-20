@@ -1,11 +1,723 @@
 [
   {
+    "alert_id": 180,
+    "alert_type": "convoy",
+    "sighting_id_a": 157,
+    "sighting_id_b": 147,
+    "detail_text": "Convoy alert: 6 vehicles (KA03MD5522, TN04AB5501, TN09CB1234, TN10AM6677, TN22CY3311, TN22TR8844) detected in formation at CAM_05 then CAM_06 within a 10-minute window. Coordinated movement pattern flagged for review.",
+    "created_at": "2026-09-19T10:50:42.008631",
+    "severity": "HIGH",
+    "acknowledged": 0,
+    "acknowledged_by": null,
+    "acknowledged_at": null
+  },
+  {
+    "alert_id": 179,
+    "alert_type": "convoy",
+    "sighting_id_a": 131,
+    "sighting_id_b": 109,
+    "detail_text": "Convoy alert: 3 vehicles (TN07BK3322, TN09CB1234, TN22TR8844) detected in formation at CAM_02 then CAM_03 within a 10-minute window. Coordinated movement pattern flagged for review.",
+    "created_at": "2026-09-19T10:50:42.008631",
+    "severity": "HIGH",
+    "acknowledged": 0,
+    "acknowledged_by": null,
+    "acknowledged_at": null
+  },
+  {
+    "alert_id": 178,
+    "alert_type": "convoy",
+    "sighting_id_a": 161,
+    "sighting_id_b": 159,
+    "detail_text": "Convoy alert: 3 vehicles (TN01AT4411, TN01AZ7788, TN22CY3311) detected in formation at CAM_01 then CAM_02 within a 10-minute window. Coordinated movement pattern flagged for review.",
+    "created_at": "2026-09-19T10:50:42.008631",
+    "severity": "HIGH",
+    "acknowledged": 0,
+    "acknowledged_by": null,
+    "acknowledged_at": null
+  },
+  {
+    "alert_id": 177,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 72,
+    "sighting_id_b": 100,
+    "detail_text": "Statistical route anomaly: Transit from CAM_07 to CAM_03 took 13232s (220.5 min). Normal corridor baseline is 310\u00b130s (5.2 min). Deviation is +430.73\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-19T10:50:42.008631",
+    "severity": "MEDIUM",
+    "acknowledged": 0,
+    "acknowledged_by": null,
+    "acknowledged_at": null
+  },
+  {
+    "alert_id": 176,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 65,
+    "sighting_id_b": 93,
+    "detail_text": "Statistical route anomaly: Transit from CAM_08 to CAM_04 took 13232s (220.5 min). Normal corridor baseline is 1080\u00b1424s (18.0 min). Deviation is +28.64\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-19T10:50:42.008631",
+    "severity": "MEDIUM",
+    "acknowledged": 0,
+    "acknowledged_by": null,
+    "acknowledged_at": null
+  },
+  {
+    "alert_id": 175,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 58,
+    "sighting_id_b": 79,
+    "detail_text": "Statistical route anomaly: Transit from CAM_01 to CAM_06 took 8046s (134.1 min). Normal corridor baseline is 5092\u00b130s (84.9 min). Deviation is +98.47\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-19T10:50:42.008631",
+    "severity": "MEDIUM",
+    "acknowledged": 0,
+    "acknowledged_by": null,
+    "acknowledged_at": null
+  },
+  {
+    "alert_id": 174,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 48,
+    "sighting_id_b": 76,
+    "detail_text": "Statistical route anomaly: Transit from CAM_07 to CAM_03 took 13232s (220.5 min). Normal corridor baseline is 310\u00b130s (5.2 min). Deviation is +430.73\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-19T10:50:42.008631",
+    "severity": "MEDIUM",
+    "acknowledged": 0,
+    "acknowledged_by": null,
+    "acknowledged_at": null
+  },
+  {
+    "alert_id": 173,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 12,
+    "sighting_id_b": 69,
+    "detail_text": "Statistical route anomaly: Transit from CAM_01 to CAM_04 took 11958s (199.3 min). Normal corridor baseline is 370\u00b130s (6.2 min). Deviation is +386.27\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-19T10:50:42.008631",
+    "severity": "MEDIUM",
+    "acknowledged": 0,
+    "acknowledged_by": null,
+    "acknowledged_at": null
+  },
+  {
+    "alert_id": 172,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 41,
+    "sighting_id_b": 69,
+    "detail_text": "Statistical route anomaly: Transit from CAM_08 to CAM_04 took 13732s (228.9 min). Normal corridor baseline is 1080\u00b1424s (18.0 min). Deviation is +29.82\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-19T10:50:42.008631",
+    "severity": "MEDIUM",
+    "acknowledged": 0,
+    "acknowledged_by": null,
+    "acknowledged_at": null
+  },
+  {
+    "alert_id": 171,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 34,
+    "sighting_id_b": 55,
+    "detail_text": "Statistical route anomaly: Transit from CAM_01 to CAM_06 took 8546s (142.4 min). Normal corridor baseline is 5092\u00b130s (84.9 min). Deviation is +115.13\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-19T10:50:42.008631",
+    "severity": "MEDIUM",
+    "acknowledged": 0,
+    "acknowledged_by": null,
+    "acknowledged_at": null
+  },
+  {
+    "alert_id": 170,
+    "alert_type": "impossible_transit",
+    "sighting_id_a": 158,
+    "sighting_id_b": 160,
+    "detail_text": "Impossible transit speed: Vehicle 'TN22CY3311' moved from CAM_06 to CAM_02 (4.98 km in 107s) at 167.6 km/h, exceeding the maximum 140.0 km/h urban safety limit.",
+    "created_at": "2026-09-19T10:50:42.008631",
+    "severity": "HIGH",
+    "acknowledged": 0,
+    "acknowledged_by": null,
+    "acknowledged_at": null
+  },
+  {
+    "alert_id": 169,
+    "alert_type": "clone",
+    "sighting_id_a": 158,
+    "sighting_id_b": 160,
+    "detail_text": "Plate clone detected: Plate 'TN22CY3311' sighted at CAM_06 and CAM_02 within 107s across 4.98 km (required speed 167.6 km/h). Physical impossibility of single vehicle traversing distance confirms duplicate cloned plate.",
+    "created_at": "2026-09-19T10:50:42.008631",
+    "severity": "CRITICAL",
+    "acknowledged": 0,
+    "acknowledged_by": null,
+    "acknowledged_at": null
+  },
+  {
+    "alert_id": 168,
+    "alert_type": "impossible_transit",
+    "sighting_id_a": 158,
+    "sighting_id_b": 159,
+    "detail_text": "Impossible transit speed: Vehicle 'TN22CY3311' moved from CAM_06 to CAM_01 (4.30 km in 72s) at 215.1 km/h, exceeding the maximum 140.0 km/h urban safety limit.",
+    "created_at": "2026-09-19T10:50:42.008631",
+    "severity": "HIGH",
+    "acknowledged": 0,
+    "acknowledged_by": null,
+    "acknowledged_at": null
+  },
+  {
+    "alert_id": 167,
+    "alert_type": "clone",
+    "sighting_id_a": 158,
+    "sighting_id_b": 159,
+    "detail_text": "Plate clone detected: Plate 'TN22CY3311' sighted at CAM_06 and CAM_01 within 72s across 4.30 km (required speed 215.1 km/h). Physical impossibility of single vehicle traversing distance confirms duplicate cloned plate.",
+    "created_at": "2026-09-19T10:50:42.008631",
+    "severity": "CRITICAL",
+    "acknowledged": 0,
+    "acknowledged_by": null,
+    "acknowledged_at": null
+  },
+  {
+    "alert_id": 166,
+    "alert_type": "impossible_transit",
+    "sighting_id_a": 157,
+    "sighting_id_b": 160,
+    "detail_text": "Impossible transit speed: Vehicle 'TN22CY3311' moved from CAM_05 to CAM_02 (7.14 km in 175s) at 146.8 km/h, exceeding the maximum 140.0 km/h urban safety limit.",
+    "created_at": "2026-09-19T10:50:42.008631",
+    "severity": "HIGH",
+    "acknowledged": 0,
+    "acknowledged_by": null,
+    "acknowledged_at": null
+  },
+  {
+    "alert_id": 165,
+    "alert_type": "clone",
+    "sighting_id_a": 157,
+    "sighting_id_b": 160,
+    "detail_text": "Plate clone detected: Plate 'TN22CY3311' sighted at CAM_05 and CAM_02 within 175s across 7.14 km (required speed 146.8 km/h). Physical impossibility of single vehicle traversing distance confirms duplicate cloned plate.",
+    "created_at": "2026-09-19T10:50:42.008631",
+    "severity": "CRITICAL",
+    "acknowledged": 0,
+    "acknowledged_by": null,
+    "acknowledged_at": null
+  },
+  {
+    "alert_id": 164,
+    "alert_type": "impossible_transit",
+    "sighting_id_a": 157,
+    "sighting_id_b": 159,
+    "detail_text": "Impossible transit speed: Vehicle 'TN22CY3311' moved from CAM_05 to CAM_01 (6.46 km in 140s) at 166.0 km/h, exceeding the maximum 140.0 km/h urban safety limit.",
+    "created_at": "2026-09-19T10:50:42.008631",
+    "severity": "HIGH",
+    "acknowledged": 0,
+    "acknowledged_by": null,
+    "acknowledged_at": null
+  },
+  {
+    "alert_id": 163,
+    "alert_type": "clone",
+    "sighting_id_a": 157,
+    "sighting_id_b": 159,
+    "detail_text": "Plate clone detected: Plate 'TN22CY3311' sighted at CAM_05 and CAM_01 within 140s across 6.46 km (required speed 166.0 km/h). Physical impossibility of single vehicle traversing distance confirms duplicate cloned plate.",
+    "created_at": "2026-09-19T10:50:42.008631",
+    "severity": "CRITICAL",
+    "acknowledged": 0,
+    "acknowledged_by": null,
+    "acknowledged_at": null
+  },
+  {
+    "alert_id": 162,
+    "alert_type": "zone_deviation",
+    "sighting_id_a": 111,
+    "sighting_id_b": null,
+    "detail_text": "Restricted zone entry: Sighting 111 (TN09CB1234) entered 'Marina Promenade Pedestrian Heritage Zone' (offset 0.0m <= 500m radius). Restriction: Pedestrian promenade \u2014 unpermitted motor vehicles prohibited",
+    "created_at": "2026-09-19T10:50:42.008631",
+    "severity": "MEDIUM",
+    "acknowledged": 0,
+    "acknowledged_by": null,
+    "acknowledged_at": null
+  },
+  {
+    "alert_id": 161,
+    "alert_type": "zone_deviation",
+    "sighting_id_a": 156,
+    "sighting_id_b": null,
+    "detail_text": "Restricted zone entry: Sighting 156 (TN07AX4521) entered 'Marina Promenade Pedestrian Heritage Zone' (offset 0.0m <= 500m radius). Restriction: Pedestrian promenade \u2014 unpermitted motor vehicles prohibited",
+    "created_at": "2026-09-19T10:50:42.008631",
+    "severity": "MEDIUM",
+    "acknowledged": 0,
+    "acknowledged_by": null,
+    "acknowledged_at": null
+  },
+  {
+    "alert_id": 160,
+    "alert_type": "zone_deviation",
+    "sighting_id_a": 137,
+    "sighting_id_b": null,
+    "detail_text": "Restricted zone entry: Sighting 137 (TN01AT4411) entered 'Marina Promenade Pedestrian Heritage Zone' (offset 0.0m <= 500m radius). Restriction: Pedestrian promenade \u2014 unpermitted motor vehicles prohibited",
+    "created_at": "2026-09-19T10:50:42.008631",
+    "severity": "MEDIUM",
+    "acknowledged": 0,
+    "acknowledged_by": null,
+    "acknowledged_at": null
+  },
+  {
+    "alert_id": 159,
+    "alert_type": "zone_deviation",
+    "sighting_id_a": 142,
+    "sighting_id_b": null,
+    "detail_text": "Restricted zone entry: Sighting 142 (TN10AM6677) entered 'Marina Promenade Pedestrian Heritage Zone' (offset 0.0m <= 500m radius). Restriction: Pedestrian promenade \u2014 unpermitted motor vehicles prohibited",
+    "created_at": "2026-09-19T10:50:42.008631",
+    "severity": "MEDIUM",
+    "acknowledged": 0,
+    "acknowledged_by": null,
+    "acknowledged_at": null
+  },
+  {
+    "alert_id": 158,
+    "alert_type": "zone_deviation",
+    "sighting_id_a": 164,
+    "sighting_id_b": null,
+    "detail_text": "Restricted zone entry: Sighting 164 (TN01AZ7788) entered 'Marina Promenade Pedestrian Heritage Zone' (offset 0.0m <= 500m radius). Restriction: Pedestrian promenade \u2014 unpermitted motor vehicles prohibited",
+    "created_at": "2026-09-19T10:50:42.008631",
+    "severity": "MEDIUM",
+    "acknowledged": 0,
+    "acknowledged_by": null,
+    "acknowledged_at": null
+  },
+  {
+    "alert_id": 157,
+    "alert_type": "zone_deviation",
+    "sighting_id_a": 129,
+    "sighting_id_b": null,
+    "detail_text": "Restricted zone entry: Sighting 129 (TN07BK3322) entered 'Marina Promenade Pedestrian Heritage Zone' (offset 0.0m <= 500m radius). Restriction: Pedestrian promenade \u2014 unpermitted motor vehicles prohibited",
+    "created_at": "2026-09-19T10:50:42.008631",
+    "severity": "MEDIUM",
+    "acknowledged": 0,
+    "acknowledged_by": null,
+    "acknowledged_at": null
+  },
+  {
+    "alert_id": 156,
+    "alert_type": "blacklist",
+    "sighting_id_a": 156,
+    "sighting_id_b": null,
+    "detail_text": "Blacklist hit: Vehicle 'TN07AX4521' detected at CAM_07 (13.0540, 80.2820). Reason on file: Wanted in connection with financial theft investigation (Case FIR 142/26)",
+    "created_at": "2026-09-19T10:50:42.008631",
+    "severity": "CRITICAL",
+    "acknowledged": 0,
+    "acknowledged_by": null,
+    "acknowledged_at": null
+  },
+  {
+    "alert_id": 155,
+    "alert_type": "blacklist",
+    "sighting_id_a": 155,
+    "sighting_id_b": null,
+    "detail_text": "Blacklist hit: Vehicle 'TN07AX4521' detected at CAM_02 (13.0577, 80.2497). Reason on file: Wanted in connection with financial theft investigation (Case FIR 142/26)",
+    "created_at": "2026-09-19T10:50:42.008631",
+    "severity": "CRITICAL",
+    "acknowledged": 0,
+    "acknowledged_by": null,
+    "acknowledged_at": null
+  },
+  {
+    "alert_id": 154,
+    "alert_type": "blacklist",
+    "sighting_id_a": 154,
+    "sighting_id_b": null,
+    "detail_text": "Blacklist hit: Vehicle 'TN07AX4521' detected at CAM_01 (13.0522, 80.2467). Reason on file: Wanted in connection with financial theft investigation (Case FIR 142/26)",
+    "created_at": "2026-09-19T10:50:42.008631",
+    "severity": "CRITICAL",
+    "acknowledged": 0,
+    "acknowledged_by": null,
+    "acknowledged_at": null
+  },
+  {
+    "alert_id": 153,
+    "alert_type": "blacklist",
+    "sighting_id_a": 153,
+    "sighting_id_b": null,
+    "detail_text": "Blacklist hit: Vehicle 'TN07AX4521' detected at CAM_06 (13.0227, 80.2210). Reason on file: Wanted in connection with financial theft investigation (Case FIR 142/26)",
+    "created_at": "2026-09-19T10:50:42.008631",
+    "severity": "CRITICAL",
+    "acknowledged": 0,
+    "acknowledged_by": null,
+    "acknowledged_at": null
+  },
+  {
+    "alert_id": 152,
+    "alert_type": "blacklist",
+    "sighting_id_a": 152,
+    "sighting_id_b": null,
+    "detail_text": "Blacklist hit: Vehicle 'TN07AX4521' detected at CAM_08 (13.0102, 80.2457). Reason on file: Wanted in connection with financial theft investigation (Case FIR 142/26)",
+    "created_at": "2026-09-19T10:50:42.008631",
+    "severity": "CRITICAL",
+    "acknowledged": 0,
+    "acknowledged_by": null,
+    "acknowledged_at": null
+  },
+  {
+    "alert_id": 151,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 97,
+    "sighting_id_b": 104,
+    "detail_text": "Statistical route anomaly: Transit from CAM_08 to CAM_07 took 3433s (57.2 min). Normal corridor baseline is 900\u00b1120s (15.0 min). Deviation is +21.11\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-18T12:42:59.908347",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.182651"
+  },
+  {
+    "alert_id": 150,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 89,
+    "sighting_id_b": 103,
+    "detail_text": "Statistical route anomaly: Transit from CAM_08 to CAM_06 took 6866s (114.4 min). Normal corridor baseline is 450\u00b160s (7.5 min). Deviation is +106.93\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-18T12:42:59.908347",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-18T13:10:32.853115"
+  },
+  {
+    "alert_id": 149,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 89,
+    "sighting_id_b": 96,
+    "detail_text": "Statistical route anomaly: Transit from CAM_08 to CAM_07 took 3433s (57.2 min). Normal corridor baseline is 900\u00b1120s (15.0 min). Deviation is +21.11\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-18T12:42:59.908347",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.193658"
+  },
+  {
+    "alert_id": 148,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 81,
+    "sighting_id_b": 95,
+    "detail_text": "Statistical route anomaly: Transit from CAM_08 to CAM_06 took 6866s (114.4 min). Normal corridor baseline is 450\u00b160s (7.5 min). Deviation is +106.93\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-18T12:42:59.908347",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.199045"
+  },
+  {
+    "alert_id": 147,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 81,
+    "sighting_id_b": 88,
+    "detail_text": "Statistical route anomaly: Transit from CAM_08 to CAM_07 took 3433s (57.2 min). Normal corridor baseline is 900\u00b1120s (15.0 min). Deviation is +21.11\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-18T12:42:59.908347",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.205019"
+  },
+  {
+    "alert_id": 146,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 79,
+    "sighting_id_b": 93,
+    "detail_text": "Statistical route anomaly: Transit from CAM_06 to CAM_04 took 6866s (114.4 min). Normal corridor baseline is 340\u00b145s (5.7 min). Deviation is +145.02\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-18T12:42:59.908347",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.211772"
+  },
+  {
+    "alert_id": 145,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 71,
+    "sighting_id_b": 85,
+    "detail_text": "Statistical route anomaly: Transit from CAM_06 to CAM_04 took 6366s (106.1 min). Normal corridor baseline is 340\u00b145s (5.7 min). Deviation is +133.91\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-18T12:42:59.908347",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.219558"
+  },
+  {
+    "alert_id": 144,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 65,
+    "sighting_id_b": 79,
+    "detail_text": "Statistical route anomaly: Transit from CAM_08 to CAM_06 took 6366s (106.1 min). Normal corridor baseline is 450\u00b160s (7.5 min). Deviation is +98.60\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-18T12:42:59.908347",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.225895"
+  },
+  {
+    "alert_id": 143,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 65,
+    "sighting_id_b": 72,
+    "detail_text": "Statistical route anomaly: Transit from CAM_08 to CAM_07 took 3433s (57.2 min). Normal corridor baseline is 900\u00b1120s (15.0 min). Deviation is +21.11\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-18T12:42:59.908347",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.232222"
+  },
+  {
+    "alert_id": 142,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 63,
+    "sighting_id_b": 77,
+    "detail_text": "Statistical route anomaly: Transit from CAM_06 to CAM_04 took 6366s (106.1 min). Normal corridor baseline is 340\u00b145s (5.7 min). Deviation is +133.91\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-18T12:42:59.908347",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.238735"
+  },
+  {
+    "alert_id": 141,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 57,
+    "sighting_id_b": 71,
+    "detail_text": "Statistical route anomaly: Transit from CAM_08 to CAM_06 took 6866s (114.4 min). Normal corridor baseline is 450\u00b160s (7.5 min). Deviation is +106.93\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-18T12:42:59.908347",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.245010"
+  },
+  {
+    "alert_id": 140,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 57,
+    "sighting_id_b": 64,
+    "detail_text": "Statistical route anomaly: Transit from CAM_08 to CAM_07 took 3433s (57.2 min). Normal corridor baseline is 900\u00b1120s (15.0 min). Deviation is +21.11\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-18T12:42:59.908347",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.253848"
+  },
+  {
+    "alert_id": 139,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 55,
+    "sighting_id_b": 69,
+    "detail_text": "Statistical route anomaly: Transit from CAM_06 to CAM_04 took 6866s (114.4 min). Normal corridor baseline is 340\u00b145s (5.7 min). Deviation is +145.02\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-18T12:42:59.908347",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.260829"
+  },
+  {
+    "alert_id": 138,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 49,
+    "sighting_id_b": 63,
+    "detail_text": "Statistical route anomaly: Transit from CAM_08 to CAM_06 took 6866s (114.4 min). Normal corridor baseline is 450\u00b160s (7.5 min). Deviation is +106.93\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-18T12:42:59.908347",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.268624"
+  },
+  {
+    "alert_id": 137,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 49,
+    "sighting_id_b": 56,
+    "detail_text": "Statistical route anomaly: Transit from CAM_08 to CAM_07 took 3433s (57.2 min). Normal corridor baseline is 900\u00b1120s (15.0 min). Deviation is +21.11\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-18T12:42:59.908347",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.275808"
+  },
+  {
+    "alert_id": 136,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 47,
+    "sighting_id_b": 61,
+    "detail_text": "Statistical route anomaly: Transit from CAM_06 to CAM_04 took 6866s (114.4 min). Normal corridor baseline is 340\u00b145s (5.7 min). Deviation is +145.02\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-18T12:42:59.908347",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.285518"
+  },
+  {
+    "alert_id": 135,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 41,
+    "sighting_id_b": 55,
+    "detail_text": "Statistical route anomaly: Transit from CAM_08 to CAM_06 took 6866s (114.4 min). Normal corridor baseline is 450\u00b160s (7.5 min). Deviation is +106.93\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-18T12:42:59.908347",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.292336"
+  },
+  {
+    "alert_id": 134,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 41,
+    "sighting_id_b": 48,
+    "detail_text": "Statistical route anomaly: Transit from CAM_08 to CAM_07 took 3433s (57.2 min). Normal corridor baseline is 900\u00b1120s (15.0 min). Deviation is +21.11\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-18T12:42:59.908347",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.300165"
+  },
+  {
+    "alert_id": 133,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 41,
+    "sighting_id_b": 13,
+    "detail_text": "Statistical route anomaly: Transit from CAM_08 to CAM_07 took 1894s (31.6 min). Normal corridor baseline is 900\u00b1120s (15.0 min). Deviation is +8.28\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-18T12:42:59.908347",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.308156"
+  },
+  {
+    "alert_id": 132,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 39,
+    "sighting_id_b": 53,
+    "detail_text": "Statistical route anomaly: Transit from CAM_06 to CAM_04 took 6866s (114.4 min). Normal corridor baseline is 340\u00b145s (5.7 min). Deviation is +145.02\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-18T12:42:59.908347",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.314804"
+  },
+  {
+    "alert_id": 131,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 10,
+    "sighting_id_b": 42,
+    "detail_text": "Statistical route anomaly: Transit from CAM_06 to CAM_01 took 2919s (48.6 min). Normal corridor baseline is 580\u00b175s (9.7 min). Deviation is +31.19\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-18T12:42:59.908347",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.322183"
+  },
+  {
+    "alert_id": 130,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 10,
+    "sighting_id_b": 11,
+    "detail_text": "Statistical route anomaly: Transit from CAM_06 to CAM_01 took 2460s (41.0 min). Normal corridor baseline is 580\u00b175s (9.7 min). Deviation is +25.07\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-18T12:42:59.908347",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.329894"
+  },
+  {
+    "alert_id": 129,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 33,
+    "sighting_id_b": 47,
+    "detail_text": "Statistical route anomaly: Transit from CAM_08 to CAM_06 took 6866s (114.4 min). Normal corridor baseline is 450\u00b160s (7.5 min). Deviation is +106.93\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-18T12:42:59.908347",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.337675"
+  },
+  {
+    "alert_id": 128,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 33,
+    "sighting_id_b": 40,
+    "detail_text": "Statistical route anomaly: Transit from CAM_08 to CAM_07 took 3433s (57.2 min). Normal corridor baseline is 900\u00b1120s (15.0 min). Deviation is +21.11\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-18T12:42:59.908347",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.345232"
+  },
+  {
+    "alert_id": 127,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 1,
+    "sighting_id_b": 39,
+    "detail_text": "Statistical route anomaly: Transit from CAM_05 to CAM_06 took 4946s (82.4 min). Normal corridor baseline is 360\u00b145s (6.0 min). Deviation is +101.91\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-18T12:42:59.908347",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.354521"
+  },
+  {
+    "alert_id": 126,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 25,
+    "sighting_id_b": 39,
+    "detail_text": "Statistical route anomaly: Transit from CAM_08 to CAM_06 took 6866s (114.4 min). Normal corridor baseline is 450\u00b160s (7.5 min). Deviation is +106.93\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-18T12:42:59.908347",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.362007"
+  },
+  {
+    "alert_id": 125,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 25,
+    "sighting_id_b": 32,
+    "detail_text": "Statistical route anomaly: Transit from CAM_08 to CAM_07 took 3433s (57.2 min). Normal corridor baseline is 900\u00b1120s (15.0 min). Deviation is +21.11\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-18T12:42:59.908347",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.370031"
+  },
+  {
+    "alert_id": 124,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 25,
+    "sighting_id_b": 2,
+    "detail_text": "Statistical route anomaly: Transit from CAM_08 to CAM_06 took 2280s (38.0 min). Normal corridor baseline is 450\u00b160s (7.5 min). Deviation is +30.50\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-18T12:42:59.908347",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.377518"
+  },
+  {
+    "alert_id": 123,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 23,
+    "sighting_id_b": 37,
+    "detail_text": "Statistical route anomaly: Transit from CAM_06 to CAM_04 took 6866s (114.4 min). Normal corridor baseline is 340\u00b145s (5.7 min). Deviation is +145.02\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-18T12:42:59.908347",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.384785"
+  },
+  {
+    "alert_id": 122,
+    "alert_type": "route_anomaly",
+    "sighting_id_a": 22,
+    "sighting_id_b": 9,
+    "detail_text": "Statistical route anomaly: Transit from CAM_05 to CAM_06 took 6282s (104.7 min). Normal corridor baseline is 360\u00b145s (6.0 min). Deviation is +131.60\u03c3, exceeding the 3.00\u03c3 threshold.",
+    "created_at": "2026-09-18T12:42:59.908347",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.392661"
+  },
+  {
     "alert_id": 121,
     "alert_type": "impossible_transit",
     "sighting_id_a": 44,
     "sighting_id_b": 14,
     "detail_text": "Impossible transit speed: Vehicle 'MH02EZ9012' moved from CAM_03 to CAM_08 (7.09 km in 101s) at 252.6 km/h, exceeding the maximum 140.0 km/h urban safety limit.",
-    "created_at": "2026-09-14T09:40:50.473761"
+    "created_at": "2026-09-14T09:40:50.473761",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-18T12:29:00.799637"
   },
   {
     "alert_id": 120,
@@ -13,7 +725,11 @@
     "sighting_id_a": 8,
     "sighting_id_b": 9,
     "detail_text": "Impossible transit speed: Vehicle 'TN22CY3311' moved from CAM_05 to CAM_06 (2.71 km in 42s) at 232.2 km/h, exceeding the maximum 140.0 km/h urban safety limit.",
-    "created_at": "2026-09-14T09:40:50.473761"
+    "created_at": "2026-09-14T09:40:50.473761",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-18T12:29:05.250948"
   },
   {
     "alert_id": 119,
@@ -21,7 +737,11 @@
     "sighting_id_a": 33,
     "sighting_id_b": 6,
     "detail_text": "Impossible transit speed: Vehicle 'TN07AX4521' moved from CAM_08 to CAM_04 (3.93 km in 47s) at 301.0 km/h, exceeding the maximum 140.0 km/h urban safety limit.",
-    "created_at": "2026-09-14T09:40:50.473761"
+    "created_at": "2026-09-14T09:40:50.473761",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.399207"
   },
   {
     "alert_id": 118,
@@ -29,7 +749,11 @@
     "sighting_id_a": 83,
     "sighting_id_b": 104,
     "detail_text": "Statistical route anomaly: Transit from CAM_02 to CAM_07 took 8546s (142.4 min). Normal corridor baseline is 423\u00b130s (7.0 min). Deviation is +270.77\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.406826"
   },
   {
     "alert_id": 117,
@@ -37,7 +761,11 @@
     "sighting_id_a": 79,
     "sighting_id_b": 100,
     "detail_text": "Statistical route anomaly: Transit from CAM_06 to CAM_03 took 10299s (171.7 min). Normal corridor baseline is 727\u00b1202s (12.1 min). Deviation is +47.34\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.414491"
   },
   {
     "alert_id": 116,
@@ -45,7 +773,11 @@
     "sighting_id_a": 78,
     "sighting_id_b": 99,
     "detail_text": "Statistical route anomaly: Transit from CAM_05 to CAM_02 took 10299s (171.7 min). Normal corridor baseline is 2574\u00b12099s (42.9 min). Deviation is +3.68\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.421852"
   },
   {
     "alert_id": 115,
@@ -53,7 +785,11 @@
     "sighting_id_a": 77,
     "sighting_id_b": 98,
     "detail_text": "Statistical route anomaly: Transit from CAM_04 to CAM_01 took 10299s (171.7 min). Normal corridor baseline is 380\u00b130s (6.3 min). Deviation is +330.63\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.428523"
   },
   {
     "alert_id": 114,
@@ -61,7 +797,11 @@
     "sighting_id_a": 76,
     "sighting_id_b": 104,
     "detail_text": "Statistical route anomaly: Transit from CAM_03 to CAM_07 took 11979s (199.7 min). Normal corridor baseline is 283\u00b130s (4.7 min). Deviation is +389.87\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.436148"
   },
   {
     "alert_id": 113,
@@ -69,7 +809,11 @@
     "sighting_id_a": 75,
     "sighting_id_b": 103,
     "detail_text": "Statistical route anomaly: Transit from CAM_02 to CAM_06 took 11979s (199.7 min). Normal corridor baseline is 3856\u00b130s (64.3 min). Deviation is +270.77\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.443374"
   },
   {
     "alert_id": 112,
@@ -77,7 +821,11 @@
     "sighting_id_a": 75,
     "sighting_id_b": 96,
     "detail_text": "Statistical route anomaly: Transit from CAM_02 to CAM_07 took 8546s (142.4 min). Normal corridor baseline is 423\u00b130s (7.0 min). Deviation is +270.77\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-18T12:28:44.915407"
   },
   {
     "alert_id": 111,
@@ -85,7 +833,11 @@
     "sighting_id_a": 71,
     "sighting_id_b": 99,
     "detail_text": "Statistical route anomaly: Transit from CAM_06 to CAM_02 took 13232s (220.5 min). Normal corridor baseline is 2374\u00b12324s (39.6 min). Deviation is +4.67\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-18T12:28:48.362765"
   },
   {
     "alert_id": 110,
@@ -93,7 +845,11 @@
     "sighting_id_a": 71,
     "sighting_id_b": 92,
     "detail_text": "Statistical route anomaly: Transit from CAM_06 to CAM_03 took 9799s (163.3 min). Normal corridor baseline is 727\u00b1202s (12.1 min). Deviation is +44.87\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.450122"
   },
   {
     "alert_id": 109,
@@ -101,7 +857,11 @@
     "sighting_id_a": 70,
     "sighting_id_b": 98,
     "detail_text": "Statistical route anomaly: Transit from CAM_05 to CAM_01 took 13232s (220.5 min). Normal corridor baseline is 940\u00b130s (15.7 min). Deviation is +409.73\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.457061"
   },
   {
     "alert_id": 108,
@@ -109,7 +869,11 @@
     "sighting_id_a": 70,
     "sighting_id_b": 91,
     "detail_text": "Statistical route anomaly: Transit from CAM_05 to CAM_02 took 9799s (163.3 min). Normal corridor baseline is 2574\u00b12099s (42.9 min). Deviation is +3.44\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.464777"
   },
   {
     "alert_id": 107,
@@ -117,7 +881,11 @@
     "sighting_id_a": 69,
     "sighting_id_b": 90,
     "detail_text": "Statistical route anomaly: Transit from CAM_04 to CAM_01 took 9799s (163.3 min). Normal corridor baseline is 380\u00b130s (6.3 min). Deviation is +313.97\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.472685"
   },
   {
     "alert_id": 106,
@@ -125,7 +893,11 @@
     "sighting_id_a": 68,
     "sighting_id_b": 96,
     "detail_text": "Statistical route anomaly: Transit from CAM_03 to CAM_07 took 11479s (191.3 min). Normal corridor baseline is 283\u00b130s (4.7 min). Deviation is +373.20\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.480159"
   },
   {
     "alert_id": 105,
@@ -133,7 +905,11 @@
     "sighting_id_a": 67,
     "sighting_id_b": 95,
     "detail_text": "Statistical route anomaly: Transit from CAM_02 to CAM_06 took 11479s (191.3 min). Normal corridor baseline is 3856\u00b130s (64.3 min). Deviation is +254.10\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.486916"
   },
   {
     "alert_id": 104,
@@ -141,7 +917,11 @@
     "sighting_id_a": 67,
     "sighting_id_b": 88,
     "detail_text": "Statistical route anomaly: Transit from CAM_02 to CAM_07 took 8046s (134.1 min). Normal corridor baseline is 423\u00b130s (7.0 min). Deviation is +254.10\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.493608"
   },
   {
     "alert_id": 103,
@@ -149,7 +929,11 @@
     "sighting_id_a": 63,
     "sighting_id_b": 91,
     "detail_text": "Statistical route anomaly: Transit from CAM_06 to CAM_02 took 13232s (220.5 min). Normal corridor baseline is 2374\u00b12324s (39.6 min). Deviation is +4.67\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.500594"
   },
   {
     "alert_id": 102,
@@ -157,7 +941,11 @@
     "sighting_id_a": 63,
     "sighting_id_b": 84,
     "detail_text": "Statistical route anomaly: Transit from CAM_06 to CAM_03 took 9799s (163.3 min). Normal corridor baseline is 727\u00b1202s (12.1 min). Deviation is +44.87\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.505702"
   },
   {
     "alert_id": 101,
@@ -165,7 +953,11 @@
     "sighting_id_a": 62,
     "sighting_id_b": 90,
     "detail_text": "Statistical route anomaly: Transit from CAM_05 to CAM_01 took 13232s (220.5 min). Normal corridor baseline is 940\u00b130s (15.7 min). Deviation is +409.73\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.512539"
   },
   {
     "alert_id": 100,
@@ -173,7 +965,11 @@
     "sighting_id_a": 62,
     "sighting_id_b": 83,
     "detail_text": "Statistical route anomaly: Transit from CAM_05 to CAM_02 took 9799s (163.3 min). Normal corridor baseline is 2574\u00b12099s (42.9 min). Deviation is +3.44\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.519943"
   },
   {
     "alert_id": 99,
@@ -181,7 +977,11 @@
     "sighting_id_a": 61,
     "sighting_id_b": 82,
     "detail_text": "Statistical route anomaly: Transit from CAM_04 to CAM_01 took 9799s (163.3 min). Normal corridor baseline is 380\u00b130s (6.3 min). Deviation is +313.97\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.528115"
   },
   {
     "alert_id": 98,
@@ -189,7 +989,11 @@
     "sighting_id_a": 60,
     "sighting_id_b": 88,
     "detail_text": "Statistical route anomaly: Transit from CAM_03 to CAM_07 took 11479s (191.3 min). Normal corridor baseline is 283\u00b130s (4.7 min). Deviation is +373.20\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.535723"
   },
   {
     "alert_id": 97,
@@ -197,7 +1001,11 @@
     "sighting_id_a": 55,
     "sighting_id_b": 83,
     "detail_text": "Statistical route anomaly: Transit from CAM_06 to CAM_02 took 13232s (220.5 min). Normal corridor baseline is 2374\u00b12324s (39.6 min). Deviation is +4.67\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.543010"
   },
   {
     "alert_id": 96,
@@ -205,7 +1013,11 @@
     "sighting_id_a": 55,
     "sighting_id_b": 76,
     "detail_text": "Statistical route anomaly: Transit from CAM_06 to CAM_03 took 9799s (163.3 min). Normal corridor baseline is 727\u00b1202s (12.1 min). Deviation is +44.87\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.550950"
   },
   {
     "alert_id": 95,
@@ -213,7 +1025,11 @@
     "sighting_id_a": 54,
     "sighting_id_b": 82,
     "detail_text": "Statistical route anomaly: Transit from CAM_05 to CAM_01 took 13232s (220.5 min). Normal corridor baseline is 940\u00b130s (15.7 min). Deviation is +409.73\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.557969"
   },
   {
     "alert_id": 94,
@@ -221,7 +1037,11 @@
     "sighting_id_a": 54,
     "sighting_id_b": 75,
     "detail_text": "Statistical route anomaly: Transit from CAM_05 to CAM_02 took 9799s (163.3 min). Normal corridor baseline is 2574\u00b12099s (42.9 min). Deviation is +3.44\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.564166"
   },
   {
     "alert_id": 93,
@@ -229,7 +1049,11 @@
     "sighting_id_a": 53,
     "sighting_id_b": 74,
     "detail_text": "Statistical route anomaly: Transit from CAM_04 to CAM_01 took 9799s (163.3 min). Normal corridor baseline is 380\u00b130s (6.3 min). Deviation is +313.97\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.571043"
   },
   {
     "alert_id": 92,
@@ -237,7 +1061,11 @@
     "sighting_id_a": 51,
     "sighting_id_b": 79,
     "detail_text": "Statistical route anomaly: Transit from CAM_02 to CAM_06 took 11479s (191.3 min). Normal corridor baseline is 3856\u00b130s (64.3 min). Deviation is +254.10\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.578431"
   },
   {
     "alert_id": 91,
@@ -245,7 +1073,11 @@
     "sighting_id_a": 51,
     "sighting_id_b": 72,
     "detail_text": "Statistical route anomaly: Transit from CAM_02 to CAM_07 took 8546s (142.4 min). Normal corridor baseline is 423\u00b130s (7.0 min). Deviation is +270.77\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.586198"
   },
   {
     "alert_id": 90,
@@ -253,7 +1085,11 @@
     "sighting_id_a": 15,
     "sighting_id_b": 79,
     "detail_text": "Statistical route anomaly: Transit from CAM_07 to CAM_06 took 13911s (231.8 min). Normal corridor baseline is 3548\u00b1559s (59.1 min). Deviation is +18.54\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.593002"
   },
   {
     "alert_id": 89,
@@ -261,7 +1097,11 @@
     "sighting_id_a": 47,
     "sighting_id_b": 75,
     "detail_text": "Statistical route anomaly: Transit from CAM_06 to CAM_02 took 13232s (220.5 min). Normal corridor baseline is 2374\u00b12324s (39.6 min). Deviation is +4.67\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.600613"
   },
   {
     "alert_id": 88,
@@ -269,7 +1109,11 @@
     "sighting_id_a": 47,
     "sighting_id_b": 68,
     "detail_text": "Statistical route anomaly: Transit from CAM_06 to CAM_03 took 10299s (171.7 min). Normal corridor baseline is 727\u00b1202s (12.1 min). Deviation is +47.34\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.607521"
   },
   {
     "alert_id": 87,
@@ -277,7 +1121,11 @@
     "sighting_id_a": 46,
     "sighting_id_b": 74,
     "detail_text": "Statistical route anomaly: Transit from CAM_05 to CAM_01 took 13232s (220.5 min). Normal corridor baseline is 940\u00b130s (15.7 min). Deviation is +409.73\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.612471"
   },
   {
     "alert_id": 86,
@@ -285,7 +1133,11 @@
     "sighting_id_a": 46,
     "sighting_id_b": 67,
     "detail_text": "Statistical route anomaly: Transit from CAM_05 to CAM_02 took 10299s (171.7 min). Normal corridor baseline is 2574\u00b12099s (42.9 min). Deviation is +3.68\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.620368"
   },
   {
     "alert_id": 85,
@@ -293,7 +1145,11 @@
     "sighting_id_a": 14,
     "sighting_id_b": 72,
     "detail_text": "Statistical route anomaly: Transit from CAM_08 to CAM_07 took 11878s (198.0 min). Normal corridor baseline is 3180\u00b1801s (53.0 min). Deviation is +10.86\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.627783"
   },
   {
     "alert_id": 84,
@@ -301,7 +1157,11 @@
     "sighting_id_a": 44,
     "sighting_id_b": 72,
     "detail_text": "Statistical route anomaly: Transit from CAM_03 to CAM_07 took 11979s (199.7 min). Normal corridor baseline is 283\u00b130s (4.7 min). Deviation is +389.87\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.634980"
   },
   {
     "alert_id": 83,
@@ -309,7 +1169,11 @@
     "sighting_id_a": 44,
     "sighting_id_b": 15,
     "detail_text": "Statistical route anomaly: Transit from CAM_03 to CAM_07 took 1001s (16.7 min). Normal corridor baseline is 283\u00b130s (4.7 min). Deviation is +23.93\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.641303"
   },
   {
     "alert_id": 82,
@@ -317,7 +1181,11 @@
     "sighting_id_a": 44,
     "sighting_id_b": 14,
     "detail_text": "Plate clone detected: Plate 'MH02EZ9012' seen at CAM_03 and CAM_08 with delta-t 101s (required speed 252.6 km/h > 180.0 km/h limit). Simultaneous multi-location transit proves duplicate physical plate.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-18T12:43:01.899988"
   },
   {
     "alert_id": 81,
@@ -325,7 +1193,11 @@
     "sighting_id_a": 43,
     "sighting_id_b": 71,
     "detail_text": "Statistical route anomaly: Transit from CAM_02 to CAM_06 took 11979s (199.7 min). Normal corridor baseline is 3856\u00b130s (64.3 min). Deviation is +270.77\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.648091"
   },
   {
     "alert_id": 80,
@@ -333,7 +1205,11 @@
     "sighting_id_a": 43,
     "sighting_id_b": 64,
     "detail_text": "Statistical route anomaly: Transit from CAM_02 to CAM_07 took 8546s (142.4 min). Normal corridor baseline is 423\u00b130s (7.0 min). Deviation is +270.77\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.655467"
   },
   {
     "alert_id": 79,
@@ -341,7 +1217,11 @@
     "sighting_id_a": 13,
     "sighting_id_b": 62,
     "detail_text": "Statistical route anomaly: Transit from CAM_07 to CAM_05 took 8405s (140.1 min). Normal corridor baseline is 6723\u00b1244s (112.1 min). Deviation is +6.89\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.662942"
   },
   {
     "alert_id": 78,
@@ -349,7 +1229,11 @@
     "sighting_id_a": 11,
     "sighting_id_b": 63,
     "detail_text": "Statistical route anomaly: Transit from CAM_01 to CAM_06 took 9005s (150.1 min). Normal corridor baseline is 5179\u00b11219s (86.3 min). Deviation is +3.14\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.670723"
   },
   {
     "alert_id": 77,
@@ -357,7 +1241,11 @@
     "sighting_id_a": 11,
     "sighting_id_b": 49,
     "detail_text": "Statistical route anomaly: Transit from CAM_01 to CAM_08 took 2139s (35.6 min). Normal corridor baseline is 1722\u00b1138s (28.7 min). Deviation is +3.02\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.677574"
   },
   {
     "alert_id": 76,
@@ -365,7 +1253,11 @@
     "sighting_id_a": 39,
     "sighting_id_b": 67,
     "detail_text": "Statistical route anomaly: Transit from CAM_06 to CAM_02 took 13732s (228.9 min). Normal corridor baseline is 2374\u00b12324s (39.6 min). Deviation is +4.89\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.684207"
   },
   {
     "alert_id": 75,
@@ -373,7 +1265,11 @@
     "sighting_id_a": 39,
     "sighting_id_b": 60,
     "detail_text": "Statistical route anomaly: Transit from CAM_06 to CAM_03 took 10299s (171.7 min). Normal corridor baseline is 727\u00b1202s (12.1 min). Deviation is +47.34\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.691069"
   },
   {
     "alert_id": 74,
@@ -381,7 +1277,11 @@
     "sighting_id_a": 10,
     "sighting_id_b": 56,
     "detail_text": "Statistical route anomaly: Transit from CAM_06 to CAM_07 took 8032s (133.9 min). Normal corridor baseline is 1153\u00b130s (19.2 min). Deviation is +229.30\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.697575"
   },
   {
     "alert_id": 73,
@@ -389,7 +1289,11 @@
     "sighting_id_a": 37,
     "sighting_id_b": 58,
     "detail_text": "Statistical route anomaly: Transit from CAM_04 to CAM_01 took 10299s (171.7 min). Normal corridor baseline is 380\u00b130s (6.3 min). Deviation is +330.63\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.704405"
   },
   {
     "alert_id": 72,
@@ -397,7 +1301,11 @@
     "sighting_id_a": 37,
     "sighting_id_b": 15,
     "detail_text": "Statistical route anomaly: Transit from CAM_04 to CAM_07 took 4434s (73.9 min). Normal corridor baseline is 3386\u00b130s (56.4 min). Deviation is +34.93\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.711409"
   },
   {
     "alert_id": 71,
@@ -405,7 +1313,11 @@
     "sighting_id_a": 36,
     "sighting_id_b": 64,
     "detail_text": "Statistical route anomaly: Transit from CAM_03 to CAM_07 took 11979s (199.7 min). Normal corridor baseline is 283\u00b130s (4.7 min). Deviation is +389.87\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.719293"
   },
   {
     "alert_id": 70,
@@ -413,7 +1325,11 @@
     "sighting_id_a": 35,
     "sighting_id_b": 63,
     "detail_text": "Statistical route anomaly: Transit from CAM_02 to CAM_06 took 11979s (199.7 min). Normal corridor baseline is 3856\u00b130s (64.3 min). Deviation is +270.77\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.726677"
   },
   {
     "alert_id": 69,
@@ -421,7 +1337,11 @@
     "sighting_id_a": 35,
     "sighting_id_b": 56,
     "detail_text": "Statistical route anomaly: Transit from CAM_02 to CAM_07 took 8546s (142.4 min). Normal corridor baseline is 423\u00b130s (7.0 min). Deviation is +270.77\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.733371"
   },
   {
     "alert_id": 68,
@@ -429,7 +1349,11 @@
     "sighting_id_a": 9,
     "sighting_id_b": 64,
     "detail_text": "Statistical route anomaly: Transit from CAM_06 to CAM_07 took 12563s (209.4 min). Normal corridor baseline is 1153\u00b130s (19.2 min). Deviation is +380.33\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.741024"
   },
   {
     "alert_id": 67,
@@ -437,7 +1361,11 @@
     "sighting_id_a": 9,
     "sighting_id_b": 57,
     "detail_text": "Statistical route anomaly: Transit from CAM_06 to CAM_08 took 9130s (152.2 min). Normal corridor baseline is 4599\u00b130s (76.7 min). Deviation is +151.03\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.748439"
   },
   {
     "alert_id": 66,
@@ -445,7 +1373,11 @@
     "sighting_id_a": 9,
     "sighting_id_b": 50,
     "detail_text": "Statistical route anomaly: Transit from CAM_06 to CAM_01 took 7450s (124.2 min). Normal corridor baseline is 1986\u00b11239s (33.1 min). Deviation is +4.41\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.757453"
   },
   {
     "alert_id": 65,
@@ -453,7 +1385,11 @@
     "sighting_id_a": 8,
     "sighting_id_b": 64,
     "detail_text": "Statistical route anomaly: Transit from CAM_05 to CAM_07 took 12605s (210.1 min). Normal corridor baseline is 1513\u00b130s (25.2 min). Deviation is +369.73\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.765147"
   },
   {
     "alert_id": 64,
@@ -461,7 +1397,11 @@
     "sighting_id_a": 8,
     "sighting_id_b": 50,
     "detail_text": "Statistical route anomaly: Transit from CAM_05 to CAM_01 took 7492s (124.9 min). Normal corridor baseline is 940\u00b130s (15.7 min). Deviation is +218.40\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.772549"
   },
   {
     "alert_id": 63,
@@ -469,7 +1409,11 @@
     "sighting_id_a": 8,
     "sighting_id_b": 9,
     "detail_text": "Plate clone detected: Plate 'TN22CY3311' seen at CAM_05 and CAM_06 with delta-t 42s (required speed 232.2 km/h > 180.0 km/h limit). Simultaneous multi-location transit proves duplicate physical plate.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-18T12:43:01.918215"
   },
   {
     "alert_id": 62,
@@ -477,7 +1421,11 @@
     "sighting_id_a": 33,
     "sighting_id_b": 6,
     "detail_text": "Plate clone detected: Plate 'TN07AX4521' seen at CAM_08 and CAM_04 with delta-t 47s (required speed 301.0 km/h > 180.0 km/h limit). Simultaneous multi-location transit proves duplicate physical plate.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-18T12:43:01.923822"
   },
   {
     "alert_id": 61,
@@ -485,7 +1433,11 @@
     "sighting_id_a": 4,
     "sighting_id_b": 60,
     "detail_text": "Statistical route anomaly: Transit from CAM_02 to CAM_03 took 14155s (235.9 min). Normal corridor baseline is 140\u00b130s (2.3 min). Deviation is +467.17\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.779902"
   },
   {
     "alert_id": 60,
@@ -493,7 +1445,11 @@
     "sighting_id_a": 30,
     "sighting_id_b": 58,
     "detail_text": "Statistical route anomaly: Transit from CAM_05 to CAM_01 took 13732s (228.9 min). Normal corridor baseline is 940\u00b130s (15.7 min). Deviation is +426.40\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.788902"
   },
   {
     "alert_id": 59,
@@ -501,7 +1457,11 @@
     "sighting_id_a": 30,
     "sighting_id_b": 51,
     "detail_text": "Statistical route anomaly: Transit from CAM_05 to CAM_02 took 10299s (171.7 min). Normal corridor baseline is 2574\u00b12099s (42.9 min). Deviation is +3.68\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.796794"
   },
   {
     "alert_id": 58,
@@ -509,7 +1469,11 @@
     "sighting_id_a": 30,
     "sighting_id_b": 15,
     "detail_text": "Statistical route anomaly: Transit from CAM_05 to CAM_07 took 7867s (131.1 min). Normal corridor baseline is 1513\u00b130s (25.2 min). Deviation is +211.80\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.805565"
   },
   {
     "alert_id": 57,
@@ -517,7 +1481,11 @@
     "sighting_id_a": 3,
     "sighting_id_b": 60,
     "detail_text": "Statistical route anomaly: Transit from CAM_01 to CAM_03 took 14305s (238.4 min). Normal corridor baseline is 290\u00b130s (4.8 min). Deviation is +467.17\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.812583"
   },
   {
     "alert_id": 56,
@@ -525,7 +1493,11 @@
     "sighting_id_a": 29,
     "sighting_id_b": 50,
     "detail_text": "Statistical route anomaly: Transit from CAM_04 to CAM_01 took 10299s (171.7 min). Normal corridor baseline is 380\u00b130s (6.3 min). Deviation is +330.63\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.822211"
   },
   {
     "alert_id": 55,
@@ -533,7 +1505,11 @@
     "sighting_id_a": 28,
     "sighting_id_b": 56,
     "detail_text": "Statistical route anomaly: Transit from CAM_03 to CAM_07 took 11979s (199.7 min). Normal corridor baseline is 283\u00b130s (4.7 min). Deviation is +389.87\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.831141"
   },
   {
     "alert_id": 54,
@@ -541,7 +1517,11 @@
     "sighting_id_a": 28,
     "sighting_id_b": 10,
     "detail_text": "Statistical route anomaly: Transit from CAM_03 to CAM_06 took 3947s (65.8 min). Normal corridor baseline is 3716\u00b130s (61.9 min). Deviation is +7.70\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.838965"
   },
   {
     "alert_id": 53,
@@ -549,7 +1529,11 @@
     "sighting_id_a": 2,
     "sighting_id_b": 53,
     "detail_text": "Statistical route anomaly: Transit from CAM_06 to CAM_04 took 11452s (190.9 min). Normal corridor baseline is 6723\u00b1244s (112.1 min). Deviation is +19.38\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.846275"
   },
   {
     "alert_id": 52,
@@ -557,7 +1541,11 @@
     "sighting_id_a": 2,
     "sighting_id_b": 46,
     "detail_text": "Statistical route anomaly: Transit from CAM_06 to CAM_05 took 8019s (133.7 min). Normal corridor baseline is 3370\u00b1177s (56.2 min). Deviation is +26.29\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.853368"
   },
   {
     "alert_id": 51,
@@ -565,7 +1553,11 @@
     "sighting_id_a": 27,
     "sighting_id_b": 55,
     "detail_text": "Statistical route anomaly: Transit from CAM_02 to CAM_06 took 11979s (199.7 min). Normal corridor baseline is 3856\u00b130s (64.3 min). Deviation is +270.77\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.860021"
   },
   {
     "alert_id": 50,
@@ -573,7 +1565,11 @@
     "sighting_id_a": 27,
     "sighting_id_b": 48,
     "detail_text": "Statistical route anomaly: Transit from CAM_02 to CAM_07 took 8546s (142.4 min). Normal corridor baseline is 423\u00b130s (7.0 min). Deviation is +270.77\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.868794"
   },
   {
     "alert_id": 49,
@@ -581,7 +1577,11 @@
     "sighting_id_a": 27,
     "sighting_id_b": 13,
     "detail_text": "Statistical route anomaly: Transit from CAM_02 to CAM_07 took 7007s (116.8 min). Normal corridor baseline is 423\u00b130s (7.0 min). Deviation is +219.47\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.875711"
   },
   {
     "alert_id": 48,
@@ -589,7 +1589,11 @@
     "sighting_id_a": 27,
     "sighting_id_b": 12,
     "detail_text": "Statistical route anomaly: Transit from CAM_02 to CAM_01 took 6887s (114.8 min). Normal corridor baseline is 3377\u00b1167s (56.3 min). Deviation is +21.05\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.884110"
   },
   {
     "alert_id": 47,
@@ -597,7 +1601,11 @@
     "sighting_id_a": 1,
     "sighting_id_b": 53,
     "detail_text": "Statistical route anomaly: Transit from CAM_05 to CAM_04 took 11812s (196.9 min). Normal corridor baseline is 3370\u00b1177s (56.2 min). Deviation is +47.75\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.892141"
   },
   {
     "alert_id": 46,
@@ -605,7 +1613,11 @@
     "sighting_id_a": 23,
     "sighting_id_b": 51,
     "detail_text": "Statistical route anomaly: Transit from CAM_06 to CAM_02 took 13732s (228.9 min). Normal corridor baseline is 2374\u00b12324s (39.6 min). Deviation is +4.89\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.899345"
   },
   {
     "alert_id": 45,
@@ -613,7 +1625,11 @@
     "sighting_id_a": 23,
     "sighting_id_b": 15,
     "detail_text": "Statistical route anomaly: Transit from CAM_06 to CAM_07 took 11300s (188.3 min). Normal corridor baseline is 1153\u00b130s (19.2 min). Deviation is +338.23\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.907195"
   },
   {
     "alert_id": 44,
@@ -621,7 +1637,11 @@
     "sighting_id_a": 23,
     "sighting_id_b": 14,
     "detail_text": "Statistical route anomaly: Transit from CAM_06 to CAM_08 took 10400s (173.3 min). Normal corridor baseline is 4599\u00b130s (76.7 min). Deviation is +193.37\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.916204"
   },
   {
     "alert_id": 43,
@@ -629,7 +1649,11 @@
     "sighting_id_a": 23,
     "sighting_id_b": 44,
     "detail_text": "Statistical route anomaly: Transit from CAM_06 to CAM_03 took 10299s (171.7 min). Normal corridor baseline is 727\u00b1202s (12.1 min). Deviation is +47.34\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.925014"
   },
   {
     "alert_id": 42,
@@ -637,7 +1661,11 @@
     "sighting_id_a": 22,
     "sighting_id_b": 50,
     "detail_text": "Statistical route anomaly: Transit from CAM_05 to CAM_01 took 13732s (228.9 min). Normal corridor baseline is 940\u00b130s (15.7 min). Deviation is +426.40\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.933662"
   },
   {
     "alert_id": 41,
@@ -645,7 +1673,11 @@
     "sighting_id_a": 22,
     "sighting_id_b": 43,
     "detail_text": "Statistical route anomaly: Transit from CAM_05 to CAM_02 took 10299s (171.7 min). Normal corridor baseline is 2574\u00b12099s (42.9 min). Deviation is +3.68\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.943106"
   },
   {
     "alert_id": 40,
@@ -653,7 +1685,11 @@
     "sighting_id_a": 21,
     "sighting_id_b": 42,
     "detail_text": "Statistical route anomaly: Transit from CAM_04 to CAM_01 took 10299s (171.7 min). Normal corridor baseline is 380\u00b130s (6.3 min). Deviation is +330.63\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.950431"
   },
   {
     "alert_id": 39,
@@ -661,7 +1697,11 @@
     "sighting_id_a": 21,
     "sighting_id_b": 11,
     "detail_text": "Statistical route anomaly: Transit from CAM_04 to CAM_01 took 9840s (164.0 min). Normal corridor baseline is 380\u00b130s (6.3 min). Deviation is +315.33\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.957855"
   },
   {
     "alert_id": 38,
@@ -669,7 +1709,11 @@
     "sighting_id_a": 21,
     "sighting_id_b": 10,
     "detail_text": "Statistical route anomaly: Transit from CAM_04 to CAM_06 took 7380s (123.0 min). Normal corridor baseline is 6819\u00b130s (113.7 min). Deviation is +18.70\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.964694"
   },
   {
     "alert_id": 37,
@@ -677,7 +1721,11 @@
     "sighting_id_a": 20,
     "sighting_id_b": 48,
     "detail_text": "Statistical route anomaly: Transit from CAM_03 to CAM_07 took 11979s (199.7 min). Normal corridor baseline is 283\u00b130s (4.7 min). Deviation is +389.87\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.972694"
   },
   {
     "alert_id": 36,
@@ -685,7 +1733,11 @@
     "sighting_id_a": 20,
     "sighting_id_b": 13,
     "detail_text": "Statistical route anomaly: Transit from CAM_03 to CAM_07 took 10440s (174.0 min). Normal corridor baseline is 283\u00b130s (4.7 min). Deviation is +338.57\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.980106"
   },
   {
     "alert_id": 35,
@@ -693,7 +1745,11 @@
     "sighting_id_a": 20,
     "sighting_id_b": 12,
     "detail_text": "Statistical route anomaly: Transit from CAM_03 to CAM_01 took 10320s (172.0 min). Normal corridor baseline is 6741\u00b1232s (112.3 min). Deviation is +15.46\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.987568"
   },
   {
     "alert_id": 34,
@@ -701,7 +1757,11 @@
     "sighting_id_a": 19,
     "sighting_id_b": 47,
     "detail_text": "Statistical route anomaly: Transit from CAM_02 to CAM_06 took 11979s (199.7 min). Normal corridor baseline is 3856\u00b130s (64.3 min). Deviation is +270.77\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:11.994838"
   },
   {
     "alert_id": 33,
@@ -709,7 +1769,11 @@
     "sighting_id_a": 19,
     "sighting_id_b": 40,
     "detail_text": "Statistical route anomaly: Transit from CAM_02 to CAM_07 took 8546s (142.4 min). Normal corridor baseline is 423\u00b130s (7.0 min). Deviation is +270.77\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.003060"
   },
   {
     "alert_id": 32,
@@ -717,7 +1781,11 @@
     "sighting_id_a": 19,
     "sighting_id_b": 7,
     "detail_text": "Statistical route anomaly: Transit from CAM_02 to CAM_01 took 5540s (92.3 min). Normal corridor baseline is 3377\u00b1167s (56.3 min). Deviation is +12.97\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.010573"
   },
   {
     "alert_id": 31,
@@ -725,7 +1793,11 @@
     "sighting_id_a": 18,
     "sighting_id_b": 5,
     "detail_text": "Statistical route anomaly: Transit from CAM_01 to CAM_03 took 4830s (80.5 min). Normal corridor baseline is 290\u00b130s (4.8 min). Deviation is +151.33\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.019222"
   },
   {
     "alert_id": 30,
@@ -733,7 +1805,11 @@
     "sighting_id_a": 18,
     "sighting_id_b": 4,
     "detail_text": "Statistical route anomaly: Transit from CAM_01 to CAM_02 took 4690s (78.2 min). Normal corridor baseline is 150\u00b130s (2.5 min). Deviation is +151.33\u03c3, exceeding the 3.00\u03c3 threshold.",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.027225"
   },
   {
     "alert_id": 29,
@@ -741,7 +1817,11 @@
     "sighting_id_a": 104,
     "sighting_id_b": null,
     "detail_text": "Restricted zone entry: Sighting 104 (TN10BE9876) entered 'Marina Promenade Pedestrian Heritage Zone' (offset 70.1m <= 500m radius). Restriction: Pedestrian promenade \u2014 unpermitted motor vehicles prohibited",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.036223"
   },
   {
     "alert_id": 28,
@@ -749,7 +1829,11 @@
     "sighting_id_a": 96,
     "sighting_id_b": null,
     "detail_text": "Restricted zone entry: Sighting 96 (TN07AX4521) entered 'Marina Promenade Pedestrian Heritage Zone' (offset 70.1m <= 500m radius). Restriction: Pedestrian promenade \u2014 unpermitted motor vehicles prohibited",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.044480"
   },
   {
     "alert_id": 27,
@@ -757,7 +1841,11 @@
     "sighting_id_a": 88,
     "sighting_id_b": null,
     "detail_text": "Restricted zone entry: Sighting 88 (TN09CB1234) entered 'Marina Promenade Pedestrian Heritage Zone' (offset 70.1m <= 500m radius). Restriction: Pedestrian promenade \u2014 unpermitted motor vehicles prohibited",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.056709"
   },
   {
     "alert_id": 26,
@@ -765,7 +1853,11 @@
     "sighting_id_a": 80,
     "sighting_id_b": null,
     "detail_text": "Restricted zone entry: Sighting 80 (unconfirmed) entered 'Marina Promenade Pedestrian Heritage Zone' (offset 70.1m <= 500m radius). Restriction: Pedestrian promenade \u2014 unpermitted motor vehicles prohibited",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.064951"
   },
   {
     "alert_id": 25,
@@ -773,7 +1865,11 @@
     "sighting_id_a": 72,
     "sighting_id_b": null,
     "detail_text": "Restricted zone entry: Sighting 72 (MH02EZ9012) entered 'Marina Promenade Pedestrian Heritage Zone' (offset 70.1m <= 500m radius). Restriction: Pedestrian promenade \u2014 unpermitted motor vehicles prohibited",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.075082"
   },
   {
     "alert_id": 24,
@@ -781,7 +1877,11 @@
     "sighting_id_a": 64,
     "sighting_id_b": null,
     "detail_text": "Restricted zone entry: Sighting 64 (TN22CY3311) entered 'Marina Promenade Pedestrian Heritage Zone' (offset 70.1m <= 500m radius). Restriction: Pedestrian promenade \u2014 unpermitted motor vehicles prohibited",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.086217"
   },
   {
     "alert_id": 23,
@@ -789,7 +1889,11 @@
     "sighting_id_a": 56,
     "sighting_id_b": null,
     "detail_text": "Restricted zone entry: Sighting 56 (KA03MD5522) entered 'Marina Promenade Pedestrian Heritage Zone' (offset 70.1m <= 500m radius). Restriction: Pedestrian promenade \u2014 unpermitted motor vehicles prohibited",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.096821"
   },
   {
     "alert_id": 22,
@@ -797,7 +1901,11 @@
     "sighting_id_a": 17,
     "sighting_id_b": null,
     "detail_text": "Restricted zone entry: Sighting 17 (unconfirmed) entered 'Marina Promenade Pedestrian Heritage Zone' (offset 70.1m <= 500m radius). Restriction: Pedestrian promenade \u2014 unpermitted motor vehicles prohibited",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.107345"
   },
   {
     "alert_id": 21,
@@ -805,7 +1913,11 @@
     "sighting_id_a": 15,
     "sighting_id_b": null,
     "detail_text": "Restricted zone entry: Sighting 15 (MH02EZ9012) entered 'Marina Promenade Pedestrian Heritage Zone' (offset 70.1m <= 500m radius). Restriction: Pedestrian promenade \u2014 unpermitted motor vehicles prohibited",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.116868"
   },
   {
     "alert_id": 20,
@@ -813,7 +1925,11 @@
     "sighting_id_a": 48,
     "sighting_id_b": null,
     "detail_text": "Restricted zone entry: Sighting 48 (TN10BE9876) entered 'Marina Promenade Pedestrian Heritage Zone' (offset 70.1m <= 500m radius). Restriction: Pedestrian promenade \u2014 unpermitted motor vehicles prohibited",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.126349"
   },
   {
     "alert_id": 19,
@@ -821,7 +1937,11 @@
     "sighting_id_a": 13,
     "sighting_id_b": null,
     "detail_text": "Restricted zone entry: Sighting 13 (TN10BE9876) entered 'Marina Promenade Pedestrian Heritage Zone' (offset 70.1m <= 500m radius). Restriction: Pedestrian promenade \u2014 unpermitted motor vehicles prohibited",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.136060"
   },
   {
     "alert_id": 18,
@@ -829,7 +1949,11 @@
     "sighting_id_a": 40,
     "sighting_id_b": null,
     "detail_text": "Restricted zone entry: Sighting 40 (TN07AX4521) entered 'Marina Promenade Pedestrian Heritage Zone' (offset 70.1m <= 500m radius). Restriction: Pedestrian promenade \u2014 unpermitted motor vehicles prohibited",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.144790"
   },
   {
     "alert_id": 17,
@@ -837,7 +1961,11 @@
     "sighting_id_a": 32,
     "sighting_id_b": null,
     "detail_text": "Restricted zone entry: Sighting 32 (TN09CB1234) entered 'Marina Promenade Pedestrian Heritage Zone' (offset 70.1m <= 500m radius). Restriction: Pedestrian promenade \u2014 unpermitted motor vehicles prohibited",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.154521"
   },
   {
     "alert_id": 16,
@@ -845,7 +1973,11 @@
     "sighting_id_a": 24,
     "sighting_id_b": null,
     "detail_text": "Restricted zone entry: Sighting 24 (unconfirmed) entered 'Marina Promenade Pedestrian Heritage Zone' (offset 70.1m <= 500m radius). Restriction: Pedestrian promenade \u2014 unpermitted motor vehicles prohibited",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.163238"
   },
   {
     "alert_id": 15,
@@ -853,7 +1985,11 @@
     "sighting_id_a": 103,
     "sighting_id_b": null,
     "detail_text": "Blacklist hit: Vehicle 'TN07AX4521' detected at CAM_06 (13.0232, 80.2228). Reason on file: Wanted in connection with financial theft investigation (Case FIR 142/26)",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.172275"
   },
   {
     "alert_id": 14,
@@ -861,7 +1997,11 @@
     "sighting_id_a": 96,
     "sighting_id_b": null,
     "detail_text": "Blacklist hit: Vehicle 'TN07AX4521' detected at CAM_07 (13.0544, 80.2825). Reason on file: Wanted in connection with financial theft investigation (Case FIR 142/26)",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.179979"
   },
   {
     "alert_id": 13,
@@ -869,7 +2009,11 @@
     "sighting_id_a": 89,
     "sighting_id_b": null,
     "detail_text": "Blacklist hit: Vehicle 'TN07AX4521' detected at CAM_08 (13.0067, 80.2443). Reason on file: Wanted in connection with financial theft investigation (Case FIR 142/26)",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.188207"
   },
   {
     "alert_id": 12,
@@ -877,7 +2021,11 @@
     "sighting_id_a": 82,
     "sighting_id_b": null,
     "detail_text": "Blacklist hit: Vehicle 'TN07AX4521' detected at CAM_01 (13.0528, 80.2512). Reason on file: Wanted in connection with financial theft investigation (Case FIR 142/26)",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.195836"
   },
   {
     "alert_id": 11,
@@ -885,7 +2033,11 @@
     "sighting_id_a": 75,
     "sighting_id_b": null,
     "detail_text": "Blacklist hit: Vehicle 'TN07AX4521' detected at CAM_02 (13.0610, 80.2580). Reason on file: Wanted in connection with financial theft investigation (Case FIR 142/26)",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.203045"
   },
   {
     "alert_id": 10,
@@ -893,7 +2045,11 @@
     "sighting_id_a": 68,
     "sighting_id_b": null,
     "detail_text": "Blacklist hit: Vehicle 'TN07AX4521' detected at CAM_03 (13.0674, 80.2642). Reason on file: Wanted in connection with financial theft investigation (Case FIR 142/26)",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.210943"
   },
   {
     "alert_id": 9,
@@ -901,7 +2057,11 @@
     "sighting_id_a": 61,
     "sighting_id_b": null,
     "detail_text": "Blacklist hit: Vehicle 'TN07AX4521' detected at CAM_04 (13.0405, 80.2337). Reason on file: Wanted in connection with financial theft investigation (Case FIR 142/26)",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.219144"
   },
   {
     "alert_id": 8,
@@ -909,7 +2069,11 @@
     "sighting_id_a": 54,
     "sighting_id_b": null,
     "detail_text": "Blacklist hit: Vehicle 'TN07AX4521' detected at CAM_05 (13.0076, 80.2036). Reason on file: Wanted in connection with financial theft investigation (Case FIR 142/26)",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.225781"
   },
   {
     "alert_id": 7,
@@ -917,7 +2081,11 @@
     "sighting_id_a": 47,
     "sighting_id_b": null,
     "detail_text": "Blacklist hit: Vehicle 'TN07AX4521' detected at CAM_06 (13.0232, 80.2228). Reason on file: Wanted in connection with financial theft investigation (Case FIR 142/26)",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.232712"
   },
   {
     "alert_id": 6,
@@ -925,7 +2093,11 @@
     "sighting_id_a": 40,
     "sighting_id_b": null,
     "detail_text": "Blacklist hit: Vehicle 'TN07AX4521' detected at CAM_07 (13.0544, 80.2825). Reason on file: Wanted in connection with financial theft investigation (Case FIR 142/26)",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.240897"
   },
   {
     "alert_id": 5,
@@ -933,7 +2105,11 @@
     "sighting_id_a": 7,
     "sighting_id_b": null,
     "detail_text": "Blacklist hit: Vehicle 'TN07AX4521' detected at CAM_01 (13.0528, 80.2512). Reason on file: Wanted in connection with financial theft investigation (Case FIR 142/26)",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.248550"
   },
   {
     "alert_id": 4,
@@ -941,7 +2117,11 @@
     "sighting_id_a": 6,
     "sighting_id_b": null,
     "detail_text": "Blacklist hit: Vehicle 'TN07AX4521' detected at CAM_04 (13.0405, 80.2337). Reason on file: Wanted in connection with financial theft investigation (Case FIR 142/26)",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.255795"
   },
   {
     "alert_id": 3,
@@ -949,7 +2129,11 @@
     "sighting_id_a": 33,
     "sighting_id_b": null,
     "detail_text": "Blacklist hit: Vehicle 'TN07AX4521' detected at CAM_08 (13.0067, 80.2443). Reason on file: Wanted in connection with financial theft investigation (Case FIR 142/26)",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.262811"
   },
   {
     "alert_id": 2,
@@ -957,7 +2141,11 @@
     "sighting_id_a": 26,
     "sighting_id_b": null,
     "detail_text": "Blacklist hit: Vehicle 'TN07AX4521' detected at CAM_01 (13.0528, 80.2512). Reason on file: Wanted in connection with financial theft investigation (Case FIR 142/26)",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.271563"
   },
   {
     "alert_id": 1,
@@ -965,6 +2153,10 @@
     "sighting_id_a": 19,
     "sighting_id_b": null,
     "detail_text": "Blacklist hit: Vehicle 'TN07AX4521' detected at CAM_02 (13.0610, 80.2580). Reason on file: Wanted in connection with financial theft investigation (Case FIR 142/26)",
-    "created_at": "2026-09-14T09:40:29.094416"
+    "created_at": "2026-09-14T09:40:29.094416",
+    "severity": "MEDIUM",
+    "acknowledged": 1,
+    "acknowledged_by": "TN-OPS-1042",
+    "acknowledged_at": "2026-09-19T09:57:12.279112"
   }
 ]

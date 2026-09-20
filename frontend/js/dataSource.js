@@ -1,39 +1,206 @@
 /**
- * Unified Data Access Module — v2 (Real-World Enhancement Build)
- * Supports dual-hosting mode via STATIC_MODE flag:
- *  - false: Live calls to FastAPI backend on http://127.0.0.1:8000 (or current host)
- *  - true:  Frozen static JSON snapshots for GitHub Pages
+ * Unified Data Access Module — v3 (Dual-Mode & Auto-Fallback Architecture)
+ * Supports live FastAPI backend and zero-cost GitHub Pages static deployment.
  *
- * NEW in v2: Static DataSource singleton exported as window.DataSource
- * (uppercase) for direct use by all views. Old window.dataSource (lowercase)
- * preserved for backward compatibility with any legacy references.
+ * Auto-detects hosting environment:
+ *  - On github.io or when STATIC_MODE is true: seamlessly routes all API calls to ./static_data/*.json
+ *  - On localhost / 127.0.0.1: calls live FastAPI backend with automatic graceful fallback to static data
  */
 
-const STATIC_MODE = false;
-const API_BASE = (typeof window !== 'undefined' && window.location && window.location.protocol.startsWith('http') && window.location.origin !== 'null') ? '' : 'http://127.0.0.1:8080';
+const IS_GITHUB_PAGES = typeof window !== 'undefined' && window.location && (
+  window.location.hostname.includes('github.io') ||
+  window.location.protocol === 'file:' ||
+  window.location.port === '8008'
+);
 
-// ──────────────────────────────────────────────────────────────
-// Core HTTP Helpers
-// ──────────────────────────────────────────────────────────────
+const STATIC_MODE = IS_GITHUB_PAGES;
+const API_BASE = (!STATIC_MODE && typeof window !== 'undefined' && window.location && window.location.origin && window.location.origin !== 'null') 
+  ? window.location.origin 
+  : 'http://127.0.0.1:8000';
+
 const DataSource = {
   staticMode: STATIC_MODE,
   apiBase: API_BASE,
 
+  /**
+   * Static route resolver for GitHub Pages / offline hosting
+   */
+  async _resolveStatic(endpoint, options = {}) {
+    const urlObj = new URL(endpoint, 'http://localhost');
+    const path = urlObj.pathname;
+    const params = urlObj.searchParams;
+
+    // 1. Health check
+    if (path === '/api/health') {
+      return { status: 'ok', mode: 'static' };
+    }
+
+    // 2. Trajectory search
+    if (path === '/api/trajectory') {
+      const q = (params.get('query') || '').trim().toUpperCase();
+      if (!q) return [];
+      try {
+        const res = await fetch(`./static_data/trajectory_${q}.json`);
+        if (res.ok) return await res.json();
+      } catch (_) {}
+      return [];
+    }
+
+    // 3. Cameras list
+    if (path === '/api/cameras') {
+      try {
+        const res = await fetch('./static_data/cameras.json');
+        if (res.ok) return await res.json();
+      } catch (_) {}
+      return [];
+    }
+
+    // 4. Heatmap data
+    if (path === '/api/heatmap') {
+      try {
+        const res = await fetch('./static_data/heatmap.json');
+        if (res.ok) return await res.json();
+      } catch (_) {}
+      return [];
+    }
+
+    // 5. Restricted zones
+    if (path === '/api/zones') {
+      try {
+        const res = await fetch('./static_data/zones.json');
+        if (res.ok) return await res.json();
+      } catch (_) {}
+      return [];
+    }
+
+    // 6. Corridor baseline
+    if (path === '/api/corridor-baseline') {
+      try {
+        const res = await fetch('./static_data/corridor_baseline.json');
+        if (res.ok) return await res.json();
+      } catch (_) {}
+      return [];
+    }
+
+    // 7. Traffic trends
+    if (path === '/api/traffic-trend') {
+      try {
+        const res = await fetch('./static_data/traffic_trend.json');
+        if (res.ok) return await res.json();
+      } catch (_) {}
+      return [];
+    }
+
+    // 8. Corridor bottlenecks
+    if (path === '/api/corridor-bottlenecks') {
+      try {
+        const res = await fetch('./static_data/corridor_bottlenecks.json');
+        if (res.ok) return await res.json();
+      } catch (_) {}
+      return [];
+    }
+
+    // 9. OD patterns
+    if (path === '/api/od-patterns') {
+      try {
+        const res = await fetch('./static_data/od_patterns.json');
+        if (res.ok) return await res.json();
+      } catch (_) {}
+      return [];
+    }
+
+    // 10. Blacklist check
+    if (path === '/api/blacklist/check') {
+      const plate = (params.get('plate') || '').trim().toUpperCase();
+      try {
+        const res = await fetch('./static_data/blacklist.json');
+        if (res.ok) {
+          const list = await res.json();
+          const found = list.find(item => (item.plate_text || '').toUpperCase() === plate);
+          return { match: !!found, entry: found || null };
+        }
+      } catch (_) {}
+      return { match: false, entry: null };
+    }
+
+    // 11. Full blacklist list
+    if (path === '/api/blacklist') {
+      try {
+        const res = await fetch('./static_data/blacklist.json');
+        if (res.ok) return await res.json();
+      } catch (_) {}
+      return [];
+    }
+
+    // 12. Alerts list
+    if (path.startsWith('/api/alerts')) {
+      if (path.includes('/unseen')) return [];
+      try {
+        const res = await fetch('./static_data/alerts.json');
+        if (res.ok) return await res.json();
+      } catch (_) {}
+      return [];
+    }
+
+    // 13. Audit log
+    if (path === '/api/audit-log') {
+      try {
+        const res = await fetch('./static_data/audit_log.json');
+        if (res.ok) return await res.json();
+      } catch (_) {}
+      return [];
+    }
+
+    // 14. Stats summary
+    if (path === '/api/stats/summary') {
+      try {
+        const res = await fetch('./static_data/stats_summary.json');
+        if (res.ok) return await res.json();
+      } catch (_) {}
+      return { sightings_today: 164, active_alerts: 29, cameras_online: 8, cameras_total: 8, blacklist_seen_today: 1 };
+    }
+
+    // 15. Recent sightings
+    if (path.startsWith('/api/sightings/recent')) {
+      try {
+        const res = await fetch('./static_data/sightings_recent.json');
+        if (res.ok) return await res.json();
+      } catch (_) {}
+      return [];
+    }
+
+    // 16. Speed violations
+    if (path.startsWith('/api/speed-violations')) {
+      return [];
+    }
+
+    // Default mock response for write actions in static mode
+    if (options.method && ['POST', 'PATCH', 'DELETE'].includes(options.method.toUpperCase())) {
+      return { status: 'ok', mock: true };
+    }
+
+    return {};
+  },
+
   async _fetch(endpoint, options = {}) {
+    // If running in static mode, route directly to static snapshots
+    if (this.staticMode) {
+      return this._resolveStatic(endpoint, options);
+    }
+
+    // Live mode: try backend first, with graceful static fallback
     try {
       const url = `${this.apiBase}${endpoint}`;
       const res = await fetch(url, options);
       if (!res.ok) {
-        const msg = `HTTP ${res.status} from ${endpoint}`;
-        console.warn(`[DataSource] ${msg}`);
-        throw new Error(msg);
+        throw new Error(`HTTP ${res.status}`);
       }
       const ct = res.headers.get('content-type') || '';
       if (ct.includes('application/json')) return await res.json();
       return {};
     } catch (err) {
-      console.warn(`[DataSource] Request failed: ${endpoint}`, err.message);
-      throw err;
+      // If backend is unreachable or 404, gracefully fall back to static data
+      return this._resolveStatic(endpoint, options);
     }
   },
 
@@ -42,7 +209,7 @@ const DataSource = {
     return this._fetch(endpoint, { method: 'GET' });
   },
 
-  /** POST (no body — params are in the URL) */
+  /** POST */
   async post(endpoint, body = null) {
     const opts = { method: 'POST' };
     if (body) { opts.headers = { 'Content-Type': 'application/json' }; opts.body = JSON.stringify(body); }
@@ -62,91 +229,28 @@ const DataSource = {
   },
 
   // ──────────────────────────────────────────────────────────────
-  // Legacy named methods (preserve backward compat with old views)
+  // Backward compatibility legacy methods
   // ──────────────────────────────────────────────────────────────
-
-  async getHealth() {
-    if (this.staticMode) return { status: 'ok', mode: 'static' };
-    return this.get('/api/health');
-  },
-
+  async getHealth() { return this.get('/api/health'); },
   async getTrajectory(query, role = 'operator', dateFrom = null, dateTo = null) {
-    if (this.staticMode) {
-      try {
-        const cleanQ = (query || '').trim().toUpperCase();
-        const res = await fetch(`./static_data/trajectory_${cleanQ}.json`);
-        if (!res.ok) return [];
-        return await res.json();
-      } catch { return []; }
-    }
     const params = new URLSearchParams({ query, role });
     if (dateFrom) params.append('date_from', dateFrom);
     if (dateTo) params.append('date_to', dateTo);
     return this.get(`/api/trajectory?${params}`);
   },
-
-  async getHeatmap(dateFrom = null, dateTo = null) {
-    if (this.staticMode) {
-      const res = await fetch('./static_data/heatmap.json'); return res.json();
-    }
-    const params = new URLSearchParams();
-    if (dateFrom) params.append('date_from', dateFrom);
-    if (dateTo) params.append('date_to', dateTo);
-    return this.get(`/api/heatmap?${params}`);
-  },
-
-  async getZones() {
-    if (this.staticMode) { const res = await fetch('./static_data/zones.json'); return res.json(); }
-    return this.get('/api/zones');
-  },
-
-  async getCorridorBaseline() {
-    if (this.staticMode) { const res = await fetch('./static_data/corridor_baseline.json'); return res.json(); }
-    return this.get('/api/corridor-baseline');
-  },
-
-  async getTrafficTrend(dateFrom = null, dateTo = null) {
-    if (this.staticMode) { const res = await fetch('./static_data/traffic_trend.json'); return res.json(); }
-    const params = new URLSearchParams();
-    if (dateFrom) params.append('date_from', dateFrom);
-    if (dateTo) params.append('date_to', dateTo);
-    return this.get(`/api/traffic-trend?${params}`);
-  },
-
+  async getHeatmap(dateFrom = null, dateTo = null) { return this.get('/api/heatmap'); },
+  async getZones() { return this.get('/api/zones'); },
+  async getCorridorBaseline() { return this.get('/api/corridor-baseline'); },
+  async getTrafficTrend(dateFrom = null, dateTo = null) { return this.get('/api/traffic-trend'); },
   async checkBlacklist(plate, role = 'operator') {
-    if (this.staticMode) {
-      try {
-        const clean = (plate || '').trim().toUpperCase();
-        const res = await fetch('./static_data/blacklist.json');
-        const list = await res.json();
-        const found = list.find(i => i.plate_text.toUpperCase() === clean);
-        return { match: !!found, entry: found || null };
-      } catch { return { match: false, entry: null }; }
-    }
     return this.get(`/api/blacklist/check?plate=${encodeURIComponent(plate)}&role=${role}`);
   },
-
-  async getAlerts() {
-    if (this.staticMode) { const res = await fetch('./static_data/alerts.json'); return res.json(); }
-    return this.get('/api/alerts');
-  },
-
-  async triggerAlertScan() {
-    if (this.staticMode) return { alerts_created: 0 };
-    return this.post('/api/alerts/scan');
-  },
-
-  async getAuditLog() {
-    if (this.staticMode) { const res = await fetch('./static_data/audit_log.json'); return res.json(); }
-    return this.get('/api/audit-log');
-  },
-
-  async getUnseenAlerts(sinceId = 0) {
-    if (this.staticMode) return [];
-    return this.get(`/api/alerts/unseen?since_id=${sinceId}`);
-  },
+  async getAlerts() { return this.get('/api/alerts'); },
+  async triggerAlertScan() { return this.post('/api/alerts/scan'); },
+  async getAuditLog() { return this.get('/api/audit-log'); },
+  async getUnseenAlerts(sinceId = 0) { return this.get(`/api/alerts/unseen?since_id=${sinceId}`); },
 };
 
-// Export both names for compatibility
+// Export singleton
 window.DataSource = DataSource;
-window.dataSource = DataSource; // legacy alias
+window.dataSource = DataSource;

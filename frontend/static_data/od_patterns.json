@@ -1,27 +1,115 @@
 [
   {
-    "origin": "CAM_01",
-    "destination": "CAM_07",
-    "trip_count": 1
+    "origin_camera": "CAM_05",
+    "origin_name": "Guindy Junction / GST Rd",
+    "dest_camera": "CAM_03",
+    "dest_name": "Spencers Plaza / Anna Salai",
+    "trip_count": 3,
+    "sample_plates": [
+      "KA03MD5522",
+      "TN04AB5501",
+      "TN22TR8844"
+    ]
   },
   {
-    "origin": "CAM_04",
-    "destination": "CAM_06",
-    "trip_count": 1
+    "origin_camera": "CAM_05",
+    "origin_name": "Guindy Junction / GST Rd",
+    "dest_camera": "CAM_07",
+    "dest_name": "Marina / Kamarajar Salai",
+    "trip_count": 2,
+    "sample_plates": [
+      "TN09CB1234",
+      "TN10AM6677"
+    ]
   },
   {
-    "origin": "CAM_05",
-    "destination": "CAM_02",
-    "trip_count": 1
+    "origin_camera": "CAM_06",
+    "origin_name": "Saidapet / Maraimalai Nagar Rd",
+    "dest_camera": "CAM_03",
+    "dest_name": "Spencers Plaza / Anna Salai",
+    "trip_count": 1,
+    "sample_plates": [
+      "MH02EZ9012"
+    ]
   },
   {
-    "origin": "CAM_06",
-    "destination": "CAM_08",
-    "trip_count": 1
+    "origin_camera": "CAM_04",
+    "origin_name": "Panagal Park / T Nagar",
+    "dest_camera": "CAM_07",
+    "dest_name": "Marina / Kamarajar Salai",
+    "trip_count": 1,
+    "sample_plates": [
+      "TN01AT4411"
+    ]
   },
   {
-    "origin": "CAM_08",
-    "destination": "CAM_03",
-    "trip_count": 1
+    "origin_camera": "CAM_01",
+    "origin_name": "Anna Salai / Gemini Flyover",
+    "dest_camera": "CAM_07",
+    "dest_name": "Marina / Kamarajar Salai",
+    "trip_count": 1,
+    "sample_plates": [
+      "TN01AZ7788"
+    ]
+  },
+  {
+    "origin_camera": "CAM_08",
+    "origin_name": "Madhya Kailash / 200 Ft Rd",
+    "dest_camera": "CAM_02",
+    "dest_name": "Thousand Lights / Museum Rd",
+    "trip_count": 1,
+    "sample_plates": [
+      "TN02BZ9876"
+    ]
+  },
+  {
+    "origin_camera": "CAM_08",
+    "origin_name": "Madhya Kailash / 200 Ft Rd",
+    "dest_camera": "CAM_04",
+    "dest_name": "Panagal Park / T Nagar",
+    "trip_count": 1,
+    "sample_plates": [
+      "TN05VN2299"
+    ]
+  },
+  {
+    "origin_camera": "CAM_08",
+    "origin_name": "Madhya Kailash / 200 Ft Rd",
+    "dest_camera": "CAM_07",
+    "dest_name": "Marina / Kamarajar Salai",
+    "trip_count": 1,
+    "sample_plates": [
+      "TN07AX4521"
+    ]
+  },
+  {
+    "origin_camera": "CAM_08",
+    "origin_name": "Madhya Kailash / 200 Ft Rd",
+    "dest_camera": "CAM_01",
+    "dest_name": "Anna Salai / Gemini Flyover",
+    "trip_count": 1,
+    "sample_plates": [
+      "TN07BK3322"
+    ]
+  },
+  {
+    "origin_camera": "CAM_03",
+    "origin_name": "Spencers Plaza / Anna Salai",
+    "dest_camera": "CAM_07",
+    "dest_name": "Marina / Kamarajar Salai",
+    "trip_count": 1,
+    "sample_plates": [
+      "TN10BE9876"
+    ]
+  },
+  {
+    "origin_camera": "CAM_05",
+    "origin_name": "Guindy Junction / GST Rd",
+    "dest_camera": "CAM_02",
+    "dest_name": "Thousand Lights / Museum Rd",
+    "trip_count": 1,
+    "sample_plates": [
+      "TN22CY3311"
+    ]
   }
 ]

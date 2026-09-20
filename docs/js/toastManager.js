@@ -1,9 +1,7 @@
 /**
- * Global Alert Toast & Notification Manager.
- * Operates across all 5 views.
- * Listens for unseen alerts via short-interval polling.
- * Triggers audio alert and displays dismissible, stacking toasts.
- * Clicking toast navigates to Alerts view and highlights row.
+ * Global Alert Toast & Tactical Floating Notification Manager.
+ * Operates across all views.
+ * Listens for unseen alerts and triggers multi-shade audio alarms and floating HUDs.
  */
 
 class ToastManager {
@@ -12,6 +10,7 @@ class ToastManager {
     this.lastSeenAlertId = 0;
     this.shownAlertIds = new Set();
     this.pollInterval = null;
+    this._activeFloatingAlert = null;
   }
 
   init() {
@@ -35,10 +34,9 @@ class ToastManager {
 
   async _primeInitialAlerts() {
     try {
-      if (window.dataSource.staticMode) return;
-      const alerts = await window.dataSource.getAlerts();
+      if (window.dataSource && window.dataSource.staticMode) return;
+      const alerts = await DataSource.get('/api/alerts');
       if (Array.isArray(alerts) && alerts.length > 0) {
-        // Find max alert_id
         for (const a of alerts) {
           if (a.alert_id > this.lastSeenAlertId) {
             this.lastSeenAlertId = a.alert_id;
@@ -52,9 +50,9 @@ class ToastManager {
   }
 
   async checkUnseenAlerts() {
-    if (window.dataSource.staticMode) return;
+    if (window.dataSource && window.dataSource.staticMode) return;
     try {
-      const newAlerts = await window.dataSource.getUnseenAlerts(this.lastSeenAlertId);
+      const newAlerts = await DataSource.get(`/api/alerts?unseen_since=${this.lastSeenAlertId}`);
       if (Array.isArray(newAlerts) && newAlerts.length > 0) {
         for (const alert of newAlerts) {
           if (!this.shownAlertIds.has(alert.alert_id)) {
@@ -62,7 +60,7 @@ class ToastManager {
             if (alert.alert_id > this.lastSeenAlertId) {
               this.lastSeenAlertId = alert.alert_id;
             }
-            this.showToast(alert);
+            this.showAlert(alert);
           }
         }
       }
@@ -71,17 +69,111 @@ class ToastManager {
     }
   }
 
-  showToast(alert) {
-    // Play single tone once
+  showAlert(alert) {
+    const isCritical = (alert.alert_type === "blacklist" || alert.alert_type === "clone" || alert.severity === "critical" || alert.severity === "high");
+    
+    // 1. Play tone scaled to alert level
     if (window.audioAlertManager) {
-      window.audioAlertManager.playAlertTone();
+      window.audioAlertManager.playAlertTone(isCritical ? 'critical' : 'warning');
     }
 
-    if (!this.container) return;
+    // 2. If it's a serious/critical alert, pop the Floating Tactical Alert HUD
+    if (isCritical) {
+      this.showFloatingSeriousAlert(alert);
+    }
+
+    // 3. Always show in standard stacking toasts
+    this.showToast(alert);
+  }
+
+  /**
+   * High-Urgency Floating Tactical HUD Banner for Critical Alerts
+   */
+  showFloatingSeriousAlert(alert) {
+    // Remove previous floating alert if any
+    const existing = document.getElementById('floating-serious-alert');
+    if (existing) existing.remove();
+
+    const banner = document.createElement('div');
+    banner.id = 'floating-serious-alert';
+    banner.className = 'floating-alert-hud';
+    banner.setAttribute('role', 'alertdialog');
+
+    const plate = alert.plate_text || alert.detail_text.match(/[A-Z]{2}[0-9]{1,2}[A-Z]{1,3}[0-9]{1,4}/)?.[0] || 'CRITICAL TARGET';
+    const alertType = (alert.alert_type || 'INCIDENT').toUpperCase();
+
+    banner.innerHTML = `
+      <div class="floating-alert-inner">
+        <div class="floating-alert-header">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span class="pulsing-siren-dot"></span>
+            <strong style="font-size:13px; letter-spacing:0.05em; font-family:var(--font-mono); color:#FFF;">
+              🚨 HIGH PRIORITY INTERCEPT // ${alertType}
+            </strong>
+          </div>
+          <button type="button" class="btn-player" style="padding:2px 8px; font-size:12px; background:transparent; border:none; color:#AAA;"
+            onclick="document.getElementById('floating-serious-alert')?.remove()">✕</button>
+        </div>
+
+        <div class="floating-alert-content">
+          <div style="font-size:16px; font-weight:800; font-family:var(--font-mono); color:#FFD1D3; margin-bottom:4px;">
+            TARGET: <span style="color:#FFF; background:#7A1417; padding:2px 8px; border-radius:3px;">${plate}</span>
+          </div>
+          <div style="font-size:12px; line-height:1.5; color:#F5EBEB;">
+            ${this._escapeHtml(alert.detail_text)}
+          </div>
+        </div>
+
+        <div class="floating-alert-actions">
+          <button type="button" class="btn-action" style="padding:6px 14px; font-size:11px; background:#B3262A; border-color:#FF6B6B; font-weight:700;"
+            onclick="window.ToastManager.trackAlertOnMap('${plate}', ${alert.alert_id})">
+            🎯 Track On Map
+          </button>
+          <button type="button" class="btn-secondary btn-sm" style="padding:6px 12px; font-size:11px; color:#FFF; border-color:#7A1417;"
+            onclick="window.audioAlertManager?.playAlertTone('critical')">
+            🔊 Replay Siren
+          </button>
+          <button type="button" class="btn-secondary btn-sm" style="padding:6px 12px; font-size:11px;"
+            onclick="document.getElementById('floating-serious-alert')?.remove()">
+            Acknowledge
+          </button>
+        </div>
+      </div>
+    `;
+
+    document.body.appendChild(banner);
+
+    // Auto-dismiss after 12 seconds if not interacted
+    setTimeout(() => {
+      if (banner && banner.parentNode) banner.remove();
+    }, 12000);
+  }
+
+  trackAlertOnMap(plate, alertId) {
+    const existing = document.getElementById('floating-serious-alert');
+    if (existing) existing.remove();
+
+    if (window.App && window.App.showView) {
+      window.App.showView('trajectory');
+      setTimeout(() => {
+        if (window.TrajectoryView) {
+          window.TrajectoryView.searchPreset(plate);
+        }
+      }, 100);
+    }
+  }
+
+  showToast(alert) {
+    if (!this.container) {
+      this.container = document.getElementById("toast-container") || document.body;
+    }
+
+    const isCritical = (alert.alert_type === "clone" || alert.alert_type === "blacklist" || alert.severity === "critical");
+    const isWarning = (alert.alert_type === "speed" || alert.alert_type === "route_delay" || alert.severity === "warning");
 
     const toast = document.createElement("div");
-    const isCritical = (alert.alert_type === "clone" || alert.alert_type === "blacklist");
-    toast.className = `toast ${isCritical ? "toast-critical" : "toast-warning"}`;
+    // Multi-shade class gradation
+    toast.className = `toast ${isCritical ? "toast-shade-critical" : (isWarning ? "toast-shade-warning" : "toast-shade-info")}`;
     toast.setAttribute("role", "alert");
     toast.dataset.alertId = alert.alert_id;
 
@@ -90,11 +182,11 @@ class ToastManager {
     toast.innerHTML = `
       <div class="toast-header">
         <div class="toast-title">
-          <span class="badge ${isCritical ? "badge-critical" : "badge-warning"}">${alert.alert_type}</span>
-          <span>Alert #${alert.alert_id}</span>
+          <span class="badge ${isCritical ? "badge-critical" : "badge-warning"}">${(alert.alert_type || 'ALERT').toUpperCase()}</span>
+          <span>#${alert.alert_id}</span>
         </div>
-        <div style="display: flex; align-items: center;">
-          <span class="toast-time">${timeStr}</span>
+        <div style="display: flex; align-items: center; gap:6px;">
+          <span class="toast-time mono">${timeStr}</span>
           <button class="toast-close" title="Dismiss">&times;</button>
         </div>
       </div>
@@ -108,18 +200,18 @@ class ToastManager {
         this._removeToast(toast);
         return;
       }
-      if (window.appRouter) {
-        window.appRouter.navigateTo("alerts", { highlightAlertId: alert.alert_id });
+      if (window.App && window.App.showView) {
+        window.App.showView("alerts");
       }
       this._removeToast(toast);
     });
 
     this.container.appendChild(toast);
 
-    // Auto dismiss after 6 seconds
+    // Auto dismiss after 7 seconds
     setTimeout(() => {
       this._removeToast(toast);
-    }, 6000);
+    }, 7000);
   }
 
   _removeToast(toast) {
@@ -138,4 +230,6 @@ class ToastManager {
   }
 }
 
-window.toastManager = new ToastManager();
+window.ToastManager = new ToastManager();
+window.toastManager = window.ToastManager;
+

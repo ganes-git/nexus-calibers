@@ -1,1 +1,90 @@
-[]
+[
+  {
+    "camera_from": "CAM_02",
+    "camera_to": "CAM_03",
+    "distance_km": 1.0,
+    "avg_speed_kmh": 25.71,
+    "mean_transit_min": 2.3,
+    "stddev_transit_min": 0.4,
+    "delay_factor": 1.94,
+    "severity": "MODERATE",
+    "status": "CONGESTED (1.94x delay)"
+  },
+  {
+    "camera_from": "CAM_01",
+    "camera_to": "CAM_02",
+    "distance_km": 1.1,
+    "avg_speed_kmh": 26.4,
+    "mean_transit_min": 2.5,
+    "stddev_transit_min": 0.5,
+    "delay_factor": 1.89,
+    "severity": "MODERATE",
+    "status": "CONGESTED (1.89x delay)"
+  },
+  {
+    "camera_from": "CAM_06",
+    "camera_to": "CAM_01",
+    "distance_km": 4.2,
+    "avg_speed_kmh": 26.07,
+    "mean_transit_min": 9.7,
+    "stddev_transit_min": 1.2,
+    "delay_factor": 1.92,
+    "severity": "MODERATE",
+    "status": "CONGESTED (1.92x delay)"
+  },
+  {
+    "camera_from": "CAM_08",
+    "camera_to": "CAM_07",
+    "distance_km": 6.5,
+    "avg_speed_kmh": 26.0,
+    "mean_transit_min": 15.0,
+    "stddev_transit_min": 2.0,
+    "delay_factor": 1.92,
+    "severity": "MODERATE",
+    "status": "CONGESTED (1.92x delay)"
+  },
+  {
+    "camera_from": "CAM_05",
+    "camera_to": "CAM_06",
+    "distance_km": 2.6,
+    "avg_speed_kmh": 26.0,
+    "mean_transit_min": 6.0,
+    "stddev_transit_min": 0.8,
+    "delay_factor": 1.92,
+    "severity": "MODERATE",
+    "status": "CONGESTED (1.92x delay)"
+  },
+  {
+    "camera_from": "CAM_08",
+    "camera_to": "CAM_06",
+    "distance_km": 3.1,
+    "avg_speed_kmh": 24.8,
+    "mean_transit_min": 7.5,
+    "stddev_transit_min": 1.0,
+    "delay_factor": 2.02,
+    "severity": "HIGH",
+    "status": "CONGESTED (2.02x delay)"
+  },
+  {
+    "camera_from": "CAM_06",
+    "camera_to": "CAM_04",
+    "distance_km": 2.3,
+    "avg_speed_kmh": 24.35,
+    "mean_transit_min": 5.7,
+    "stddev_transit_min": 0.8,
+    "delay_factor": 2.05,
+    "severity": "HIGH",
+    "status": "CONGESTED (2.05x delay)"
+  },
+  {
+    "camera_from": "CAM_04",
+    "camera_to": "CAM_01",
+    "distance_km": 2.4,
+    "avg_speed_kmh": 22.74,
+    "mean_transit_min": 6.3,
+    "stddev_transit_min": 0.8,
+    "delay_factor": 2.2,
+    "severity": "HIGH",
+    "status": "CONGESTED (2.2x delay)"
+  }
+]

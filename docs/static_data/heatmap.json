@@ -3,6 +3,12 @@
     "camera_id": "CAM_01",
     "lat": 13.0522,
     "lon": 80.2467,
+    "count": 17
+  },
+  {
+    "camera_id": "CAM_02",
+    "lat": 13.0577,
+    "lon": 80.2497,
     "count": 15
   },
   {
@@ -18,33 +24,27 @@
     "count": 14
   },
   {
-    "camera_id": "CAM_05",
-    "lat": 13.007,
-    "lon": 80.2093,
-    "count": 13
-  },
-  {
-    "camera_id": "CAM_08",
-    "lat": 13.0102,
-    "lon": 80.2457,
-    "count": 13
-  },
-  {
-    "camera_id": "CAM_02",
-    "lat": 13.0577,
-    "lon": 80.2497,
-    "count": 12
-  },
-  {
     "camera_id": "CAM_03",
     "lat": 13.062,
     "lon": 80.2601,
     "count": 12
   },
   {
+    "camera_id": "CAM_05",
+    "lat": 13.007,
+    "lon": 80.2093,
+    "count": 11
+  },
+  {
     "camera_id": "CAM_04",
     "lat": 13.0397,
     "lon": 80.2325,
-    "count": 12
+    "count": 9
+  },
+  {
+    "camera_id": "CAM_08",
+    "lat": 13.0102,
+    "lon": 80.2457,
+    "count": 9
   }
 ]

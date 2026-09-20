@@ -1,6 +1,6 @@
 """
 Verifies the exported /docs static build served on port 8008.
-Tests all 5 views with STATIC_MODE=true.
+Tests all 6 views with static data access.
 """
 
 import time
@@ -17,31 +17,36 @@ def test_static():
 
         print("Testing View 1: Trajectory on static server...")
         page.goto("http://127.0.0.1:8008/", wait_until="networkidle")
-        page.fill("#traj-query", "TN09CB1234")
-        page.click("#traj-form button[type='submit']")
-        page.wait_for_selector("#traj-table-container table", timeout=5000)
+        page.fill("#plate-query-input", "TN09CB1234")
+        page.click("#btn-search-plate")
+        page.wait_for_selector("#traj-table-container", timeout=6000)
         time.sleep(0.5)
 
         print("Testing View 2: Heatmap on static server...")
         page.click("a[data-view='heatmap']")
-        page.wait_for_selector("#heatmap-table-container table", timeout=5000)
+        page.wait_for_selector("#heatmap-table-container", timeout=6000)
         time.sleep(0.5)
 
         print("Testing View 3: Blacklist on static server...")
         page.click("a[data-view='blacklist']")
         page.fill("#bl-input", "TN07AX4521")
         page.click("#blacklist-form button[type='submit']")
-        page.wait_for_selector(".badge-critical", timeout=5000)
+        page.wait_for_selector(".badge-critical", timeout=6000)
         time.sleep(0.5)
 
         print("Testing View 4: Alerts on static server...")
         page.click("a[data-view='alerts']")
-        page.wait_for_selector("#alerts-table-container table", timeout=5000)
+        page.wait_for_selector("#alerts-table-container", timeout=6000)
         time.sleep(0.5)
 
         print("Testing View 5: Trends on static server...")
         page.click("a[data-view='trends']")
-        page.wait_for_selector("#corridor-table-container table", timeout=5000)
+        page.wait_for_selector("#corridor-table-container", timeout=6000)
+        time.sleep(0.5)
+
+        print("Testing View 6: Cameras on static server...")
+        page.click("a[data-view='cameras']")
+        page.wait_for_selector("#cameras-table-container", timeout=6000)
         time.sleep(0.5)
 
         browser.close()

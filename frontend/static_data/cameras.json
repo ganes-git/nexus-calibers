@@ -1,0 +1,98 @@
+[
+  {
+    "camera_id": "CAM_01",
+    "name": "Anna Salai / Gemini Flyover",
+    "lat": 13.0522,
+    "lon": 80.2467,
+    "zone_id": "Z1",
+    "rtsp_url": null,
+    "enabled": 1,
+    "last_seen": null,
+    "status": "DEMO",
+    "sightings_today": 0
+  },
+  {
+    "camera_id": "CAM_02",
+    "name": "Thousand Lights / Museum Rd",
+    "lat": 13.0577,
+    "lon": 80.2497,
+    "zone_id": "Z1",
+    "rtsp_url": null,
+    "enabled": 1,
+    "last_seen": null,
+    "status": "DEMO",
+    "sightings_today": 0
+  },
+  {
+    "camera_id": "CAM_03",
+    "name": "Spencers Plaza / Anna Salai",
+    "lat": 13.062,
+    "lon": 80.2601,
+    "zone_id": "Z2",
+    "rtsp_url": null,
+    "enabled": 1,
+    "last_seen": null,
+    "status": "DEMO",
+    "sightings_today": 0
+  },
+  {
+    "camera_id": "CAM_04",
+    "name": "Panagal Park / T Nagar",
+    "lat": 13.0397,
+    "lon": 80.2325,
+    "zone_id": "Z3",
+    "rtsp_url": null,
+    "enabled": 1,
+    "last_seen": null,
+    "status": "DEMO",
+    "sightings_today": 0
+  },
+  {
+    "camera_id": "CAM_05",
+    "name": "Guindy Junction / GST Rd",
+    "lat": 13.007,
+    "lon": 80.2093,
+    "zone_id": "Z4",
+    "rtsp_url": null,
+    "enabled": 1,
+    "last_seen": null,
+    "status": "DEMO",
+    "sightings_today": 0
+  },
+  {
+    "camera_id": "CAM_06",
+    "name": "Saidapet / Maraimalai Nagar Rd",
+    "lat": 13.0227,
+    "lon": 80.221,
+    "zone_id": "Z4",
+    "rtsp_url": null,
+    "enabled": 1,
+    "last_seen": null,
+    "status": "DEMO",
+    "sightings_today": 0
+  },
+  {
+    "camera_id": "CAM_07",
+    "name": "Marina / Kamarajar Salai",
+    "lat": 13.054,
+    "lon": 80.282,
+    "zone_id": "Z2",
+    "rtsp_url": null,
+    "enabled": 1,
+    "last_seen": null,
+    "status": "DEMO",
+    "sightings_today": 0
+  },
+  {
+    "camera_id": "CAM_08",
+    "name": "Madhya Kailash / 200 Ft Rd",
+    "lat": 13.0102,
+    "lon": 80.2457,
+    "zone_id": "Z3",
+    "rtsp_url": null,
+    "enabled": 1,
+    "last_seen": null,
+    "status": "DEMO",
+    "sightings_today": 0
+  }
+]

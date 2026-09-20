@@ -1,0 +1,72 @@
+[
+  {
+    "sighting_id": 164,
+    "camera_id": "CAM_07",
+    "plate_text": "TN01AZ7788",
+    "timestamp": "2026-03-14T09:42:00",
+    "vehicle_type": "HATCHBACK"
+  },
+  {
+    "sighting_id": 163,
+    "camera_id": "CAM_03",
+    "plate_text": "TN01AZ7788",
+    "timestamp": "2026-03-14T09:35:00",
+    "vehicle_type": "HATCHBACK"
+  },
+  {
+    "sighting_id": 162,
+    "camera_id": "CAM_02",
+    "plate_text": "TN01AZ7788",
+    "timestamp": "2026-03-14T09:32:30",
+    "vehicle_type": "HATCHBACK"
+  },
+  {
+    "sighting_id": 161,
+    "camera_id": "CAM_01",
+    "plate_text": "TN01AZ7788",
+    "timestamp": "2026-03-14T09:30:00",
+    "vehicle_type": "HATCHBACK"
+  },
+  {
+    "sighting_id": 160,
+    "camera_id": "CAM_02",
+    "plate_text": "TN22CY3311",
+    "timestamp": "2026-03-14T09:32:55",
+    "vehicle_type": "CAR"
+  },
+  {
+    "sighting_id": 159,
+    "camera_id": "CAM_01",
+    "plate_text": "TN22CY3311",
+    "timestamp": "2026-03-14T09:32:20",
+    "vehicle_type": "CAR"
+  },
+  {
+    "sighting_id": 158,
+    "camera_id": "CAM_06",
+    "plate_text": "TN22CY3311",
+    "timestamp": "2026-03-14T09:31:08",
+    "vehicle_type": "CAR"
+  },
+  {
+    "sighting_id": 157,
+    "camera_id": "CAM_05",
+    "plate_text": "TN22CY3311",
+    "timestamp": "2026-03-14T09:30:00",
+    "vehicle_type": "CAR"
+  },
+  {
+    "sighting_id": 156,
+    "camera_id": "CAM_07",
+    "plate_text": "TN07AX4521",
+    "timestamp": "2026-03-14T09:54:10",
+    "vehicle_type": "SUV"
+  },
+  {
+    "sighting_id": 155,
+    "camera_id": "CAM_02",
+    "plate_text": "TN07AX4521",
+    "timestamp": "2026-03-14T09:47:50",
+    "vehicle_type": "SUV"
+  }
+]
