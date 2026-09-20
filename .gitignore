@@ -52,6 +52,28 @@ venv.bak/
 .pytest_cache/
 .system_generated/
 
+# Node / JS dependencies
+node_modules/
+
+# IDE / Editor folders
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Scratch / working files
+scratch/
+
+# Large binaries, models, datasets
+*.h5
+*.pt
+*.onnx
+*.pkl
+*.bin
+*.tar.gz
+*.zip
+
 # OS specific
 .DS_Store
 Thumbs.db

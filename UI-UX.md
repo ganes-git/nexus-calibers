@@ -1,125 +1,129 @@
-# UI-UX.md — City-Wide ANPR Trajectory & Route-Anomaly Engine
+# UI-UX.md v2 — Visual & Layout Redesign
 
-Traces to PRD.md user stories and TRD.md components. No invented business goals here.
+Supersedes the visual/layout portions of `UI-UX.md` (v1). Traces to the same PRD.md user stories and TRD.md components as v1 — nothing here changes what the product does.
 
----
+**Reason for this pass:** the v1 spec was functionally sound but read as generic — the locked, restrained palette was correctly followed, but the layout underneath it (a uniform card grid, undifferentiated typography, default map pins, no distinct component language) is what actually made it feel templated, not the colors. This pass redesigns layout, typography, iconography, and component language. It changes nothing else.
 
-## Design Principles
+## What changed / what didn't
 
-Grounded in the Competitive Landscape research in PRD.md, plus this project's already-locked design system (not reinvented here):
-
-1. **Automatic over manual, and say why.** Dahua AcuPick's cross-camera search is powerful but manual (a human must pick a reference image). This product's matching and anomaly detection run automatically on every sighting — the UI's job is to surface *why* a match or alert happened (per-hop scores, baseline deviation numbers), not just *that* it happened. This directly addresses the explainability gap found in the academic ANPR-anomaly research reviewed (Sun 2014, ICCS 2018) — those systems don't appear to expose operator-facing reasoning; this one leads with it.
-2. **Serious operations tool, not a generic AI product.** Already-locked design contract (from this project's `DESIGN.md`, reused here, not redesigned): background `#FAFAF8`, primary text `#1F1F1F`, muted text `#6B6B63`, border `#E1DED6`, primary accent `#2F5233` (dark forest green), warning accent `#C98A1E` (amber), critical accent `#B3262A` (red). **No blue, indigo, purple, or gradients anywhere, on anything — including the new alert toasts.** Max 4px border-radius. No drop shadows, no glassmorphism, no bounce/spring animation. Monospace font for plate numbers, coordinates, timestamps, scores, IDs.
-3. **New in this revision — alerts must interrupt attention without breaking the "serious tool" feel.** A toast + optional short tone, never a blocking modal, never a cutesy sound. This is a control-room tool; alerts should feel like a professional dispatch console, not a mobile app notification.
-
----
-
-## User Flows
-
-One per PRD user story.
-
-**Flow 1 — Operator searches a trajectory (Story 1, 3, 6)**
-Enter plate/sighting ID + date range → submit → map renders the path chronologically → per-hop table appears below with plate/visual/transit/composite scores → any hop with an unreadable plate is labeled "plate unconfirmed" instead of breaking the chain → any hop flagged by the anomaly engine shows a badge → clicking a flagged hop expands the specific reason (e.g. "9±3 min normal, this hop took 41 min").
-
-**Flow 2 — Operator receives and responds to an alert (Story 2)**
-Alert fires anywhere in the system → toast appears in a fixed corner across all views (not just the Alerts view) → optional tone plays once → Operator can click the toast to jump directly to that entry in the Alerts view, or dismiss it → toast auto-dismisses after a set duration if ignored, but remains in the Alerts table regardless.
-
-**Flow 3 — Supervisor reviews the audit log (Story 4)**
-Switch role selector to "Supervisor" → Audit Log section becomes visible within the Alerts view (hidden entirely, not just greyed out, in Operator mode) → table of every search performed, most recent first.
-
-**Flow 4 — Analyst reviews traffic patterns (Story 5)**
-Open Traffic Trends view → hourly bar chart of sightings loads → corridor table below shows mean transit time, average speed, sample count per camera pair, with seeded (synthetic-calibration) rows visually de-emphasized from real observed rows.
-
-**Flow 5 — Regulator-facing evidence review (Story 6)**
-Same as Flow 1's per-hop table — no separate screen. The requirement is that the evidence is *present and legible* on the existing Trajectory Search view, not a new export/report screen (none was requested).
-
----
-
-## Screen Inventory
-
-| Screen | Maps to user story |
+| | |
 |---|---|
-| 1. Trajectory Search | Story 1, 3, 6 |
-| 2. Heatmap | Story 5 |
-| 3. Blacklist Check | Story 2 |
-| 4. Alerts (+ role-gated Audit Log) | Story 2, 4 |
-| 5. Traffic Trends | Story 5 |
-| *(global, not a screen)* Alert toast + audio layer | Story 2, appears across all 5 screens |
+| **Unchanged** | Color palette, tech stack (vanilla HTML/CSS/JS, Leaflet, no framework/build step), the 5 views and every state/action they must support, toast + audio alert behavior, the motion rule (opacity/background-color only, ≤150ms), font *families* (system-ui sans, system monospace) |
+| **New in this pass** | An explicit type scale, a spacing scale, a single recurring "confidence/deviation meter" component used wherever a score or baseline deviation appears, custom flat map markers replacing default Leaflet pins, a single hand-drawn monoline icon set, a per-screen layout composition (no more one card-grid template repeated five times), a shared header status strip, an explicit focus-visible spec |
 
 ---
 
-## Per-Screen Breakdown
+## Design Plan
+
+**Color** — unchanged, reproduced for reference: background `#FAFAF8`, text `#1F1F1F`, muted `#6B6B63`, border `#E1DED6`, accent `#2F5233`, warning `#C98A1E`, critical `#B3262A`.
+
+**Type** — one sans role (system-ui stack) for interface text, one monospace role (ui-monospace stack) for data. Same families as v1, but now with an explicit scale (below) instead of ad hoc sizing, and only two weights (400/600) — hierarchy comes from size and spacing, not boldness or color.
+
+**Layout** — the single idea driving this pass: **the evidence is the design.** This product's whole pitch is "here's *why* this match or alert fired," so the per-hop score table, the corridor-baseline numbers, and the alert detail text are the visual centerpiece of their screens — not a map or chart sitting decoratively next to a generic card grid. Each of the 5 screens gets a layout shaped by its actual job (search-and-explain, spatial overview, single lookup, triage table, trend reading) instead of one dashboard template stamped five times.
+
+**Principle** — restraint stays, but restraint means *quiet*, not *empty of decisions*. One recurring device, a small flat tick/bar meter next to every score or deviation number, carries the "instrument" character everywhere it's needed. Everything else (chrome, nav, buttons, headers) stays deliberately plain so that one device doesn't compete with anything.
+
+*Self-check before building this out:* the generic default here would be a rounded-card grid with icon-topped stat tiles repeated on every screen — avoided by giving each screen its own asymmetric composition below. The other generic default would be tracked, all-caps section labels with a meta line underneath — avoided; labels stay sentence case, one line, nothing decorative that isn't already meaningful.
+
+---
+
+## Typographic Scale *(new)*
+
+Sizes in rem, assuming a 16px root. Sans role unless marked mono.
+
+| Role | Size | Weight | Used for |
+|---|---|---|---|
+| Screen title | 1.25rem (20px) | 600 | One per screen, top-left of the header strip |
+| Section label | 0.8125rem (13px) | 600 | Sentence case — "Per-hop breakdown", "Restricted zones" |
+| Body / table text | 0.875rem (14px) | 400 | Default interface text |
+| Meta / caption | 0.75rem (12px) | 400, muted color | Timestamps under a heading, helper text |
+| Data readout (mono) | 0.875rem (14px), tabular-nums | 400 | Plate text, coordinates, scores, IDs |
+| Data readout, emphasized (mono) | 1rem (16px), tabular-nums | 600 | The one number a screen wants read first — e.g. a composite score in an expanded hop |
+
+No size below 12px anywhere. No third typeface introduced.
+
+## Spacing Scale *(new)*
+
+4px base unit: `4, 8, 12, 16, 24, 32, 48`. Section padding defaults to 24px; inter-row padding in dense tables defaults to 8–12px; never less than 8px between two adjacent interactive targets.
+
+## Iconography *(new)*
+
+A single hand-drawn set, inline SVG, 1.5px stroke, no fill, monoline, 18–20px, colored `#1F1F1F` or `#6B6B63` (never accent-colored, except the active nav item). Covers: search, map pin, shield (blacklist), bell (alerts), trend line (traffic), audit log, mute/unmute, dismiss, expand. No icon pack, no duotone, no filled variants — keeps every icon visually related to every other one, which a mixed pack never does.
+
+## The Confidence/Deviation Meter *(new — the one recurring signature device)*
+
+Wherever a score (plate, visual, transit, composite) or a baseline deviation (timing z-score) is shown, it's paired with a small flat horizontal meter: a 40×6px bordered track, filled left-to-right in muted color up to the value, switching fill color to warning/critical only past the same thresholds already used for badges. Flat fill, 1px border, 2px radius — no gradient, no glow. This is the one place the design is allowed to be a little bold; everywhere else stays quiet.
+
+```
+Plate    0.94   [███████████░]
+Visual   0.88   [██████████░░]
+Transit  0.31   [███░░░░░░░░░]   ← below threshold, fill turns critical-red
+```
+
+---
+
+## Per-Screen Redesign
+
+Purpose, states, and actions are carried over unchanged from v1 and repeated only where the visual treatment needs the context. Layout composition is new.
 
 ### 1. Trajectory Search
-- **Purpose:** reconstruct and explain a specific vehicle's path.
-- **Key elements:** search box (plate text or sighting ID), date range, Leaflet map with chronological connected markers, per-hop table (camera, timestamp, plate/visual/transit/composite scores, anomaly badge where flagged).
-- **States:** *Empty* — no query yet, map centered on the city anchor, prompt text. *Loading* — map placeholder + table skeleton (plain gray blocks, no shimmer animation per the motion constraint). *No results* — plain text, "No trajectory found for this query," not a blank screen. *Error / backend unreachable* (new) — plain banner, "Unable to reach the backend — check your connection," not a silent failure. *Populated.*
-- **Actions:** submit search → renders map + table; click a flagged hop → expands its reason inline.
+*(unchanged: search box, date range, per-hop table with plate/visual/transit/composite scores and anomaly badges, all 5 states)*
+**Layout:** two-column, not stacked cards — map roughly 55% left, per-hop table roughly 45% right, both starting directly under one shared search bar (no separate "search card" floating above). The table is the primary artifact: each row shows the meter next to each score, and a flagged row's anomaly badge expands in place, growing that row, rather than opening a modal or side panel.
+**Loading:** table rows render as flat gray bars occupying the exact position real rows will take (no shimmer, no skeleton "cards").
+**Empty / no-results / error:** a left-aligned plain sentence sits in the table's position, not a centered illustration — keeps the instrument-not-app tone.
 
 ### 2. Heatmap
-- **Purpose:** show sighting density and restricted zones spatially.
-- **Key elements:** Leaflet map, density-colored circle markers per camera (dark green = high, fading to background = low — no blue heat scale), dashed critical-accent circles for restricted zones with name tooltips.
-- **States:** Loading, Populated, Error/unreachable (same pattern as above).
-- **Actions:** hover a zone circle → tooltip with zone name and reason.
+*(unchanged: density markers, restricted-zone overlay)*
+**Layout:** full-bleed map, no card frame. Custom flat circle markers (replacing the default Leaflet teardrop pin) sized and colored by density with the same palette. Restricted zones keep the dashed critical-accent outline; the name appears on hover as a small flat tag anchored to the circle, not a floating shadowed tooltip. Legend is a slide-out panel from the left edge (bordered, flat, no shadow), not a card floating on top of the map.
 
 ### 3. Blacklist Check
-- **Purpose:** check a single plate against the blacklist.
-- **Key elements:** search box, match/no-match result.
-- **States:** Empty, Loading, Match (critical accent, states the reason on file), No match (plain, muted text — deliberately *not* styled as an error), Error/unreachable.
-- **Actions:** submit → result appears inline, no page change.
+*(unchanged: single search, match/no-match)*
+**Layout:** deliberately small and centered — a single-purpose lookup, not stretched into a dashboard-width panel. This screen's generic-ness in v1 came from trying to fill space it doesn't need; staying small and quiet is the fix.
 
 ### 4. Alerts (+ Audit Log)
-- **Purpose:** central alert review; Supervisor-only audit oversight.
-- **Key elements:** plain table (most recent first), alert_type color-coded (critical accent: clone/blacklist; amber: impossible_transit/zone_deviation/route_anomaly), Audit Log sub-section.
-- **States:** Empty ("No alerts in this range"), Loading, Populated, Error/unreachable. Audit Log: hidden entirely in Operator mode (not present in the DOM, not just visually hidden — avoids a curious Operator opening dev tools and finding it anyway).
-- **Actions:** role toggle switch → Audit Log mounts/unmounts; click an alert row → highlights the relevant hop if opened from Trajectory Search context.
+*(unchanged: table, color-coded types, role-gated audit log)*
+**Layout:** one full-width table, most recent first, each row's alert type shown as a 2px left-border accent stripe plus its text label, rather than a filled colored badge — color-coding stays present but quiet, consistent with the rule that color is never the sole signal. Audit Log (Supervisor only) is a second table directly beneath, separated by a single rule and a section label, not a tab or modal.
 
 ### 5. Traffic Trends
-- **Purpose:** descriptive city-wide analytics.
-- **Key elements:** plain bar chart (inline SVG/DOM, no charting library) of sightings-per-hour; corridor table (camera pair, mean transit time, avg speed, sample count, source).
-- **States:** Loading, Populated, Error/unreachable. Seeded rows in the corridor table render in muted text color with a small "seed" label — never visually identical to real observed data.
-- **Actions:** none beyond viewing (no filters currently specced — **[NEEDS INPUT]** if date-range filtering on this view is wanted; not assumed here).
+*(unchanged: hourly bar chart, corridor table)*
+**Layout:** the bar chart sits at the top as the primary artifact (muted-color bars, no gradient fill, thin border), corridor table beneath it. Seeded rows keep v1's muted-text-plus-"seed"-label treatment, unchanged.
 
-### Global — Alert Toast + Audio Layer (new)
-- **Purpose:** ensure an Operator watching any screen notices a new alert without having to be on the Alerts view.
-- **Key elements:** fixed-position toast (bottom-right, stacking if multiple), alert type + one-line reason, dismiss control, a persistent mute icon-button in the header.
-- **States:** *Visible* (auto-dismiss after ~6s or manual dismiss), *Muted* (toast still appears silently; sound suppressed), *Stacked* (2+ alerts arrive close together — stack, don't overlap or replace).
-- **Behavior:** sound plays once per unique alert, never repeats on re-render; toast is non-blocking (page remains fully interactive underneath); clicking a toast navigates to the Alerts view and highlights that row.
+### Global — Header Status Strip *(new)*
+One persistent line above all 5 views: screen title on the left, then role selector, mute toggle, and a plain-text connection indicator ("Live" / "Static demo" / "Unreachable"). This reuses states each screen already has to report — no new data source, just one shared place for what v1 repeated per screen.
 
----
-
-## Component Inventory
-
-- **Pages (5):** Trajectory Search, Heatmap, Blacklist Check, Alerts, Traffic Trends.
-- **Feature components:** trajectory map, per-hop score table, heatmap map, zone overlay, blacklist result panel, alerts table, audit log panel, corridor-baseline table, hourly bar chart, role selector.
-- **Shared/global components (new additions marked):** left nav, header, role selector, **toast notification manager (new)**, **audio alert manager (new)**, error/unreachable banner (new — not previously specced, added per the NFR in TRD.md).
+### Global — Toast + Audio Layer
+*(behavior unchanged: visual-first, one sound per alert, persistent mute, non-blocking, stacking)*
+**Visual:** flat bordered box, no shadow, severity shown as a 3px left-border stripe (critical/warning color) instead of a tinted background — consistent with the Alerts table treatment above. Bottom-right, stacks downward, ≤150ms opacity fade only.
 
 ---
 
-## Design System Basics
+## Buttons & Controls *(new)*
 
-Brand direction **was** already given in this project's prior `DESIGN.md` — reused exactly, not reinvented:
+- **Primary action:** filled `#2F5233`, white text, 4px radius, no shadow. Hover: background darkens roughly 8%, 150ms.
+- **Secondary:** border only, transparent fill, `#1F1F1F` text. Hover: background tints a few percent darker than the page background, 150ms.
+- **Role selector / mute toggle:** plain text and icon, no pill background — the active state is a 2px underline in accent color, not a filled badge.
+- No button carries a shadow, a gradient, or an appended arrow glyph.
 
-- **Color:** background `#FAFAF8`; primary text `#1F1F1F`; muted text `#6B6B63`; border `#E1DED6`; primary accent `#2F5233`; warning accent `#C98A1E`; critical accent `#B3262A`. No other colors, including in the new toast component.
-- **Typography:** UI text — system-ui / -apple-system / Segoe UI / sans-serif. Data fields (plates, coordinates, timestamps, scores, IDs) — monospace (ui-monospace / SF Mono / Cascadia Mono / Consolas).
-- **Shape:** max 4px border-radius, everywhere, including the new toast.
-- **Motion:** opacity/background-color transitions only, ≤150ms, ease timing. The toast's entrance/exit uses this same rule — no slide-bounce, no spring physics.
-- **Sound (new, since none was previously specified):** a single short, low-key tone (not a siren, not a chime), distinct per severity tier is optional but not required — **[NEEDS INPUT: whether distinct tones per alert type/severity are wanted, or one tone for all alerts is sufficient]**. Default proposed here, flagged as an assumption: one tone for all alert types, since severity is already visually color-coded.
+## Focus & Keyboard *(new)*
+
+Every interactive element gets a visible 2px accent-color outline on keyboard focus (not on mouse click). V1 already required the mute control specifically to be keyboard-reachable; this generalizes that into an explicit visual rule for every control.
 
 ---
 
 ## Accessibility Notes
 
-- Sound is never the only signal for an alert — every alert has an equally informative visual toast and a permanent row in the Alerts table. This is a direct requirement, not a nice-to-have, given the new audio feature.
-- Color is never the only signal — every color-coded alert type also carries its text label (`clone`, `blacklist`, etc.), already true of the existing alert table design.
-- The mute control must be keyboard-reachable and its state (muted/unmuted) conveyed by icon *and* text, not icon alone.
-- Error/unreachable states use plain text, not color or iconography alone, so they're legible without relying on the accent palette.
+Carried forward unchanged from v1, plus the focus rule above:
+- Sound is never the only signal for an alert.
+- Color is never the only signal — every color-coded element (alert type, meter fill) carries its text or number alongside it.
+- Mute state is conveyed by icon and text, not icon alone.
+- Error/unreachable states use plain text, not color or iconography alone.
 
----
+## Component Inventory (updated)
 
-## References
+Pages (5, unchanged): Trajectory Search, Heatmap, Blacklist Check, Alerts, Traffic Trends.
+Feature components: trajectory map, per-hop table with confidence meter (new), heatmap map with custom markers (new), zone overlay, blacklist result panel, alerts table with left-border severity stripe (new), audit log panel, corridor-baseline table, hourly bar chart, role selector.
+Shared/global: left nav, header status strip (new), toast manager (updated visual), audio manager (unchanged), icon set (new, one hand-drawn family), confidence/deviation meter (new, shared component).
 
-Real products/papers researched for this document (see PRD.md Competitive Landscape table for full detail):
-- **Hikvision AcuSense/AcuSearch** — borrowed: automatic false-alarm-reduction philosophy (only surface signal, not noise). Avoided: search remains manual-trigger only in their product; this system automates it.
-- **Dahua AcuPick 2.0** — borrowed: cross-camera automatic tracking of a single target. Avoided: their system doesn't explain *why* two sightings matched; this system's per-hop score breakdown directly addresses that gap.
-- **Sun (2014) / ICCS 2018 ANPR-anomaly papers** — avoided: no operator-facing explainability in either — this project's explicit design principle #1 exists specifically because of this gap.
+## What This Does Not Touch
+
+Backend, data model, API contracts (SCHEMA.md), the five views' functional scope, or the tech stack (still vanilla HTML/CSS/JS, Leaflet, no build step) — none of it needed to change to get this redesign, so none of it was touched. If implementing this surfaces a spot where it genuinely does need a backend or data change, that should be flagged before working around it silently, not assumed.
