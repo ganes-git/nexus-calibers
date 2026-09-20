@@ -33,58 +33,7 @@ const ShiftSession = (() => {
   return { start, getBadgeId, getRole, isActive };
 })();
 
-// ──────────────────────────────────────────────────────────────
-// Recent Plate Search History
-// ──────────────────────────────────────────────────────────────
-const RecentSearches = (() => {
-  const MAX = 5;
-  const KEY = 'anpr_recent_searches';
 
-  function getAll() {
-    try { return JSON.parse(sessionStorage.getItem(KEY)) || []; }
-    catch { return []; }
-  }
-
-  function push(plate) {
-    if (!plate) return;
-    const existing = getAll().filter(p => p !== plate.toUpperCase());
-    const updated = [plate.toUpperCase(), ...existing].slice(0, MAX);
-    sessionStorage.setItem(KEY, JSON.stringify(updated));
-    render();
-  }
-
-  function render() {
-    const section = document.getElementById('recent-searches-section');
-    const list = document.getElementById('recent-searches-list');
-    if (!list) return;
-    const items = getAll();
-    if (items.length === 0) {
-      section.style.display = 'none';
-      return;
-    }
-    section.style.display = 'block';
-    list.innerHTML = items.map(plate =>
-      `<div class="recent-search-item" data-plate="${plate}">${plate}</div>`
-    ).join('');
-    list.querySelectorAll('.recent-search-item').forEach(el => {
-      el.addEventListener('click', () => {
-        navigateTo('trajectory');
-        // Give the view time to render, then fill in the search input
-        setTimeout(() => {
-          const inp = document.getElementById('plate-query-input');
-          if (inp) {
-            inp.value = el.dataset.plate;
-            inp.dispatchEvent(new Event('input'));
-          }
-          const btn = document.getElementById('btn-search-plate');
-          if (btn) btn.click();
-        }, 120);
-      });
-    });
-  }
-
-  return { push, render };
-})();
 
 // ──────────────────────────────────────────────────────────────
 // App State
@@ -516,7 +465,7 @@ function updatePaletteSelectionVisual() {
 window.App = {
   getCurrentRole,
   getShiftBadgeId: () => ShiftSession.getBadgeId(),
-  pushRecentSearch: (plate) => RecentSearches.push(plate),
+  pushRecentSearch: () => {}, // removed: recent searches panel no longer shown
   refreshKPIs,
   toggleShortcutsModal,
   toggleCommandPalette,
@@ -532,7 +481,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initMuteButton();
   initShiftSession();
   initKeyboardShortcuts();
-  RecentSearches.render();
 
   // Handle hash-based routing on initial load
   const hash = window.location.hash.replace('#', '') || 'trajectory';
