@@ -205,8 +205,16 @@ NexusCaliber directly supports the United Nations Sustainable Development Goals:
 ## 10. Team Information
 
 - **Team Name:** NexusCaliber
-- **Team Lead & Developer:** ganes-git
-- **Affiliation:** Smart India Hackathon (SIH) 2026
+- **Affiliation:** R.M.D. Engineering College &bull; Smart India Hackathon (SIH) 2026
+
+| # | Name | Role | Institutional Email |
+|:---:|:---|:---|:---|
+| 1 | **Ganesh S** | **Team Lead** | `25ec034@rmd.ac.in` |
+| 2 | **Hemavarshini M** | Core Team Member | `25ec050@rmd.ac.in` |
+| 3 | **Deepika N** | Core Team Member | `25ec020@rmd.ac.in` |
+| 4 | **Kavi Vadhana R** | Core Team Member | `25ec071@rmd.ac.in` |
+| 5 | **Harshitha R** | Core Team Member | `25ec047@rmd.ac.in` |
+| 6 | **Khavyaa D** | Core Team Member | `25ec078@rmd.ac.in` |
 
 ---
 
