@@ -80,3 +80,7 @@ def cosine_similarity(emb_json_1, emb_json_2):
         return max(0.0, min(1.0, sim))
     except Exception:
         return 0.0
+
+# Backward compatibility alias
+compute_embedding = extract_visual_embedding
+
