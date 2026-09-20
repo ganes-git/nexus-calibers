@@ -1,15 +1,12 @@
 """
 Export static database queries to JSON files for STATIC_MODE (GitHub Pages).
 Exports:
-- /static_data/trajectory_TN09CB1234.json
-- /static_data/trajectory_TN07AX4521.json
-- /static_data/trajectory_TN22CY3311.json
-- /static_data/trajectory_KA03MD5522.json
-- /static_data/trajectory_TN10BE9876.json
-- /static_data/trajectory_TN01AZ7788.json
-- /static_data/heatmap.json
+- /static_data/trajectory_TN09CB1234.json  (and other demo plates)
+- /static_data/heatmap.json               (all cameras, including zero-sighting)
 - /static_data/zones.json
 - /static_data/corridor_baseline.json
+- /static_data/od_patterns.json           [NEW PS Item 4]
+- /static_data/corridor_bottlenecks.json  [NEW PS Item 5]
 - /static_data/traffic_trend.json
 - /static_data/blacklist.json
 - /static_data/alerts.json
@@ -33,8 +30,14 @@ def export_static_json():
 
     print("Exporting static snapshots to", STATIC_DATA_DIR)
 
-    # 1. Heatmap
-    cursor.execute("SELECT camera_id, lat, lon, COUNT(*) as count FROM sightings GROUP BY camera_id, lat, lon ORDER BY count DESC")
+    # 1. Heatmap — LEFT JOIN to include zero-sighting cameras (PS Item 9)
+    cursor.execute("""
+        SELECT c.camera_id, c.lat, c.lon, COUNT(s.sighting_id) as count
+        FROM cameras c
+        LEFT JOIN sightings s ON c.camera_id = s.camera_id
+        GROUP BY c.camera_id, c.lat, c.lon
+        ORDER BY count DESC
+    """)
     heatmap = [dict(r) for r in cursor.fetchall()]
     with open(os.path.join(STATIC_DATA_DIR, "heatmap.json"), "w") as f:
         json.dump(heatmap, f, indent=2)
@@ -79,7 +82,55 @@ def export_static_json():
     with open(os.path.join(STATIC_DATA_DIR, "audit_log.json"), "w") as f:
         json.dump(audit_log, f, indent=2)
 
-    # 8. Trajectories for key demo plates
+    # 8. O-D Patterns (PS Item 4)
+    cursor.execute("""
+        SELECT s1.camera_id as origin, sN.camera_id as destination, COUNT(*) as trip_count
+        FROM (
+            SELECT plate_text, MIN(sighting_id) as first_id, MAX(sighting_id) as last_id
+            FROM sightings
+            WHERE plate_text IS NOT NULL
+            GROUP BY plate_text
+            HAVING COUNT(*) >= 2
+        ) trips
+        JOIN sightings s1 ON s1.sighting_id = trips.first_id
+        JOIN sightings sN ON sN.sighting_id = trips.last_id
+        WHERE s1.camera_id != sN.camera_id
+        GROUP BY origin, destination
+        ORDER BY trip_count DESC
+        LIMIT 30
+    """)
+    od_patterns = [dict(r) for r in cursor.fetchall()]
+    with open(os.path.join(STATIC_DATA_DIR, "od_patterns.json"), "w") as f:
+        json.dump(od_patterns, f, indent=2)
+
+    # 9. Corridor Bottlenecks (PS Item 5)
+    import statistics
+    cursor.execute("""
+        SELECT camera_from, camera_to, distance_km, mean_transit_seconds, stddev_transit_seconds, sample_count, avg_speed_kmh
+        FROM corridor_baseline ORDER BY sample_count DESC
+    """)
+    baseline_rows = [dict(r) for r in cursor.fetchall()]
+    # Calculate overall mean and std for delay threshold (2-sigma above mean)
+    delays = [r['mean_transit_seconds'] for r in baseline_rows if r['sample_count'] > 0]
+    global_mean = statistics.mean(delays) if delays else 0
+    global_std = statistics.stdev(delays) if len(delays) > 1 else 0
+    threshold = global_mean + 2 * global_std
+    bottlenecks = []
+    for r in baseline_rows:
+        if r['mean_transit_seconds'] > threshold:
+            bottlenecks.append({
+                'camera_from': r['camera_from'],
+                'camera_to': r['camera_to'],
+                'distance_km': r['distance_km'],
+                'mean_transit_seconds': r['mean_transit_seconds'],
+                'avg_speed_kmh': r['avg_speed_kmh'],
+                'sample_count': r['sample_count'],
+                'delay_sigma': round((r['mean_transit_seconds'] - global_mean) / global_std, 2) if global_std > 0 else 0
+            })
+    with open(os.path.join(STATIC_DATA_DIR, "corridor_bottlenecks.json"), "w") as f:
+        json.dump(bottlenecks, f, indent=2)
+
+    # 10. Trajectories for key demo plates
     demo_plates = ["TN09CB1234", "TN07AX4521", "TN22CY3311", "KA03MD5522", "TN10BE9876", "TN01AZ7788", "MH02EZ9012"]
     base_dict = {(r["camera_from"], r["camera_to"]): r for r in baselines}
 

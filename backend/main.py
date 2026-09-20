@@ -140,6 +140,7 @@ def get_trajectory(
 
     for i in range(len(sightings)):
         s = sightings[i]
+        vtype = s["vehicle_type"] if "vehicle_type" in s.keys() and s["vehicle_type"] else "CAR"
         if i == 0:
             # First hop: origin sighting
             hop_data = {
@@ -149,6 +150,7 @@ def get_trajectory(
                 "lon": s["lon"],
                 "timestamp": s["timestamp"],
                 "plate_text": s["plate_text"],
+                "vehicle_type": vtype,
                 "snapshot_path": s["snapshot_path"],
                 "plate_score": 1.0 if s["plate_text"] else 0.0,
                 "visual_score": 1.0,
@@ -158,6 +160,10 @@ def get_trajectory(
                 "is_path_rare": False,
                 "speed_kmh": 0.0,
                 "distance_km": 0.0,
+                "bearing_deg": 0.0,
+                "heading": "Origin Node",
+                "heading_arrow": "📍",
+                "heading_card": "Origin",
                 "plate_unconfirmed": s["plate_text"] is None,
                 "explanation": "Initial origin sighting"
             }
@@ -171,6 +177,7 @@ def get_trajectory(
                 "lon": s["lon"],
                 "timestamp": s["timestamp"],
                 "plate_text": s["plate_text"],
+                "vehicle_type": vtype,
                 "snapshot_path": s["snapshot_path"],
                 "plate_score": fusion["plate_score"],
                 "visual_score": fusion["visual_score"],
@@ -180,6 +187,10 @@ def get_trajectory(
                 "is_path_rare": fusion["is_path_rare"],
                 "speed_kmh": fusion["speed_kmh"],
                 "distance_km": fusion["distance_km"],
+                "bearing_deg": fusion.get("bearing_deg", 0.0),
+                "heading": fusion.get("heading", ""),
+                "heading_arrow": fusion.get("heading_arrow", "→"),
+                "heading_card": fusion.get("heading_card", ""),
                 "plate_unconfirmed": fusion["plate_unconfirmed"],
                 "explanation": fusion["explanation"]
             }
@@ -207,9 +218,10 @@ def get_heatmap(date_from: Optional[str] = Query(None), date_to: Optional[str] =
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("""
-        SELECT camera_id, lat, lon, COUNT(*) as count
-        FROM sightings
-        GROUP BY camera_id, lat, lon
+        SELECT c.camera_id, c.lat, c.lon, COUNT(s.sighting_id) as count
+        FROM cameras c
+        LEFT JOIN sightings s ON c.camera_id = s.camera_id
+        GROUP BY c.camera_id, c.lat, c.lon
         ORDER BY count DESC
     """)
     rows = cursor.fetchall()
@@ -226,7 +238,7 @@ def get_zones():
     conn.close()
     return [dict(r) for r in rows]
 
-# 5. Corridor Baseline
+# 5. Corridor Baseline & Bottlenecks
 @app.get("/api/corridor-baseline")
 def get_corridor_baseline():
     conn = get_db_connection()
@@ -240,12 +252,95 @@ def get_corridor_baseline():
     conn.close()
     return [dict(r) for r in rows]
 
+# 5b. Congestion Bottlenecks Detection (PS Mandate 5)
+@app.get("/api/corridor-bottlenecks")
+def get_corridor_bottlenecks():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT camera_from, camera_to, distance_km, mean_transit_seconds, stddev_transit_seconds, sample_count, avg_speed_kmh, source
+        FROM corridor_baseline
+        ORDER BY sample_count DESC
+    """)
+    rows = [dict(r) for r in cursor.fetchall()]
+    conn.close()
+    
+    bottlenecks = []
+    for r in rows:
+        # Flag corridors running with low average speed or high baseline delay
+        is_congested = (r["avg_speed_kmh"] < 40.0 and r["sample_count"] >= 3)
+        delay_factor = round(max(1.0, 50.0 / max(r["avg_speed_kmh"], 5.0)), 2)
+        
+        if is_congested:
+            severity = "HIGH" if r["avg_speed_kmh"] < 25.0 else "MODERATE"
+            bottlenecks.append({
+                "camera_from": r["camera_from"],
+                "camera_to": r["camera_to"],
+                "distance_km": r["distance_km"],
+                "avg_speed_kmh": r["avg_speed_kmh"],
+                "mean_transit_min": round(r["mean_transit_seconds"] / 60.0, 1),
+                "stddev_transit_min": round(r["stddev_transit_seconds"] / 60.0, 1),
+                "delay_factor": delay_factor,
+                "severity": severity,
+                "status": f"CONGESTED ({delay_factor}x delay)"
+            })
+    return bottlenecks
+
+# 5c. Origin-Destination Patterns (PS Mandate 4)
+@app.get("/api/od-patterns")
+def get_od_patterns():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    cursor.execute("SELECT camera_id, name FROM cameras")
+    cam_names = {r["camera_id"]: r["name"] for r in cursor.fetchall()}
+    
+    cursor.execute("""
+        SELECT plate_text, camera_id, timestamp
+        FROM sightings
+        WHERE plate_text IS NOT NULL AND plate_text != ''
+        ORDER BY plate_text, timestamp ASC
+    """)
+    rows = cursor.fetchall()
+    conn.close()
+    
+    trajectories = {}
+    for r in rows:
+        p = r["plate_text"]
+        if p not in trajectories:
+            trajectories[p] = []
+        trajectories[p].append(r)
+        
+    od_counts = {}
+    for p, list_s in trajectories.items():
+        if len(list_s) >= 2:
+            orig = list_s[0]["camera_id"]
+            dest = list_s[-1]["camera_id"]
+            if orig != dest:
+                key = (orig, dest)
+                if key not in od_counts:
+                    od_counts[key] = {"count": 0, "sample_plates": []}
+                od_counts[key]["count"] += 1
+                if len(od_counts[key]["sample_plates"]) < 3:
+                    od_counts[key]["sample_plates"].append(p)
+                    
+    results = []
+    for (orig, dest), data in sorted(od_counts.items(), key=lambda x: x[1]["count"], reverse=True):
+        results.append({
+            "origin_camera": orig,
+            "origin_name": cam_names.get(orig, orig),
+            "dest_camera": dest,
+            "dest_name": cam_names.get(dest, dest),
+            "trip_count": data["count"],
+            "sample_plates": data["sample_plates"]
+        })
+    return results
+
 # 6. Traffic Trend
 @app.get("/api/traffic-trend")
 def get_traffic_trend(date_from: Optional[str] = Query(None), date_to: Optional[str] = Query(None)):
     conn = get_db_connection()
     cursor = conn.cursor()
-    # Extract hour from timestamp
     cursor.execute("""
         SELECT strftime('%H', timestamp) as hr, COUNT(*) as cnt
         FROM sightings
@@ -255,15 +350,83 @@ def get_traffic_trend(date_from: Optional[str] = Query(None), date_to: Optional[
     rows = cursor.fetchall()
     conn.close()
     
-    # Format as 0..23 with counts
     trend_dict = {int(r["hr"]): r["cnt"] for r in rows if r["hr"] is not None}
     results = []
-    for h in range(8, 20): # Typical operational day 8am to 8pm
+    for h in range(8, 20):
         results.append({
             "hour": f"{h:02d}:00",
             "count": trend_dict.get(h, 0)
         })
     return results
+
+# 6b. Individual Vehicle Speed Violations
+@app.get("/api/speed-violations")
+def get_speed_violations(min_speed: float = Query(60.0, description="Minimum speed threshold in km/h")):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT sighting_id, plate_text, vehicle_type, camera_id, lat, lon, timestamp
+        FROM sightings
+        WHERE plate_text IS NOT NULL AND plate_text != ''
+        ORDER BY plate_text, timestamp ASC
+    """)
+    rows = [dict(r) for r in cursor.fetchall()]
+    
+    # Load camera coords
+    cursor.execute("SELECT camera_id, name, lat, lon FROM cameras")
+    cams = {r["camera_id"]: dict(r) for r in cursor.fetchall()}
+    conn.close()
+    
+    by_plate = {}
+    for r in rows:
+        p = r["plate_text"]
+        by_plate.setdefault(p, []).append(r)
+        
+    violations = []
+    for plate, sightings in by_plate.items():
+        if len(sightings) < 2:
+            continue
+        for i in range(1, len(sightings)):
+            s1 = sightings[i - 1]
+            s2 = sightings[i]
+            if s1["camera_id"] == s2["camera_id"]:
+                continue
+            try:
+                t1 = datetime.fromisoformat(s1["timestamp"])
+                t2 = datetime.fromisoformat(s2["timestamp"])
+                dt_sec = (t2 - t1).total_seconds()
+                if dt_sec <= 0 or dt_sec > 7200:
+                    continue
+                dist_km = calculate_haversine_km(s1["lat"], s1["lon"], s2["lat"], s2["lon"])
+                speed_kmh = round((dist_km / (dt_sec / 3600.0)), 1)
+                
+                if speed_kmh >= min_speed:
+                    vtype = s2.get("vehicle_type") or s1.get("vehicle_type") or "CAR"
+                    cam_from_name = cams.get(s1["camera_id"], {}).get("name", s1["camera_id"])
+                    cam_to_name = cams.get(s2["camera_id"], {}).get("name", s2["camera_id"])
+                    excess = round(speed_kmh - min_speed, 1)
+                    severity = "CRITICAL" if speed_kmh >= 100 else ("HIGH" if speed_kmh >= 80 else "MODERATE")
+                    violations.append({
+                        "plate_text": plate,
+                        "vehicle_type": vtype,
+                        "camera_from": s1["camera_id"],
+                        "camera_from_name": cam_from_name,
+                        "camera_to": s2["camera_id"],
+                        "camera_to_name": cam_to_name,
+                        "speed_kmh": speed_kmh,
+                        "min_speed_threshold": min_speed,
+                        "excess_kmh": excess,
+                        "distance_km": round(dist_km, 2),
+                        "transit_time_sec": int(dt_sec),
+                        "timestamp": s2["timestamp"],
+                        "severity": severity,
+                        "sighting_id": s2["sighting_id"]
+                    })
+            except Exception:
+                pass
+                
+    violations.sort(key=lambda x: x["speed_kmh"], reverse=True)
+    return violations
 
 # 7. Blacklist Check
 @app.get("/api/blacklist/check")

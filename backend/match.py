@@ -21,6 +21,38 @@ def calculate_haversine_km(lat1, lon1, lat2, lon2):
     c = 2.0 * math.atan2(math.sqrt(a), math.sqrt(1.0 - a))
     return R * c
 
+def calculate_bearing(lat1, lon1, lat2, lon2):
+    """
+    Computes initial Great-Circle bearing in degrees (0-360) and cardinal direction.
+    Returns: (bearing_deg: float, cardinal: str, arrow: str)
+    """
+    if lat1 == lat2 and lon1 == lon2:
+        return 0.0, "N", "↑"
+        
+    phi1, phi2 = math.radians(lat1), math.radians(lat2)
+    dlambda = math.radians(lon2 - lon1)
+    
+    y = math.sin(dlambda) * math.cos(phi2)
+    x = math.cos(phi1) * math.sin(phi2) - math.sin(phi1) * math.cos(phi2) * math.cos(dlambda)
+    
+    bearing = (math.degrees(math.atan2(y, x)) + 360.0) % 360.0
+    
+    # Map bearing to 8 cardinal directions and arrows
+    directions = [
+        (22.5, 67.5, "NE", "↗"),
+        (67.5, 112.5, "E", "→"),
+        (112.5, 157.5, "SE", "↘"),
+        (157.5, 202.5, "S", "↓"),
+        (202.5, 247.5, "SW", "↙"),
+        (247.5, 292.5, "W", "←"),
+        (292.5, 337.5, "NW", "↖"),
+    ]
+    for low, high, card, arrow in directions:
+        if low <= bearing < high:
+            return round(bearing, 1), card, arrow
+            
+    return round(bearing, 1), "N", "↑"
+
 def compute_plate_similarity(plate1, plate2):
     """Normalized string similarity in [0, 1]."""
     if not plate1 or not plate2:
@@ -138,6 +170,9 @@ def fuse_sighting_pair(sighting_a, sighting_b, baseline_dict=None):
         composite = 0.65 * visual_score + 0.35 * transit_score
         explanation = f"Plate unconfirmed — visual similarity fallback {visual_score*100:.1f}%, transit plausibility {transit_score*100:.1f}% ({speed_kmh} km/h)"
 
+    bearing_deg, heading_card, heading_arrow = calculate_bearing(lat1, lon1, lat2, lon2)
+    heading_str = f"{heading_arrow} {heading_card} ({bearing_deg}°)"
+
     return {
         "plate_score": round(plate_score, 3),
         "visual_score": round(visual_score, 3),
@@ -145,6 +180,10 @@ def fuse_sighting_pair(sighting_a, sighting_b, baseline_dict=None):
         "composite_score": round(composite, 3),
         "speed_kmh": speed_kmh,
         "distance_km": round(dist_km, 2),
+        "bearing_deg": bearing_deg,
+        "heading": heading_str,
+        "heading_arrow": heading_arrow,
+        "heading_card": heading_card,
         "transit_seconds": round(dt_seconds, 1),
         "timing_anomaly_score": round(anomaly_z, 2),
         "is_path_rare": is_rare,

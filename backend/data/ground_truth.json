@@ -9,6 +9,7 @@
     "lon": 80.2512,
     "true_plate": "TN09CB1234",
     "condition": "clean",
+    "category": "clean",
     "vehicle_type": "white sedan",
     "is_adversarial": false
   },
@@ -22,6 +23,7 @@
     "lon": 80.258,
     "true_plate": "TN07AX4521",
     "condition": "clean",
+    "category": "clean",
     "vehicle_type": "black suv",
     "is_adversarial": false
   },
@@ -35,6 +37,7 @@
     "lon": 80.2642,
     "true_plate": "TN10BE9876",
     "condition": "clean",
+    "category": "clean",
     "vehicle_type": "silver hatchback",
     "is_adversarial": false
   },
@@ -48,6 +51,7 @@
     "lon": 80.2337,
     "true_plate": "KA03MD5522",
     "condition": "clean",
+    "category": "clean",
     "vehicle_type": "yellow auto-taxi",
     "is_adversarial": false
   },
@@ -61,6 +65,7 @@
     "lon": 80.2036,
     "true_plate": "TN22CY3311",
     "condition": "clean",
+    "category": "clean",
     "vehicle_type": "red hatchback",
     "is_adversarial": false
   },
@@ -74,6 +79,7 @@
     "lon": 80.2228,
     "true_plate": "MH02EZ9012",
     "condition": "clean",
+    "category": "clean",
     "vehicle_type": "dark blue truck",
     "is_adversarial": false
   },
@@ -86,7 +92,8 @@
     "lat": 13.0544,
     "lon": 80.2825,
     "true_plate": "TN01AZ7788",
-    "condition": "blurred_occluded",
+    "condition": "motion_blur",
+    "category": "blur",
     "vehicle_type": "green sedan",
     "is_adversarial": true
   },
@@ -99,8 +106,51 @@
     "lat": 13.0067,
     "lon": 80.2443,
     "true_plate": "TN05BK6655",
-    "condition": "low_contrast",
+    "condition": "low_contrast_lighting",
+    "category": "lighting",
     "vehicle_type": "grey sedan",
+    "is_adversarial": true
+  },
+  {
+    "clip_id": "clip_09",
+    "clip_path": "backend/data/clips/clip_09.mp4",
+    "snapshot_path": "data/snapshots/clip_09_snap.jpg",
+    "camera_id": "CAM_01",
+    "camera_name": "Gemini Flyover (Anna Salai)",
+    "lat": 13.0528,
+    "lon": 80.2512,
+    "true_plate": "TN11DX4499",
+    "condition": "poor_weather_rain",
+    "category": "weather",
+    "vehicle_type": "white suv",
+    "is_adversarial": true
+  },
+  {
+    "clip_id": "clip_10",
+    "clip_path": "backend/data/clips/clip_10.mp4",
+    "snapshot_path": "data/snapshots/clip_10_snap.jpg",
+    "camera_id": "CAM_02",
+    "camera_name": "Thousand Lights (Anna Salai)",
+    "lat": 13.061,
+    "lon": 80.258,
+    "true_plate": "KA05MN8833",
+    "condition": "angled_shot_skew",
+    "category": "angle",
+    "vehicle_type": "blue sedan",
+    "is_adversarial": true
+  },
+  {
+    "clip_id": "clip_11",
+    "clip_path": "backend/data/clips/clip_11.mp4",
+    "snapshot_path": "data/snapshots/clip_11_snap.jpg",
+    "camera_id": "CAM_03",
+    "camera_name": "Spencers Plaza (Anna Salai)",
+    "lat": 13.0674,
+    "lon": 80.2642,
+    "true_plate": "DL04CA1122",
+    "condition": "damaged_dirty_occlusion",
+    "category": "damage",
+    "vehicle_type": "silver sedan",
     "is_adversarial": true
   }
 ]

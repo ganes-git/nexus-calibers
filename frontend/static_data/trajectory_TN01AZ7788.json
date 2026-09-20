@@ -53,7 +53,7 @@
     "visual_score": 1.0,
     "transit_score": 0.95,
     "composite_score": 0.982,
-    "timing_anomaly_score": 2.85,
+    "timing_anomaly_score": 0.0,
     "is_path_rare": false,
     "speed_kmh": 26.9,
     "distance_km": 6.73,

@@ -12,6 +12,9 @@ import os
 import re
 import sys
 
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
+
 FRONTEND_DIR = os.path.join(os.path.dirname(__file__), "frontend")
 
 BANNED_RULES = [

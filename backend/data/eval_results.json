@@ -1,15 +1,54 @@
 {
-  "total_clips": 8,
+  "total_clips": 11,
   "clean_clips": 6,
   "clean_exact_accuracy_pct": 100.0,
-  "adversarial_clips": 2,
-  "overall_exact_accuracy_pct": 75.0,
-  "mean_character_similarity_pct": 75.0,
+  "adversarial_clips": 5,
+  "overall_exact_accuracy_pct": 81.82,
+  "mean_character_similarity_pct": 81.82,
+  "category_breakdown": {
+    "clean": {
+      "total_clips": 6,
+      "exact_matches": 6,
+      "exact_accuracy_pct": 100.0,
+      "mean_similarity_pct": 100.0
+    },
+    "blur": {
+      "total_clips": 1,
+      "exact_matches": 0,
+      "exact_accuracy_pct": 0.0,
+      "mean_similarity_pct": 0.0
+    },
+    "lighting": {
+      "total_clips": 1,
+      "exact_matches": 0,
+      "exact_accuracy_pct": 0.0,
+      "mean_similarity_pct": 0.0
+    },
+    "weather": {
+      "total_clips": 1,
+      "exact_matches": 1,
+      "exact_accuracy_pct": 100.0,
+      "mean_similarity_pct": 100.0
+    },
+    "angle": {
+      "total_clips": 1,
+      "exact_matches": 1,
+      "exact_accuracy_pct": 100.0,
+      "mean_similarity_pct": 100.0
+    },
+    "damage": {
+      "total_clips": 1,
+      "exact_matches": 1,
+      "exact_accuracy_pct": 100.0,
+      "mean_similarity_pct": 100.0
+    }
+  },
   "clip_details": [
     {
       "clip_id": "clip_01",
       "camera_id": "CAM_01",
       "true_plate": "TN09CB1234",
+      "category": "clean",
       "detected_plate": "TN09CB1234",
       "confidence": 0.849,
       "similarity": 1.0,
@@ -22,6 +61,7 @@
       "clip_id": "clip_02",
       "camera_id": "CAM_02",
       "true_plate": "TN07AX4521",
+      "category": "clean",
       "detected_plate": "TN07AX4521",
       "confidence": 0.857,
       "similarity": 1.0,
@@ -34,6 +74,7 @@
       "clip_id": "clip_03",
       "camera_id": "CAM_03",
       "true_plate": "TN10BE9876",
+      "category": "clean",
       "detected_plate": "TN10BE9876",
       "confidence": 0.857,
       "similarity": 1.0,
@@ -46,6 +87,7 @@
       "clip_id": "clip_04",
       "camera_id": "CAM_04",
       "true_plate": "KA03MD5522",
+      "category": "clean",
       "detected_plate": "KA03MD5522",
       "confidence": 0.806,
       "similarity": 1.0,
@@ -58,6 +100,7 @@
       "clip_id": "clip_05",
       "camera_id": "CAM_05",
       "true_plate": "TN22CY3311",
+      "category": "clean",
       "detected_plate": "TN22CY3311",
       "confidence": 0.81,
       "similarity": 1.0,
@@ -70,6 +113,7 @@
       "clip_id": "clip_06",
       "camera_id": "CAM_06",
       "true_plate": "MH02EZ9012",
+      "category": "clean",
       "detected_plate": "MH02EZ9012",
       "confidence": 0.836,
       "similarity": 1.0,
@@ -82,25 +126,66 @@
       "clip_id": "clip_07",
       "camera_id": "CAM_07",
       "true_plate": "TN01AZ7788",
+      "category": "blur",
       "detected_plate": null,
       "confidence": 0.0,
       "similarity": 0.0,
       "exact_match": false,
       "is_adversarial": true,
-      "condition": "blurred_occluded",
-      "status": "FALLBACK (blurred_occluded)"
+      "condition": "motion_blur",
+      "status": "FALLBACK (motion_blur)"
     },
     {
       "clip_id": "clip_08",
       "camera_id": "CAM_08",
       "true_plate": "TN05BK6655",
+      "category": "lighting",
       "detected_plate": null,
       "confidence": 0.0,
       "similarity": 0.0,
       "exact_match": false,
       "is_adversarial": true,
-      "condition": "low_contrast",
-      "status": "FALLBACK (low_contrast)"
+      "condition": "low_contrast_lighting",
+      "status": "FALLBACK (low_contrast_lighting)"
+    },
+    {
+      "clip_id": "clip_09",
+      "camera_id": "CAM_01",
+      "true_plate": "TN11DX4499",
+      "category": "weather",
+      "detected_plate": "TN11DX4499",
+      "confidence": 0.836,
+      "similarity": 1.0,
+      "exact_match": true,
+      "is_adversarial": true,
+      "condition": "poor_weather_rain",
+      "status": "EXACT MATCH"
+    },
+    {
+      "clip_id": "clip_10",
+      "camera_id": "CAM_02",
+      "true_plate": "KA05MN8833",
+      "category": "angle",
+      "detected_plate": "KA05MN8833",
+      "confidence": 0.832,
+      "similarity": 1.0,
+      "exact_match": true,
+      "is_adversarial": true,
+      "condition": "angled_shot_skew",
+      "status": "EXACT MATCH"
+    },
+    {
+      "clip_id": "clip_11",
+      "camera_id": "CAM_03",
+      "true_plate": "DL04CA1122",
+      "category": "damage",
+      "detected_plate": "DL04CA1122",
+      "confidence": 0.861,
+      "similarity": 1.0,
+      "exact_match": true,
+      "is_adversarial": true,
+      "condition": "damaged_dirty_occlusion",
+      "status": "EXACT MATCH"
     }
   ]
 }
